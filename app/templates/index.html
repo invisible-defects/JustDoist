@@ -13,17 +13,42 @@
 
 <body id="content">
     <style>
-        .nav-wrapper > ul > li > .active{
+        
+        @import url('https://fonts.googleapis.com/css?family=Unica+One');
+        h4,h5{
+            font-family: 'Unica One', cursive;
+
+        }
+        nav > div > ul > li > .active{
             border-bottom: 1.5px solid white;
             margin-top: -1.5px;
         }
-
+        nav  a{
+            font-family: 'Unica One', cursive;
+        }
+        nav a img{
+            display: inline-flex;
+            height: 2.6rem;
+            flex: auto;
+            margin: 0 0.2rem;
+            margin-top:-0.6rem;
+        }
+        nav > div > a{ 
+            font-weight: 400 !important;
+            text-transform: uppercase;
+            display: flex !important;
+            align-content: center;
+            align-items: center;
+            text-align: justify;
+            justify-content: center; 
+            font-size: 3rem !important;
+        }
 
     </style>
 <!--  Menu  -->
 <nav>
 <div class="nav-wrapper red">
-  <a href="#!" class="brand-logo" style="font-weight: 600; margin-left: 1rem;"><i class="material-icons">event</i>Just Doist</a>
+  <a href="#!" class="brand-logo" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
   <ul class="right">
     <li><a href="index" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
@@ -39,7 +64,7 @@
     
     <div class="card">
         <div class="card-content">
-            <h4><b>Problem</b></h4>
+            <h4><b>PROBLEM</b></h4>
         </div>
     </div> 
     
@@ -48,14 +73,14 @@
 <div class="col s5">
     <div class="card">
         <div class="card-content">
-            <h5><b>Your statistics</b></h5>
+            <h5><b>YOUR STATISTICS</b></h5>
             <span>Last week</span>
             <div></div>
         </div>
     </div> 
     <div class="card">
         <div class="card-content">
-            <h5><b>Your productivity</b></h5>
+            <h5><b>YOUR PRODUCTIVITY</b></h5>
             <span>Last week</span>
 
         </div>

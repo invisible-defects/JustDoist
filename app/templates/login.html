@@ -8,85 +8,100 @@
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
 </head>
 <body>
-    <style>
     
-    .wrapper{
-    display: block;
-    position:absolute;
-    background: white;
-    left:50%;
-    top:50%;
-    transform: translate(-50%,-50%);
-}
-.media-object{
-  display:block;
-  width:100%;
-  margin-left:auto;
-  margin-right:auto;
-  margin-bottom:30px;
-}
-h5{
-  padding-left:1px;
-  padding-bottom:30px
-}
-.cont{
-  display: block;
-  width:400px;
-  padding:50px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow-y: auto;
-  box-sizing: border-box;
-  overflow: hidden;
-  transition: .2s;
-  webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Unica+One');
 
-}
-.continue{
-  background: #4285f4;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-}
-.form{
-    display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    border: 0;
-    border-bottom: 1.3px solid #ccc;
-    transition: border .2s;
-}
-    </style>
+    html{
+        
+        background: #e44332ff ;
+    }
+    .wrapper{
+        display: block;
+        position:absolute;
+        background: none;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+    }
+    .media-object{
+        display:block;
+        width:100%;
+        margin-left:auto;
+        margin-right:auto;
+        margin-bottom:30px;
+    }
+    h5{
+        padding-left:1px;
+        padding-bottom:30px
+    }
+    .cont{
+        display: block;
+        width:400px;
+        padding:50px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-y: auto;
+        box-sizing: border-box;
+        overflow: hidden;
+        transition: .2s;
+
+    }
+    .continue{
+        background: none;
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1.42857143;
+        text-align: center;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+    }
+    .form{
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 0;
+        border-bottom: 1.3px solid #ccc;
+        transition: border .2s;
+    }
+
+    .logotext{
+        color: white;
+        font-family: 'Unica One', cursive;
+        font-weight: 400 !important;
+        text-transform: uppercase;
+        display: flex !important;
+        align-content: center;
+        align-items: center;
+        text-align: justify;
+        justify-content: center; 
+        font-size: 3rem;
+    }
+    .logotext > img{
+        height: 3.5rem;
+        margin-top: -1.4rem;
+    }
+    button{
+        color:#e44332ff !important;
+        margin: 0 auto !important;
+        display: block !important;
+    }
+</style>
 <div class="wrapper">
 <div class="cont">
-<img  class="media-object" src="../static/img/logo.png">
-    <button type="button" name="signin" class="waves-effect waves-light btn red" onclick="window.location='/authorize/todoist'">Войти с помощью Todoist</button>
+    <div class="logotext">
+    </div>
 </div>
 </div>
 </body>
