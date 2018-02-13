@@ -1,4 +1,5 @@
 from app import db
+import todoist
 
 
 class User(db.Model):
@@ -6,6 +7,16 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True)
     todoist_token = db.Column(db.String(128))
     problems = db.relationship('ProblemProbability', backref='owner', lazy='dynamic')
+
+    def link_todoist(self, api_key):
+        self.todoist_token = api_key
+
+    def check_todoist(self):
+        api = todoist.TodoistAPI(self.todoist_token)
+        if api.sync()['http_code'] == 200:
+            return True
+        else:
+            return False
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
