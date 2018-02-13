@@ -58,16 +58,12 @@ class TodoistSignIn(OAuthSignIn):
 
         if 'code' not in request.args:
             return None, None
-        oauth_session = self.service.get_auth_session(
+        token = self.service.get_access_token(
             data={'client_id': self.client_id,
                   'client_secret': self.client_secret,
                   'code': request.args['code'],
                   'redirect_uri': self.get_callback_url()},
             decoder=decode_json
         )
-        me = oauth_session.get().json()
-        return (
-            me.get('access_token'),
-            me.get('token_type')
-        )
+        return (token)
 
