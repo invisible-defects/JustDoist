@@ -13,8 +13,11 @@
     @import url('https://fonts.googleapis.com/css?family=Unica+One');
 
     html{
-        
-        background: #e44332ff ;
+        background: #ff230c; /* Old Browsers */
+        background: -webkit-linear-gradient(top,#ff230c,#e44332); /*Safari 5.1-6*/
+        background: -o-linear-gradient(top,#ff230c,#e44332); /*Opera 11.1-12*/
+        background: -moz-linear-gradient(top,#ff230c,#e44332); /*Fx 3.6-15*/
+        background: linear-gradient(to bottom, #ff230c, #e44332); /*Standard*/
     }
     .wrapper{
         display: block;
@@ -77,6 +80,7 @@
     }
 
     .logotext{
+        user-select: none;
         color: white;
         font-family: 'Unica One', cursive;
         font-weight: 400 !important;
@@ -89,6 +93,7 @@
         font-size: 3rem;
     }
     .logotext > img{
+        user-select: none;
         height: 3.5rem;
         margin-top: -1.4rem;
     }
