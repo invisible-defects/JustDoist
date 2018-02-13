@@ -1,8 +1,9 @@
-from app import db
+from app import db, login
 import todoist
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
     todoist_token = db.Column(db.String(128))
@@ -31,3 +32,8 @@ class Problem(db.Model):
 class ProblemProbability(db.Model):
     val = db.Column(db.Float)
     problem_num = db.Column(db.Integer)
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
