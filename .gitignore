@@ -1,0 +1,4 @@
+*.pyc
+.idea/modules.xml
+*.xml
+.idea/JustDoist.iml
