@@ -5,11 +5,20 @@ from .models import User
 from .oauth import OAuthSignIn
 
 
+DEBUG = True
+
+
+def alert(message):
+    if DEBUG:
+        print(message)
+
+
 # Main (problems) page
 @app.route('/')
 @app.route('/index')
 def index():
     if current_user.is_anonymous:
+        print('anonymous trying to go index!')
         return redirect(url_for('login'))
 
     return render_template('index.html')
@@ -19,6 +28,7 @@ def index():
 @app.route('/login')
 def login():
     if current_user.is_authenticated:
+        alert('REDIRECTING TO INDEX BC NOT ANONYMOUS')
         return redirect(url_for('index'))
 
     return render_template('login.html')
@@ -27,27 +37,34 @@ def login():
 # Authorization page
 @app.route('/authorize/<provider>')
 def authorize(provider):
-    if not current_user.is_is_anonymous:
+    if not current_user.is_anonymous:
+        alert('REDIRECTING TO INDEX BC NOT ANONYMOUS')
         return render_template('index.html')
+    alert('STARTED AUTHORIZING')
     oauth = OAuthSignIn.get_provider(provider)
+    alert('PROVIDER: {}'.format(provider))
     return oauth.authorize()
 
 
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
-    if not current_user.is_anonymous():
+    alert('STARTING CALLBACK')
+    if not current_user.is_anonymous:
+        alert('REDIRECTING TO INDEX BC ANONYMOUS')
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
-    token, token_type = oauth.callback()
+    token = oauth.callback()
     if token is None:
-        flash('Authentication failed.')
+        alert('REDIRECTING TO INDEX BC LOGIN FAILED')
         return redirect(url_for('index'))
+    alert('TOKEN: {}'.format(token))
     user = User.query.filter_by(todoist_token=token).first()
     if not user:
         user = User(todoist_token=token)
         db.session.add(user)
         db.session.commit()
     login_user(user, True)
+    alert('LOGGED IN!')
     return redirect(url_for('index'))
 
 
