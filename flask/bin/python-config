@@ -1,4 +1,4 @@
-#!/home/lifetimealone/code/flask-app-template/bin/python
+#!/home/lifetimealone/code/JustDoist/flask/bin/python
 
 import sys
 import getopt
