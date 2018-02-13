@@ -9,6 +9,9 @@
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
 <script type="text/javascript" src="../static/js/functions.js"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
+        <script src="../static/js/showdown.min.js"></script>
+        <script src="../static/js/Chart.min.js"></script>
+
 </head>
 
 <body id="content">
@@ -21,7 +24,6 @@
         
         h4,h5{
             font-family: 'Unica One', cursive;
-
         }
         nav > div > ul > li > .active{
             border-bottom: 1.5px solid white;
@@ -47,16 +49,88 @@
             justify-content: center; 
             font-size: 3rem !important;
         }
-
+        .nav-wrapper{
+            max-width: 85%;
+            margin: 0 auto;
+        }
+        .stats-crytery{
+            margin: 1rem 0;
+        }
+        .stats-crytery > a{
+            color:black;
+        }
+        .stats-crytery > a > span{
+            color:black;
+            font-weight: 600;
+        }
+        .stats-crytery > a > p{
+            display: inline-block;
+            float: right;
+            text-align: right;
+            color:black;
+            font-weight: 600;
+        }
+        .stats-slider{
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: #BDBDBD;
+        }
+        .stats-slider div{
+            display: block;
+            height: 3px;
+        }
+        .grad-plus{
+            background: rgb(125,185,232);
+            background: -moz-linear-gradient(left, rgb(125,185,232) 0%, rgb(45,229,52) 99%);
+            background: -webkit-linear-gradient(left, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
+            background: linear-gradient(to right, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
+        }
+        .grad-minus{
+            float: right;
+            background: rgb(235,87,87);
+            background: -moz-linear-gradient(left, rgb(235,87,87) 0%, rgb(242,153,74) 100%);
+            background: -webkit-linear-gradient(left, rgb(235,87,87) 0%,rgb(242,153,74) 100%); 
+            background: linear-gradient(to right, rgb(235,87,87) 0%,rgb(242,153,74) 100%);
+        }
+        #problem-text p{
+            margin: 1rem 0;
+            font-size: 1.3rem;
+        }
+        #problem-text p u{
+            text-decoration: none;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+        @media only screen and (max-width: 992px){
+            nav .brand-logo.left {
+                margin:0 !important;
+            }
+        }
+        .dropdown-top{
+            overflow: hidden;
+            margin-top: 65px !important;
+        }
+        .dropdown-top > li{
+            color: black;
+        }
     </style>
 <!--  Menu  -->
-<nav>
+
+<ul id="dropdown1" class="dropdown-content dropdown-top">
+  <li><a href="#!">one</a></li>
+  <li><a href="#!">two</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">three</a></li>
+</ul>
+    
+<nav class="red">
 <div class="nav-wrapper red">
-  <a href="#!" class="brand-logo" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
+  <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
   <ul class="right">
     <li><a href="index" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
+    <li><a href="settings" class="dropdown-button" data-activates="dropdown1"><i class="material-icons left">settings</i>SETTINGS<i class="material-icons right">arrow_drop_down</i></a></li>
     <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
 </div>
@@ -69,10 +143,20 @@
     
     <div class="card">
         <div class="card-content">
-            <h4><b>PROBLEM</b></h4>
+            <h4><i class="material-icons">error</i><b> PROBLEM</b></h4>
+            <div id="problem-text"></div>
+<!--            TODO            -->
+            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="document.location='....'">Do It!</button>
         </div>
     </div> 
-    
+    <script>
+        text = "You should be more exact when settings your objectives: determine the task accomplishment criteria, date or deadline, place, etc.\n\r" + 
+                "__For example, instead of “workout” there should be “90 minutes of workout in Superhero Gym on Sunday”__\n\r"+
+                "**Why does it work?**\n\r"+
+                "When our brain is unsure how big the job to be done is, or when the circumstances are not exact, it’s harder and less likely to complete the task, as it’s psychologically scary and uncomfortable to complete uncertain tasks.";
+        txt = new showdown.Converter({underline: true}).makeHtml(text);
+        $('#problem-text').html(txt);
+    </script>
 </div>
     
 <div class="col s5">
@@ -80,16 +164,60 @@
         <div class="card-content">
             <h5><b>YOUR STATISTICS</b></h5>
             <span>Last week</span>
-            <div></div>
+            <div class="stats-crytery">
+                <a>You comleted <span>99</span> tasks <p>+10%</p></a>
+                <div class="stats-slider">
+                    <div data="56"></div>
+                </div>
+            </div>
+            <div class="stats-crytery">
+                <a>You postponed <span>99</span> tasks <p>-70%</p></a>
+                <div class="stats-slider">
+                    <div data="-56"></div>
+                </div>
+            </div>
+            <div class="stats-crytery">
+                <a>You missed <span>99</span> deadlines <p>-10%</p></a>
+                <div class="stats-slider">
+                    <div data="-56"></div>
+                </div>
+            </div>
         </div>
     </div> 
+    
+    
+    
     <div class="card">
         <div class="card-content">
             <h5><b>YOUR PRODUCTIVITY</b></h5>
             <span>Last week</span>
-
+            <canvas id="myChart" width="400px" height="400px"></canvas>
         </div>
     </div> 
+   
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["mo", "tu", "we", "thu", "fr", "sat", "sun"],
+                datasets: [{ 
+                    data: [86,114,106,106,107, 110, 100],
+                    label: "Karma",
+                    borderColor: "#e44332ff",
+                    fill: "origin"
+                  }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Stats'
+                }
+            }
+        });
+    </script>
+    
+    
 </div>
         
 </div></div>
@@ -105,6 +233,29 @@ $(document).ready(function(){
         endingTop: '0%' // Ending top style attribute
     });
     $('select').material_select();
+    $(".dropdown-button").dropdown({hover:true});
+    build_stats();
+    
 });
+function build_stats(){
+    slid = $('.stats-slider > div');
+    for (i = 0; i < slid.length; i++){
+        wid =  parseInt($(slid[i]).attr("data"));
+        if (wid < 0){
+            $(slid[i]).css({
+                "width" : Math.abs(wid)/2 + "%",
+                "margin-right":"50%"
+            })
+            $(slid[i]).addClass("grad-minus");
+        }
+        else{
+            $(slid[i]).css({
+                "width" :  Math.abs(wid)/2 + "%",
+                "margin-left":"50%"
+            })
+            $(slid[i]).addClass("grad-plus");
+        }
+    }
+}
 </script>
 </html>
