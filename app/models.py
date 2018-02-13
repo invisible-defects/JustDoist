@@ -4,9 +4,7 @@ from flask_login import UserMixin
 
 
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True)
-    todoist_token = db.Column(db.String(128))
+    todoist_token = db.Column(db.String(128), primary_key=True)
     problems = db.relationship('ProblemProbability', backref='owner', lazy='dynamic')
 
     def link_todoist(self, api_key):
@@ -24,14 +22,14 @@ class User(UserMixin, db.Model):
 
 
 class Problem(db.Model):
-    num = db.Column(db.Integer)
+    num = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(10000))
     steps = db.Column(db.String(10000))
 
 
 class ProblemProbability(db.Model):
     val = db.Column(db.Float)
-    problem_num = db.Column(db.Integer)
+    problem_num = db.Column(db.Integer, primary_key=True)
 
 
 @login.user_loader
