@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from .models import User
 from .oauth import OAuthSignIn
 
@@ -65,6 +65,12 @@ def oauth_callback(provider):
         db.session.commit()
     login_user(user, True)
     alert('LOGGED IN!')
+    return redirect(url_for('index'))
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
     return redirect(url_for('index'))
 
 
