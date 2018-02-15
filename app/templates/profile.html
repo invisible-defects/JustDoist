@@ -2,12 +2,10 @@
 <head>
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="../static/css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
-<script type="text/javascript" src="../static/js/functions.js"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
         <script src="../static/js/showdown.min.js"></script>
         <script src="../static/js/Chart.min.js"></script>
@@ -240,14 +238,14 @@ function build_stats(){
     }
 }
 function open_problem_modal(id, e){
-    
-    $.get("problem",{problem_id: id},onAjaxSuccess);
+    $.get("/problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
         txt = new showdown.Converter({underline: true}).makeHtml(data);
         title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
-        text = title + txt;
-        $('.modal-content').html(text);
-        $("#modal1").modal("open");
+        console.log(title, txt);
+//        text = title + txt;
+//        $('.modal-content').html(text);
+//        $("#modal1").modal("open");
     }
 }
 </script>
