@@ -152,10 +152,7 @@
         </div>
     </div> 
     <script>
-        text = "You should be more exact when settings your objectives: determine the task accomplishment criteria, date or deadline, place, etc.\n\r" + 
-                "__For example, instead of “workout” there should be “90 minutes of workout in Superhero Gym on Sunday”__\n\r"+
-                "**Why does it work?**\n\r"+
-                "When our brain is unsure how big the job to be done is, or when the circumstances are not exact, it’s harder and less likely to complete the task, as it’s psychologically scary and uncomfortable to complete uncertain tasks.";
+        text = '{{problem_text.replace("\n", "\\n\\r")}}'
         txt = new showdown.Converter({underline: true}).makeHtml(text);
         $('#problem-text').html(txt);
     </script>

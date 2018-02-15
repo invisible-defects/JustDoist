@@ -28,7 +28,8 @@ class User(UserMixin, db.Model):
 
     def get_problem(self):
         problem = ProblemProbability.query.filter_by(
-            user_token=self.todoist_token).order_by(ProblemProbability.val.desc()).first()
+            user_token=self.todoist_token).filter_by(is_being_solved=False).order_by(
+            ProblemProbability.val.desc()).first()
         return problem
 
     def count_probabilities(self):

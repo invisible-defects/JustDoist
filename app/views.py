@@ -21,7 +21,14 @@ def index():
         print('anonymous trying to go index!')
         return redirect(url_for('login'))
 
-    return render_template('index.html')
+    problem_q = current_user.get_problem()
+
+    if problem_q is None:
+        problem = "No problems for you!\nCome back later."
+    else:
+        problem = problem_q.body
+
+    return render_template('index.html', problem_text=problem)
 
 
 # Start login page w button
@@ -75,8 +82,13 @@ def logout():
 
 
 # "My problems" page
-@app.route('/profile')
-def profile():
+@app.route('/profile/<data>')
+def profile(data):
+    if data == 'add':
+        pr = current_user.get_problem()
+        pr.is_being_solved = True
+        db.session.add(pr)
+        db.session.commit()
     return render_template('profile.html')
 
 
