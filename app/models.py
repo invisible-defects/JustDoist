@@ -42,6 +42,12 @@ class User(UserMixin, db.Model):
             db.session.add(prob)
             db.session.commit()
 
+    def add_problem(self, text):
+        if not self.check_todoist():
+            return False
+        api = todoist.TodoistAPI(self.todoist_token)
+        item = api.items.add(text)
+        api.commit()
 
     def __repr__(self):
         return '<User {} {}>'.format(self.id, self.todoist_token)

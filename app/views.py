@@ -118,3 +118,4 @@ def problem():
 @app.route('/add_task')
 def add_task():
     task_text = request.args.get('text')
+    current_user.add_problem(task_text)
