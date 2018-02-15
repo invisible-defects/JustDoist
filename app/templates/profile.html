@@ -175,7 +175,13 @@
         flex-direction: row;
         align-items: center;
     }
-    .card-panel > a{
+    .
+    .card-panel > div{
+        width:3rem;
+        display: flex;
+        margin-left: auto;
+    }
+    .card-panel > div > a{
         display: flex !important;
         margin-left: auto;
     }
@@ -259,7 +265,7 @@ function open_problem_modal(id, e){
         newtext = '';
         for (i = 0; i < txt.length; i++){
             if (i % 2 != 0){
-                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div>';
+                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div></div>';
             }
             else{
                 newtext += txt[i];
@@ -269,6 +275,7 @@ function open_problem_modal(id, e){
         text = title + newtext;
         $('.modal-content').html(text);
         $("#modal1").modal("open");
+        $('.tooltipped').tooltip({delay: 50});
     }
 }
 function add_to_todoist(e){
