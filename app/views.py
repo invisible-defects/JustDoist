@@ -28,7 +28,8 @@ def index():
         problem = "No problems for you!\nCome back later."
         butt = False
     else:
-        problem = problem_q.body
+        prob_raw = Problem.query.filter_by(num=problem_q.problem_num).first()
+        problem = prob_raw.body
 
     return render_template('index.html', problem_text=problem, butt=butt)
 
@@ -97,7 +98,7 @@ def profile(data):
         prob_raw = Problem.query.filter_by(num=prob.problem_num).first()
         problems.append(
             {'title' : prob_raw.title,
-             'percantage' : int(prob.steps_completed/prob_raw.steps*100),
+             'percantage' : int(int(prob.steps_completed)/int(prob_raw.steps_num)*100),
              'id' : prob.problem_num}
         )
     return render_template('profile.html', probs=problems)

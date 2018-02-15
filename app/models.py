@@ -58,9 +58,10 @@ class Problem(db.Model):
 
 class ProblemProbability(db.Model):
     __tablename__ = 'problem_probability'
+    id = db.Column(db.Integer, primary_key=True)
     val = db.Column(db.Float)
     problem_num = db.Column(db.Integer)
-    user_token = db.Column(db.String(128), db.ForeignKey('users.todoist_token'), primary_key=True)
+    user_token = db.Column(db.String(128), db.ForeignKey('users.todoist_token'))
     steps_completed = db.Column(db.Integer)
     is_being_solved = db.Column(db.Boolean, default=False)
 
