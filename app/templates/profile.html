@@ -174,54 +174,20 @@
     <div class="col s12">
         <h4>Progress</h4>
     </div>
-    
+    {% for problem in probs %}
     <div class="col s4">
-        <div class="card problem-card" onclick="open_problem_modal(2, this)">
+        <div class="card problem-card" onclick="open_problem_modal({{problem['id']}}, this)">
             <div class="card-content">
-                <p >Проблема asdfasdfasd asdfa asdf a asd f/</p>
-                <span>90%</span>
+                <p >{{problem['title']}}</p>
+                <span>{{problem['percantage']}}%</span>
                 <div class="stats-slider">
-                    <div data="90"></div>
+                    <div data="{{problem['percantage']}}"></div>
                 </div>
             </div>
         </div>
         
     </div>
-    <div class="col s4">
-        <div class="card problem-card">
-            <div class="card-content">
-                Проблема
-                <span>55%</span>
-                <div class="stats-slider">
-                    <div data="55"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col s4">
-        <div class="card problem-card">
-            <div class="card-content">
-                Проблема
-                <span>30%</span>
-                <div class="stats-slider">
-                    <div data="30"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col s4">
-        <div class="card problem-card">
-            <div class="card-content">
-                Проблема
-                <span>10%</span>
-                <div class="stats-slider">
-                    <div data="10"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
     
     
 </div></div>

@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user
-from .models import User
+from .models import User, ProblemProbability, Problem
 from .oauth import OAuthSignIn
 
 
@@ -91,7 +91,16 @@ def profile(data):
         pr.is_being_solved = True
         db.session.add(pr)
         db.session.commit()
-    return render_template('profile.html')
+    problem_probs = ProblemProbability.query.filter_by(user_token=current_user.todoist_token, is_being_solved=True)
+    problems = []
+    for prob in problem_probs:
+        prob_raw = Problem.query.filter_by(num=prob.problem_num).first()
+        problems.append(
+            {'title' : prob_raw.title,
+             'percantage' : int(prob.steps_completed/prob_raw.steps*100),
+             'id' : prob.problem_num}
+        )
+    return render_template('profile.html', probs=problems)
 
 
 @app.route('/settings')
