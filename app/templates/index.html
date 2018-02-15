@@ -79,14 +79,18 @@
         .stats-slider div{
             display: block;
             height: 3px;
+            width:0;
         }
         .grad-plus{
+            margin-left:50%;
             background: rgb(125,185,232);
             background: -moz-linear-gradient(left, rgb(125,185,232) 0%, rgb(45,229,52) 99%);
             background: -webkit-linear-gradient(left, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
             background: linear-gradient(to right, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
         }
         .grad-minus{
+            margin-right:50%;
+            
             float: right;
             background: rgb(235,87,87);
             background: -moz-linear-gradient(left, rgb(235,87,87) 0%, rgb(242,153,74) 100%);
@@ -148,7 +152,7 @@
             <h4><i class="material-icons">error</i><b> PROBLEM</b></h4>
             <div id="problem-text"></div>
 <!--            TODO            -->
-            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="document.location='....'">Do It!</button>
+            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="document.location='profile/add'">Do It!</button>
         </div>
     </div> 
     <script>
@@ -166,19 +170,19 @@
             <div class="stats-crytery">
                 <a>You comleted <span>99</span> tasks <p>+10%</p></a>
                 <div class="stats-slider">
-                    <div data="56"></div>
+                    <div data="10"></div>
                 </div>
             </div>
             <div class="stats-crytery">
                 <a>You postponed <span>99</span> tasks <p>-70%</p></a>
                 <div class="stats-slider">
-                    <div data="-56"></div>
+                    <div data="-70"></div>
                 </div>
             </div>
             <div class="stats-crytery">
                 <a>You missed <span>99</span> deadlines <p>-10%</p></a>
                 <div class="stats-slider">
-                    <div data="-56"></div>
+                    <div data="-10"></div>
                 </div>
             </div>
         </div>
@@ -241,18 +245,25 @@ function build_stats(){
     for (i = 0; i < slid.length; i++){
         wid =  parseInt($(slid[i]).attr("data"));
         if (wid < 0){
+            $(slid[i]).addClass("grad-minus");
+
+            $(slid[i]).animate({
+                "width": Math.abs(wid)/2 + "%"
+            }, 1000);
+            
             $(slid[i]).css({
                 "width" : Math.abs(wid)/2 + "%",
-                "margin-right":"50%"
             })
-            $(slid[i]).addClass("grad-minus");
         }
         else{
+            $(slid[i]).addClass("grad-plus");
+
+            $(slid[i]).animate({
+                "width" :  Math.abs(wid)/2 + "%",
+            })
             $(slid[i]).css({
                 "width" :  Math.abs(wid)/2 + "%",
-                "margin-left":"50%"
             })
-            $(slid[i]).addClass("grad-plus");
         }
     }
 }
