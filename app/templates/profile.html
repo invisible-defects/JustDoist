@@ -251,9 +251,7 @@ function open_problem_modal(id, e){
         newtext = '';
         for (i = 0; i < txt.length; i++){
             if (i % 2 != 0){
-                newtext += '<div class="card-panel indigo lighten-5">' + txt[i] + 
-                + '<a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)><i class="material-icons">add</i></a>'+
-                + '</div>';
+                newtext += '<div class="card-panel z-depth-1 indigo lighten-5">' + txt[i] + '<a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div>';
             }
             else{
                 newtext += txt[i];
@@ -266,7 +264,7 @@ function open_problem_modal(id, e){
     }
 }
 function add_to_todoist(e){
-    console.log(e.parentElement);
+    console.log($(e.parentElement));
 }
 </script>
 </html>
