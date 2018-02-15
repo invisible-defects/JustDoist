@@ -7,8 +7,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
-<script src="../static/js/showdown.min.js"></script>
-<script src="../static/js/Chart.min.js"></script>
+        <script src="../static/js/showdown.min.js"></script>
+        <script src="../static/js/Chart.min.js"></script>
 
 </head>
 
@@ -134,7 +134,7 @@
   <ul class="right">
     <li><a href="index" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-<!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
+    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
     <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
 </div>
@@ -143,86 +143,10 @@
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
     
-<div class="col s7">   
-    
-    <div class="card">
-        <div class="card-content">
-            <h4><i class="material-icons">error</i><b> PROBLEM</b></h4>
-            <div id="problem-text"></div>
-<!--            TODO            -->
-            {% if butt %}
-            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="document.location='profile/add'">Do It!</button>
-            {% endif %}
-        </div>
-    </div> 
-    <script>
-        text = '{{problem_text.replace("\n", "\\n\\r")}}'
-        txt = new showdown.Converter({underline: true}).makeHtml(text);
-        $('#problem-text').html(txt);
-    </script>
+<div class="col s12">   
+   <h4>SETTINGS</h4>
 </div>
-    
-<div class="col s5">
-    <div class="card">
-        <div class="card-content">
-            <h5><b>YOUR STATISTICS</b></h5>
-            <span>Last week</span>
-            <div class="stats-crytery">
-                <a>You comleted <span>99</span> tasks <p>+10%</p></a>
-                <div class="stats-slider">
-                    <div data="10"></div>
-                </div>
-            </div>
-            <div class="stats-crytery">
-                <a>You postponed <span>99</span> tasks <p>-70%</p></a>
-                <div class="stats-slider">
-                    <div data="-70"></div>
-                </div>
-            </div>
-            <div class="stats-crytery">
-                <a>You missed <span>99</span> deadlines <p>-10%</p></a>
-                <div class="stats-slider">
-                    <div data="-10"></div>
-                </div>
-            </div>
-        </div>
-    </div> 
-    
-    
-    
-    <div class="card">
-        <div class="card-content">
-            <h5><b>YOUR PRODUCTIVITY</b></h5>
-            <span>Last week</span>
-            <canvas id="myChart" width="400px" height="400px"></canvas>
-        </div>
-    </div> 
-   
-    <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["mo", "tu", "we", "thu", "fr", "sat", "sun"],
-                datasets: [{ 
-                    data: [86,114,106,106,107, 110, 100],
-                    label: "Karma",
-                    borderColor: "#e44332ff",
-                    fill: "origin"
-                  }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Stats'
-                }
-            }
-        });
-    </script>
-    
-    
-</div>
-        
+     
 </div></div>
     
     

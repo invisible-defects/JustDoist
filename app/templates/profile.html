@@ -7,8 +7,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
-<script src="../static/js/showdown.min.js"></script>
-<script src="../static/js/Chart.min.js"></script>
+        <script src="../static/js/showdown.min.js"></script>
+        <script src="../static/js/Chart.min.js"></script>
 
 </head>
 
@@ -22,6 +22,7 @@
         
         h4,h5{
             font-family: 'Unica One', cursive;
+            text-transform: uppercase;
         }
         nav > div > ul > li > .active{
             border-bottom: 1.5px solid white;
@@ -75,20 +76,17 @@
             background: #dedede;
         }
         .stats-slider div{
+            width:0;
             display: block;
             height: 3px;
-            width:0;
         }
         .grad-plus{
-            margin-left:50%;
             background: rgb(125,185,232);
             background: -moz-linear-gradient(left, rgb(125,185,232) 0%, rgb(45,229,52) 99%);
             background: -webkit-linear-gradient(left, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
             background: linear-gradient(to right, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
         }
         .grad-minus{
-            margin-right:50%;
-            
             float: right;
             background: rgb(235,87,87);
             background: -moz-linear-gradient(left, rgb(235,87,87) 0%, rgb(242,153,74) 100%);
@@ -116,6 +114,15 @@
         .dropdown-top > li{
             color: black;
         }
+        .problem-card{
+            transition: 0.3s;
+        }
+        .problem-card:hover{
+            transition: 0.3s;
+            transform: translateY(1px);
+            box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);
+            cursor:pointer;
+        }
     </style>
 <!--  Menu  -->
 <!--
@@ -132,99 +139,94 @@
 <div class="nav-wrapper red">
   <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
   <ul class="right">
-    <li><a href="index" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
-    <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-<!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
-    <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a href="../index"><i class="material-icons left">description</i>PROBLEMS</a></li>
+    <li><a href="." class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
+<!--    <li><a href="../settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
+    <li><a href="../logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
 </div>
 </nav>
+
+<style>
+    .stats-slider{
+        position:absolute;
+        bottom:0;
+        left:0;
+    }
+    .card-content{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .problem-card > div > span{
+        display: flex;
+        margin-left: auto;
+        padding-left:1rem;
+        font-weight: 600;
+        width:2rem;
+    }
     
+    .problem-card > div > p{
+        display: inline-flex;
+        flex:auto;
+    }
+    .card-panel{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .
+    .card-panel > div{
+        width:3rem;
+        display: flex;
+        margin-left: auto;
+    }
+    .card-panel > div > a{
+        display: flex !important;
+        margin-left: auto;
+    }
+    
+    .card-panel  > p{
+        display: inline-flex;
+        flex:auto;
+    }
+    .modal{
+         overflow-y: scroll !important; max-height: 100% !important; height: 100% !important; 
+    }
+</style>
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
-    
-<div class="col s7">   
-    
-    <div class="card">
-        <div class="card-content">
-            <h4><i class="material-icons">error</i><b> PROBLEM</b></h4>
-            <div id="problem-text"></div>
-<!--            TODO            -->
-            {% if butt %}
-            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="document.location='profile/add'">Do It!</button>
-            {% endif %}
-        </div>
-    </div> 
-    <script>
-        text = '{{problem_text.replace("\n", "\\n\\r")}}'
-        txt = new showdown.Converter({underline: true}).makeHtml(text);
-        $('#problem-text').html(txt);
-    </script>
-</div>
-    
-<div class="col s5">
-    <div class="card">
-        <div class="card-content">
-            <h5><b>YOUR STATISTICS</b></h5>
-            <span>Last week</span>
-            <div class="stats-crytery">
-                <a>You comleted <span>99</span> tasks <p>+10%</p></a>
+    <div class="col s12">
+        <h4>Progress</h4>
+    </div>
+    {% for problem in probs %}
+    <div class="col s4">
+        <div class="card problem-card" onclick="open_problem_modal({{problem['id']}}, this)">
+            <div class="card-content">
+                <p >{{problem['title']}}</p>
+                <span>{{problem['percantage']}}%</span>
                 <div class="stats-slider">
-                    <div data="10"></div>
-                </div>
-            </div>
-            <div class="stats-crytery">
-                <a>You postponed <span>99</span> tasks <p>-70%</p></a>
-                <div class="stats-slider">
-                    <div data="-70"></div>
-                </div>
-            </div>
-            <div class="stats-crytery">
-                <a>You missed <span>99</span> deadlines <p>-10%</p></a>
-                <div class="stats-slider">
-                    <div data="-10"></div>
+                    <div data="{{problem['percantage']}}"></div>
                 </div>
             </div>
         </div>
-    </div> 
-    
-    
-    
-    <div class="card">
-        <div class="card-content">
-            <h5><b>YOUR PRODUCTIVITY</b></h5>
-            <span>Last week</span>
-            <canvas id="myChart" width="400px" height="400px"></canvas>
-        </div>
-    </div> 
-   
-    <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["mo", "tu", "we", "thu", "fr", "sat", "sun"],
-                datasets: [{ 
-                    data: [86,114,106,106,107, 110, 100],
-                    label: "Karma",
-                    borderColor: "#e44332ff",
-                    fill: "origin"
-                  }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Stats'
-                }
-            }
-        });
-    </script>
-    
-    
-</div>
         
+    </div>
+    {% endfor %}
+    
+    
 </div></div>
     
+  
+<div id="modal1" class="modal">
+<div class="modal-content">
+<h4>Modal Header</h4>
+    
+</div>
+<div class="modal-footer">
+<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+</div>
+</div>
     
 </body>
      
@@ -235,6 +237,7 @@ $(document).ready(function(){
         startingTop: '0%', // Starting top style attribute
         endingTop: '0%' // Ending top style attribute
     });
+    $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $(".dropdown-button").dropdown({hover:true});
     build_stats();
@@ -243,28 +246,46 @@ $(document).ready(function(){
 function build_stats(){
     slid = $('.stats-slider > div');
     for (i = 0; i < slid.length; i++){
+        
         wid =  parseInt($(slid[i]).attr("data"));
-        if (wid < 0){
-            $(slid[i]).addClass("grad-minus");
+        $(slid[i]).animate({
+            "width": Math.abs(wid) + "%"
+        }, 1000);
+        $(slid[i]).css({
+            "width" : Math.abs(wid) + "%"
+        })
+        $(slid[i]).addClass("grad-plus");
+        
+    }
+}
 
-            $(slid[i]).animate({
-                "width": Math.abs(wid)/2 + "%"
-            }, 1000);
-            
-            $(slid[i]).css({
-                "width" : Math.abs(wid)/2 + "%",
-            })
+function open_problem_modal(id, e){
+    
+    $.get("/problem",{problem_id: id},onAjaxSuccess);
+    function onAjaxSuccess(data){
+        txt = new showdown.Converter({underline: true}).makeHtml(data);
+        txt = txt.split('&lt;&gt;');
+        newtext = '';
+        for (i = 0; i < txt.length; i++){
+            if (i % 2 != 0){
+                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div></div>';
+            }
+            else{
+                newtext += txt[i];
+            }
         }
-        else{
-            $(slid[i]).addClass("grad-plus");
-
-            $(slid[i]).animate({
-                "width" :  Math.abs(wid)/2 + "%",
-            })
-            $(slid[i]).css({
-                "width" :  Math.abs(wid)/2 + "%",
-            })
-        }
+        title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
+        text = title + newtext;
+        $('.modal-content').html(text);
+        $("#modal1").modal("open");
+        $('.tooltipped').tooltip({delay: 50});
+    }
+}
+function add_to_todoist(e){
+    text = e.parentElement.innerText;
+    $.get("/add_task",{text: text},onAjaxSuccess);
+    function onAjaxSuccess(data){
+        $(e).addClass('disabled');
     }
 }
 </script>
