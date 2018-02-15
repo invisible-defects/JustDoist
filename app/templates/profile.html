@@ -149,12 +149,22 @@
         bottom:0;
         left:0;
     }
-    .problem-card > div > span{
-        float:right;
-        font-weight: 600;
+    .card-content{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
+    .problem-card > div > span{
+        display: flex;
+        margin-left: auto;
+        padding-left:1rem;
+        font-weight: 600;
+        width:2rem;
+    }
+    
     .problem-card > div > p{
-        display: inline-block;
+        display: inline-flex;
+        flex:auto;
     }
     
 </style>
@@ -167,7 +177,7 @@
     <div class="col s4">
         <div class="card problem-card" onclick="open_problem_modal(2, this)">
             <div class="card-content">
-                <p>Проблема asdfasdfasd asdfa asdf a asd f/</p>
+                <p >Проблема asdfasdfasd asdfa asdf a asd f/</p>
                 <span>90%</span>
                 <div class="stats-slider">
                     <div data="90"></div>
