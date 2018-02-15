@@ -61,6 +61,7 @@ class ProblemProbability(db.Model):
     problem_num = db.Column(db.Integer)
     user_token = db.Column(db.String(128), db.ForeignKey('users.todoist_token'), primary_key=True)
     steps_completed = db.Column(db.Integer)
+    is_being_solved = db.Column(db.Boolean, default=False)
 
 
 @login.user_loader
