@@ -243,7 +243,7 @@ function open_problem_modal(id, e){
     
     $.get("problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
-        txt = new showdown.Converter({underline: true}).makeHtml(data[text]);
+        txt = new showdown.Converter({underline: true}).makeHtml(data);
         title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
         text = title + txt;
         $('.modal-content').html(text);
