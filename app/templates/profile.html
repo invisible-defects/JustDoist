@@ -78,6 +78,7 @@
             background: #dedede;
         }
         .stats-slider div{
+            width:0;
             display: block;
             height: 3px;
         }
@@ -257,8 +258,11 @@ function build_stats(){
     for (i = 0; i < slid.length; i++){
         
         wid =  parseInt($(slid[i]).attr("data"));
+        $(slid[i]).animate({
+            "width": Math.abs(wid) + "%"
+        }, 1000);
         $(slid[i]).css({
-            "width" : Math.abs(wid) + "%",
+            "width" : Math.abs(wid) + "%"
         })
         $(slid[i]).addClass("grad-plus");
         
