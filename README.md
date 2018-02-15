@@ -15,3 +15,6 @@ chmod a+x run.py
 cd JustDoist/
 flask/Scripts/python run.py
 ```
+
+**Start work**<br>
+Firstly login with your ToDoist.
