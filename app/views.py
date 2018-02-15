@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from .models import User, ProblemProbability, Problem
 from .oauth import OAuthSignIn
@@ -106,3 +106,9 @@ def profile(data):
 @app.route('/settings')
 def settings():
     return render_template('settings.html')
+
+
+@app.route('/problem')
+def problem():
+    prid = request.args('problem_id')
+    return Problem.query.filter_by(num=prid).first().steps
