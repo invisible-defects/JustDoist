@@ -219,6 +219,7 @@ $(document).ready(function(){
 //        startingTop: '0%', // Starting top style attribute
 //        endingTop: '0%' // Ending top style attribute
     });
+    $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $(".dropdown-button").dropdown({hover:true});
     build_stats();
@@ -250,7 +251,9 @@ function open_problem_modal(id, e){
         newtext = '';
         for (i = 0; i < txt.length; i++){
             if (i % 2 != 0){
-                newtext += '<div class="card-panel indigo lighten-5">' + txt[i] + '<button class="btn-floating waves-effect waves-light red"></button></div>';
+                newtext += '<div class="card-panel indigo lighten-5">' + txt[i] + 
+                + '<a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)><i class="material-icons">add</i></a>'+
+                + '</div>';
             }
             else{
                 newtext += txt[i];
@@ -261,6 +264,9 @@ function open_problem_modal(id, e){
         $('.modal-content').html(text);
         $("#modal1").modal("open");
     }
+}
+function add_to_todoist(e){
+    console.log(e.parentElement);
 }
 </script>
 </html>
