@@ -191,7 +191,7 @@
         flex:auto;
     }
     .modal{
-         overflow-y: visible !important; max-height: 100% !important; height: 100% !important; 
+         overflow-y: scroll !important; max-height: 100% !important; height: 100% !important; 
     }
 </style>
 <!--  Main  -->
@@ -234,8 +234,8 @@
 $(document).ready(function(){
     $('.modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
-//        startingTop: '0%', // Starting top style attribute
-//        endingTop: '0%' // Ending top style attribute
+        startingTop: '0%', // Starting top style attribute
+        endingTop: '0%' // Ending top style attribute
     });
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
