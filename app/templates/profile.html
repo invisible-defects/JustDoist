@@ -249,8 +249,8 @@ function open_problem_modal(id, e){
         console.log(txt);
         newtext = '';
         for (i = 0; i < txt.length; i++){
-            if (i / 2 != 0){
-                newtext += '<div class="card light-grey">' + txt[i] + '<button class="btn-floating red"></button></div>'
+            if (i % 2 != 0){
+                newtext += '<div class="card-panel indigo lighten-5">' + txt[i] + '<button class="btn-floating waves-effect waves-light red"></button></div>';
             }
             else{
                 newtext += txt[i];
