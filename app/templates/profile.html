@@ -239,25 +239,27 @@ function build_stats(){
         
     }
 }
+
 function open_problem_modal(id, e){
     
     $.get("/problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
         txt = new showdown.Converter({underline: true}).makeHtml(data);
-        while (true){
-            
-        }
-        txt = txt.split('<>'); 
+        txt = txt.split('&lt;&gt;');
         console.log(txt);
         newtext = '';
-//        for (i = 0; i < txt.length; i++){
-//            
-//        }
-//        
-//        title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
-//        text = title + txt;
-//        $('.modal-content').html(text);
-//        $("#modal1").modal("open");
+        for (i = 0; i < txt.length; i++){
+            if (i / 2 != 0){
+                newtext += '<div class="card light-grey">' + txt[i] + '<button class="btn-floating red"></button></div>'
+            }
+            else{
+                newtext += txt[i];
+            }
+        }
+        title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
+        text = title + newtext;
+        $('.modal-content').html(text);
+        $("#modal1").modal("open");
     }
 }
 </script>
