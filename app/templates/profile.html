@@ -190,6 +190,9 @@
         display: inline-flex;
         flex:auto;
     }
+    .modal{
+         overflow-y: visible !important; max-height: 100% !important; height: 100% !important; 
+    }
 </style>
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
@@ -265,7 +268,7 @@ function open_problem_modal(id, e){
         newtext = '';
         for (i = 0; i < txt.length; i++){
             if (i % 2 != 0){
-                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div></div>';
+                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div></div>';
             }
             else{
                 newtext += txt[i];
