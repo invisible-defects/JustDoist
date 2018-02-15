@@ -22,13 +22,15 @@ def index():
         return redirect(url_for('login'))
 
     problem_q = current_user.get_problem()
+    butt = True
 
     if problem_q is None:
         problem = "No problems for you!\nCome back later."
+        butt = False
     else:
         problem = problem_q.body
 
-    return render_template('index.html', problem_text=problem)
+    return render_template('index.html', problem_text=problem, butt=butt)
 
 
 # Start login page w button
