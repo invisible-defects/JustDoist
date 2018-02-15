@@ -111,5 +111,10 @@ def settings():
 
 @app.route('/problem')
 def problem():
-    prid = request.args('problem_id')
-    return Problem.query.filter_by(num=prid).first().steps
+    prid = request.args.get('problem_id')
+    return Problem.query.filter_by(num=prid).first().steps.replace("*", "")
+
+
+@app.route('/add_task')
+def add_task():
+    task_text = request.args.get('text')
