@@ -1,7 +1,9 @@
-from .doist import has_preferred_tasks, does_use_regullary
+from .problems import has_preferred_tasks, does_use_regularly
+
 
 def get_combined_problems(api):
-    problems = dict()
+    problems_dict = dict()
+    problems_dict[2] = has_preferred_tasks(api)
+    problems_dict[3] = does_use_regularly(api)
 
-    problems[2] = has_preferred_tasks(api)
-    problems[3] = does_use_regullary(api)
+    return problems_dict

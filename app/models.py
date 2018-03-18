@@ -1,10 +1,8 @@
 from app import db, login
 import todoist
+import datetime
 from flask_login import UserMixin
-
-
-def parser(problem_num, todoist_api):
-    return 0
+from parser import get_combined_problems
 
 
 class User(UserMixin, db.Model):
@@ -14,30 +12,43 @@ class User(UserMixin, db.Model):
     problems = db.relationship('ProblemProbability', backref='owner', lazy='dynamic')
     last_problem_shown = db.Column(db.DateTime())
 
-    possible_problems = [1, 2, 3, 4]
+    possible_problems = [2, 3]
 
     def link_todoist(self, api_key):
         self.todoist_token = api_key
 
     def check_todoist(self):
         api = todoist.TodoistAPI(self.todoist_token)
-        if api.sync()['http_code'] == 200:
+        data = api.sync()
+        if 'sync_token' in data:
             return True
         else:
             return False
 
     def get_problem(self):
+        if self.last_problem_shown is not None:
+            delta = datetime.datetime.now() - self.last_problem_shown
+            if delta.days < 1:
+                return {'status': 'time', 'problem': None}
+
+        self.count_probabilities()
+
         problem = ProblemProbability.query.filter_by(
             user_token=self.todoist_token).filter_by(is_being_solved=False).order_by(
             ProblemProbability.val.desc()).first()
-        return problem
+        if problem is None:
+            return {'status': 'no', 'problem': None}
+        if problem.val < 0.3:
+            return {'status': 'no', 'problem': None}
+        return {'status': 'ok','problem':problem}
 
     def count_probabilities(self):
         if not self.check_todoist():
             return False
         api = todoist.TodoistAPI(self.todoist_token)
+        data = get_combined_problems(api)
         for problem in self.possible_problems:
-            val = parser(problem, api)
+            val = data[problem]
             prob = ProblemProbability(val=val, problem_num=problem, user_token=self.todoist_token, steps_completed=0)
             db.session.add(prob)
             db.session.commit()
@@ -61,6 +72,9 @@ class Problem(db.Model):
     steps = db.Column(db.String(10000))
     steps_num = db.Column(db.Integer)
 
+    def __repr__(self):
+        return '<Problem {} "{}">'.format(self.num, self.title)
+
 
 class ProblemProbability(db.Model):
     __tablename__ = 'problem_probability'
@@ -70,6 +84,9 @@ class ProblemProbability(db.Model):
     user_token = db.Column(db.String(128), db.ForeignKey('users.todoist_token'))
     steps_completed = db.Column(db.Integer)
     is_being_solved = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<ProblemProbability {} {}%>'.format(self.problem_num, self.val*100)
 
 
 @login.user_loader

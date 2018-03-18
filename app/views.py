@@ -1,4 +1,5 @@
 from app import app, db
+import datetime
 from flask import render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from .models import User, ProblemProbability, Problem
@@ -24,11 +25,14 @@ def index():
     problem_q = current_user.get_problem()
     butt = True
 
-    if problem_q is None:
-        problem = "No problems for you!\nCome back later."
+    if problem_q['status'] == 'no':
+        problem = "Seems like you have no problems now.\nHooray!"
+        butt = False
+    elif problem_q['status'] == 'time':
+        problem = "Come back tomorrow for more advice!\nYou can work on your current problems now."
         butt = False
     else:
-        prob_raw = Problem.query.filter_by(num=problem_q.problem_num).first()
+        prob_raw = Problem.query.filter_by(num=problem_q['problem'].problem_num).first()
         problem = prob_raw.body
 
     return render_template('index.html', problem_text=problem, butt=butt)
@@ -88,9 +92,11 @@ def logout():
 @app.route('/profile/<data>')
 def profile(data):
     if data == 'add':
-        pr = current_user.get_problem()
+        pr = current_user.get_problem()['problem']
         pr.is_being_solved = True
+        current_user.last_problem_shown = datetime.datetime.now()
         db.session.add(pr)
+        db.session.add(current_user)
         db.session.commit()
     problem_probs = ProblemProbability.query.filter_by(user_token=current_user.todoist_token, is_being_solved=True)
     problems = []
