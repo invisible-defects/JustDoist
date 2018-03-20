@@ -2,7 +2,7 @@ from app import db, login
 import todoist
 import datetime
 from flask_login import UserMixin
-from ..parser import get_combined_problems
+from .. import parser
 
 
 class User(UserMixin, db.Model):
@@ -48,7 +48,7 @@ class User(UserMixin, db.Model):
         if not self.check_todoist():
             return False
         api = todoist.TodoistAPI(self.todoist_token)
-        data = get_combined_problems(api)
+        data = parser.get_combined_problems(api)
         for problem in self.possible_problems:
             val = data[problem]
             prob = ProblemProbability.query.filter_by(problem_num=problem).first()
