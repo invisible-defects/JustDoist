@@ -2,7 +2,13 @@ from dateutil import parser
 
 
 def has_preferred_tasks(api):
-    return int(max([item["priority"] for item in api.items.all()]) != 1)
+    max_prior = 1
+    for item in api.items.all():
+        try:
+            max_prior = max(int(item['priority']), max_prior)
+        except KeyError:
+            continue
+    return max_prior != 1
 
 
 def does_use_regularly(api):

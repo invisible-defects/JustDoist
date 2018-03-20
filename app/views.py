@@ -26,7 +26,7 @@ def index():
     butt = True
 
     if problem_q['status'] == 'no':
-        problem = "Seems like you have no problems now.\nHooray!"
+        problem = "Seems like you have no problems now.\nHooray!\nCome back later."
         butt = False
     elif problem_q['status'] == 'time':
         problem = "Come back tomorrow for more advice!\nYou can work on your current problems now."

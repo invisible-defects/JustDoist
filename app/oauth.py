@@ -47,7 +47,7 @@ class TodoistSignIn(OAuthSignIn):
 
     def authorize(self):
         return redirect(self.service.get_authorize_url(
-            scope='task:add,data:read',
+            scope='data:read_write',
             response_type='code',
             redirect_uri=self.get_callback_url())
         )

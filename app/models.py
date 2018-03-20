@@ -2,7 +2,7 @@ from app import db, login
 import todoist
 import datetime
 from flask_login import UserMixin
-from parser import get_combined_problems
+from ..parser import get_combined_problems
 
 
 class User(UserMixin, db.Model):
@@ -11,6 +11,7 @@ class User(UserMixin, db.Model):
     todoist_token = db.Column(db.String(128))
     problems = db.relationship('ProblemProbability', backref='owner', lazy='dynamic')
     last_problem_shown = db.Column(db.DateTime())
+    inbox_id = None
 
     possible_problems = [2, 3]
 
@@ -36,6 +37,7 @@ class User(UserMixin, db.Model):
         problem = ProblemProbability.query.filter_by(
             user_token=self.todoist_token).filter_by(is_being_solved=False).order_by(
             ProblemProbability.val.desc()).first()
+
         if problem is None:
             return {'status': 'no', 'problem': None}
         if problem.val < 0.3:
@@ -49,15 +51,25 @@ class User(UserMixin, db.Model):
         data = get_combined_problems(api)
         for problem in self.possible_problems:
             val = data[problem]
-            prob = ProblemProbability(val=val, problem_num=problem, user_token=self.todoist_token, steps_completed=0)
+            prob = ProblemProbability.query.filter_by(problem_num=problem).first()
+            if prob is None:
+                prob = ProblemProbability(val=val, problem_num=problem, user_token=self.todoist_token,
+                                          steps_completed=0)
             db.session.add(prob)
             db.session.commit()
+
+    def get_inbox_id(self, api):
+        if self.inbox_id is not None:
+            return self.inbox_id
+        for project in api.state['projects']:
+            if project['inbox_project']:
+                return project['id']
 
     def add_problem(self, text):
         if not self.check_todoist():
             return False
         api = todoist.TodoistAPI(self.todoist_token)
-        item = api.items.add(text)
+        item = api.items.add(text, self.get_inbox_id(api))
         api.commit()
 
     def __repr__(self):
