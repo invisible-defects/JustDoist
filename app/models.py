@@ -68,9 +68,13 @@ class User(UserMixin, db.Model):
             if project['inbox_project']:
                 return project['id']
 
-    def add_problem(self, text):
+    def add_problem(self, text, pr_id):
         if not self.check_todoist():
             return False
+        prob = ProblemProbability.query(user_token=self.todoist_token).query(problem_num=pr_id).first()
+        prob.steps_completed += 1
+        db.session.add(prob)
+        db.session.commit()
         api = todoist.TodoistAPI(self.todoist_token)
         item = api.items.add(text, self.get_inbox_id(api))
         api.commit()

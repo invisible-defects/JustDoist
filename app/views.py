@@ -103,9 +103,9 @@ def profile(data):
     for prob in problem_probs:
         prob_raw = Problem.query.filter_by(num=prob.problem_num).first()
         problems.append(
-            {'title' : prob_raw.title,
-             'percantage' : int(int(prob.steps_completed)/int(prob_raw.steps_num)*100),
-             'id' : prob.problem_num}
+            {'title': prob_raw.title,
+             'percantage': int(int(prob.steps_completed)/int(prob_raw.steps_num)*100),
+             'id': prob.problem_num}
         )
     return render_template('profile.html', probs=problems)
 
@@ -124,5 +124,6 @@ def problem():
 @app.route('/add_task')
 def add_task():
     task_text = request.args.get('text')
-    current_user.add_problem(task_text)
+    task_id = request.args.get('id')
+    current_user.add_problem(task_text, task_id)
     return "true"
