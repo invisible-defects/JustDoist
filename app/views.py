@@ -104,7 +104,7 @@ def profile(data):
         prob_raw = Problem.query.filter_by(num=prob.problem_num).first()
         problems.append(
             {'title': prob_raw.title,
-             'percantage': int(int(prob.steps_completed)/int(prob_raw.steps_num)*100),
+             'percantage': min(int(int(prob.steps_completed)/int(prob_raw.steps_num)*100), 100),
              'id': prob.problem_num}
         )
     return render_template('profile.html', probs=problems)

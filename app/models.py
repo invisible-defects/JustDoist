@@ -73,7 +73,7 @@ class User(UserMixin, db.Model):
         if not self.check_todoist():
             return False
         
-        prob = ProblemProbability.query(user_token=self.todoist_token).query(problem_num=pr_id).first()
+        prob = ProblemProbability.query.filter_by(user_token=self.todoist_token).filter_by(problem_num=pr_id).first()
         prob.steps_completed += 1
         db.session.add(prob)
         db.session.commit()
