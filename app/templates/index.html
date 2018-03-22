@@ -199,25 +199,44 @@
     </div> 
    
     <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["mo", "tu", "we", "thu", "fr", "sat", "sun"],
-                datasets: [{ 
-                    data: [86,114,106,106,107, 110, 100],
-                    label: "Karma",
-                    borderColor: "#e44332ff",
-                    fill: "origin"
-                  }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Stats'
-                }
-            }
+        $.ajax({
+              url: '/statistics',
+              type: "GET",
+              async: true,
+              success: onAjaxSuccess,
+              error: function(jqXHR, exception) {alert(jqXHR);}
         });
+        function onAjaxSuccess(data){
+            data = JSON.parse(data)["graph"];
+            var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
+            var day = new Date().getDay();
+            f_part = week.slice(0, day);
+            s_part = week.slice(day-7);
+            week_labels = s_part.concat(f_part);
+
+            stats = [];
+            for (i of data){
+                stats.push(i.karma_avg)
+            }
+
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: week_labels,
+                    datasets: [{
+                        data: stats,
+                        label: "Karma",
+                        borderColor: "#e44332ff",
+                        fill: "origin"
+                      }]
+                },
+                options: {
+                    title: {display: true},
+                    legend: {display:false}
+                }
+            });
+        }
     </script>
     
     
