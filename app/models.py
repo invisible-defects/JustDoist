@@ -1,12 +1,9 @@
-from app import db, login
-import todoist
 import datetime
+
+import todoist
 from flask_login import UserMixin
 
-import sys
-sys.path.append('../')
-import parser
-
+from app import db, login, parser
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -17,6 +14,10 @@ class User(UserMixin, db.Model):
     inbox_id = None
 
     possible_problems = [2, 3]
+
+    def get_stats(self):
+        api = todoist.TodoistAPI(self.todoist_token)
+        return parser.get_stats(api)
 
     def link_todoist(self, api_key):
         self.todoist_token = api_key

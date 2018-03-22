@@ -13,3 +13,7 @@ def has_preferred_tasks(api):
 
 def does_use_regularly(api):
     return int(sum(map(lambda x: x['total_completed'], api.completed.get_stats()['days_items'])) < 7)
+
+
+def is_premium(api):
+    return api.user.get()["is_premium"]

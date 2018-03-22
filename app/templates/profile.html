@@ -107,6 +107,7 @@
                 margin:0 !important;
             }
         }
+
         .dropdown-top{
             overflow: hidden;
             margin-top: 65px !important;
@@ -268,8 +269,9 @@ function open_problem_modal(id, e){
         newtext = '';
         for (i = 0; i < txt.length; i++){
             if (i % 2 != 0){
-                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this)"><i class="material-icons">add</i></a></div></div>';
+                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this, id)"><i class="material-icons">add</i></a></div></div>';
             }
+
             else{
                 newtext += txt[i];
             }
@@ -281,12 +283,18 @@ function open_problem_modal(id, e){
         $('.tooltipped').tooltip({delay: 50});
     }
 }
-function add_to_todoist(e){
-    text = e.parentElement.innerText;
-    $.get("/add_task",{text: text},onAjaxSuccess);
-    function onAjaxSuccess(data){
-        $(e).addClass('disabled');
-    }
+function add_to_todoist(e, id){
+    text = e.parentElement.previousSibling.innerText;
+    console.log(e.parentElement.previousSibling.innerText);
+    $(e).addClass('scale-out');
+    $.ajax({
+          url: '/add_task',
+          data: {text: text, id: id},
+          type: "GET",
+          async: true,
+          success: onAjaxSuccess,
+          error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);}
+    });
 }
 </script>
 </html>
