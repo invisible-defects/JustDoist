@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from .models import User, ProblemProbability, Problem
 from .oauth import OAuthSignIn
-
+import json
 
 DEBUG = True
 
@@ -127,3 +127,8 @@ def add_task():
     task_id = request.args.get('id')
     current_user.add_problem(task_text, task_id)
     return "true"
+
+@app.route('/statistics')
+def statistics():
+    stats = current_user.get_stats()
+    return json.dumps(stats)
