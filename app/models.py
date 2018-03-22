@@ -2,7 +2,10 @@ from app import db, login
 import todoist
 import datetime
 from flask_login import UserMixin
-from .. import parser
+
+import sys
+sys.path.append('../')
+import parser
 
 
 class User(UserMixin, db.Model):
