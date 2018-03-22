@@ -72,6 +72,7 @@ class User(UserMixin, db.Model):
     def add_problem(self, text, pr_id):
         if not self.check_todoist():
             return False
+        
         prob = ProblemProbability.query(user_token=self.todoist_token).query(problem_num=pr_id).first()
         prob.steps_completed += 1
         db.session.add(prob)

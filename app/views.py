@@ -114,6 +114,10 @@ def profile(data):
 def settings():
     return render_template('settings.html')
 
+@app.route('/contact_us')
+def contact_us():
+    return render_template('contact_us.html')
+
 
 @app.route('/problem')
 def problem():

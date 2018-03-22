@@ -7,8 +7,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
-        <script src="../static/js/showdown.min.js"></script>
-        <script src="../static/js/Chart.min.js"></script>
 
 </head>
 
@@ -140,11 +138,11 @@
 <div class="nav-wrapper red">
   <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
   <ul class="right">
-    <li><a href="../index"><i class="material-icons left">description</i>PROBLEMS</a></li>
-    <li><a href="." class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
+    <li><a href="index"><i class="material-icons left">description</i>PROBLEMS</a></li>
+    <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
 <!--    <li><a href="../settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
-    <li><a href="../contact_us"><i class="material-icons left">contacts</i>CONTACT US</a></li>
-    <li><a href="../logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a href="." class="active"><i class="material-icons left">contacts</i>CONTACT US</a></li>
+    <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
 </div>
 </nav>
@@ -199,36 +197,9 @@
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
     <div class="col s12">
-        <h4>Progress</h4>
+        <h4>Contact us</h4>
     </div>
-    {% for problem in probs %}
-    <div class="col s4">
-        <div class="card problem-card" onclick="open_problem_modal({{problem['id']}}, this)">
-            <div class="card-content">
-                <p >{{problem['title']}}</p>
-                <span>{{problem['percantage']}}%</span>
-                <div class="stats-slider">
-                    <div data="{{problem['percantage']}}"></div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    {% endfor %}
-    
-    
 </div></div>
-    
-  
-<div id="modal1" class="modal">
-<div class="modal-content">
-<h4>Modal Header</h4>
-    
-</div>
-<div class="modal-footer">
-<a href="#!" class="modal-action modal-close waves-effect waves-light red btn">OK</a>
-</div>
-</div>
     
 </body>
      
@@ -242,59 +213,6 @@ $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $(".dropdown-button").dropdown({hover:true});
-    build_stats();
-    
 });
-function build_stats(){
-    slid = $('.stats-slider > div');
-    for (i = 0; i < slid.length; i++){
-        
-        wid =  parseInt($(slid[i]).attr("data"));
-        $(slid[i]).animate({
-            "width": Math.abs(wid) + "%"
-        }, 1000);
-        $(slid[i]).css({
-            "width" : Math.abs(wid) + "%"
-        })
-        $(slid[i]).addClass("grad-plus");
-        
-    }
-}
-
-function open_problem_modal(id, e){
-    
-    $.get("/problem",{problem_id: id},onAjaxSuccess);
-    function onAjaxSuccess(data){
-        txt = new showdown.Converter({underline: true}).makeHtml(data);
-        txt = txt.split('&lt;&gt;');
-        newtext = '';
-        for (i = 0; i < txt.length; i++){
-            if (i % 2 != 0){
-                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ id + ')"><i class="material-icons">add</i></a></div></div>';
-            }
-
-            else{
-                newtext += txt[i];
-            }
-        }
-        title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
-        text = title + newtext;
-        $('.modal-content').html(text);
-        $("#modal1").modal("open");
-        $('.tooltipped').tooltip({delay: 50});
-    }
-}
-function add_to_todoist(e, id){
-    text = e.parentElement.previousSibling.innerText;
-    console.log(e.parentElement.previousSibling.innerText);
-    $(e).addClass('scale-out');
-    $.ajax({
-          url: '/add_task',
-          data: {text: text, id: id},
-          type: "GET",
-          async: true,
-          error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);}
-    });
-}
 </script>
 </html>
