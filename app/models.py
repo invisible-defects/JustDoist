@@ -36,11 +36,16 @@ class User(UserMixin, db.Model):
             if delta.days < 1:
                 return {'status': 'time', 'problem': None}
 
-        self.count_probabilities()
-
         problem = ProblemProbability.query.filter_by(
             user_token=self.todoist_token).filter_by(is_being_solved=False).order_by(
             ProblemProbability.val.desc()).first()
+
+        if problem is None or problem.val < 0.3:
+            self.count_probabilities()
+            problem = ProblemProbability.query.filter_by(
+                user_token=self.todoist_token).filter_by(is_being_solved=False).order_by(
+                ProblemProbability.val.desc()).first()
+
 
         if problem is None:
             return {'status': 'no', 'problem': None}
