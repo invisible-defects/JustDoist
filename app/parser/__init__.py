@@ -12,6 +12,11 @@ def get_combined_problems(api):
 def get_stats(api):
     statistics = api.completed.get_stats()
     stats_for_graph = statistics["karma_graph_data"]
+    if(stats_for_graph[-1]["karma_avg"] < stats_for_graph[0]["karma_avg"]):
+        stats_linear_graph = int(int(stats_for_graph[-1]["karma_avg"])/int(stats_for_graph[0]["karma_avg"])*100) * (-1)
+    else:
+        stats_linear_graph = int(int(stats_for_graph[0]["karma_avg"]) / int(stats_for_graph[-1]["karma_avg"]) * 100)
+
     stats_for_linear_graph_completed = sum(map(lambda x: x['total_completed'], statistics["days_items"]))
     
-    return {"graph": stats_for_graph}
+    return {"graph": stats_for_graph, "percentage": stats_linear_graph}

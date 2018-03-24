@@ -34,8 +34,8 @@ def index():
     else:
         prob_raw = Problem.query.filter_by(num=problem_q['problem'].problem_num).first()
         problem = prob_raw.body
-
-    return render_template('index.html', problem_text=problem, butt=butt)
+    stats = current_user.get_stats()["percentage"]
+    return render_template('index.html', problem_text=problem, butt=butt, percentage=stats)
 
 
 # Start login page w button
@@ -107,6 +107,7 @@ def profile(data):
              'percantage': min(int(int(prob.steps_completed)/int(prob_raw.steps_num)*100), 100),
              'id': prob.problem_num}
         )
+
     return render_template('profile.html', probs=problems)
 
 
