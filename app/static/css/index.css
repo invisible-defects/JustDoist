@@ -1,0 +1,173 @@
+@font-face {
+    font-family: 'Unica One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Unica One'), local('UnicaOne-Regular'), url(https://fonts.gstatic.com/s/unicaone/v5/DPEuYwWHyAYGVTSmalsRf93eiEY.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+    font-family: 'Unica One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Unica One'), local('UnicaOne-Regular'), url(https://fonts.gstatic.com/s/unicaone/v5/DPEuYwWHyAYGVTSmalsRcd3e.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.red{
+    background: #e44332ff !important;
+}
+
+h4,h5{
+    font-family: 'Unica One', cursive;
+    text-transform: uppercase;
+}
+nav > div > ul > li > .active{
+    border-bottom: 1.5px solid white;
+    margin-top: -1.5px;
+}
+nav  a{
+    font-family: 'Unica One', cursive;
+}
+nav a img{
+    display: inline-flex;
+    height: 2.6rem;
+    flex: auto;
+    margin: 0 0.2rem;
+    margin-top:-0.6rem;
+}
+nav > div > a{ 
+    font-weight: 400 !important;
+    text-transform: uppercase;
+    display: flex !important;
+    align-content: center;
+    align-items: center;
+    text-align: justify;
+    justify-content: center; 
+    font-size: 3rem !important;
+}
+.nav-wrapper{
+    max-width: 85%;
+    margin: 0 auto;
+}
+.stats-crytery{
+    margin: 1rem 0;
+}
+.stats-crytery > a{
+    color:black;
+}
+.stats-crytery > a > span{
+    color:black;
+    font-weight: 600;
+}
+.stats-crytery > a > p{
+    display: inline-block;
+    float: right;
+    text-align: right;
+    color:black;
+    font-weight: 600;
+}
+.stats-slider{
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #dedede;
+}
+.stats-slider div{
+    width:0;
+    display: block;
+    height: 3px;
+}
+.grad-plus{
+    background: rgb(125,185,232);
+    background: -moz-linear-gradient(left, rgb(125,185,232) 0%, rgb(45,229,52) 99%);
+    background: -webkit-linear-gradient(left, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
+    background: linear-gradient(to right, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
+}
+.grad-minus{
+    float: right;
+    background: rgb(235,87,87);
+    background: -moz-linear-gradient(left, rgb(235,87,87) 0%, rgb(242,153,74) 100%);
+    background: -webkit-linear-gradient(left, rgb(235,87,87) 0%,rgb(242,153,74) 100%); 
+    background: linear-gradient(to right, rgb(235,87,87) 0%,rgb(242,153,74) 100%);
+}
+#problem-text p{
+    margin: 1rem 0;
+    font-size: 1.3rem;
+}
+#problem-text p u{
+    text-decoration: none;
+    font-style: italic;
+    margin: 1rem 0;
+}
+@media only screen and (max-width: 992px){
+    nav .brand-logo.left {
+        margin:0 !important;
+    }
+}
+
+.dropdown-top{
+    overflow: hidden;
+    margin-top: 65px !important;
+}
+.dropdown-top > li{
+    color: black;
+}
+.problem-card{
+    transition: 0.3s;
+}
+.problem-card:hover{
+    transition: 0.3s;
+    transform: translateY(1px);
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);
+    cursor:pointer;
+}
+
+
+
+
+.stats-slider{
+    position:absolute;
+    bottom:0;
+    left:0;
+}
+.card-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.problem-card > div > span{
+    display: flex;
+    margin-left: auto;
+    padding-left:1rem;
+    font-weight: 600;
+    width:2rem;
+}
+
+.problem-card > div > p{
+    display: inline-flex;
+    flex:auto;
+}
+.card-panel{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.
+.card-panel > div{
+    width:3rem;
+    display: flex;
+    margin-left: auto;
+}
+.card-panel > div > a{
+    display: flex !important;
+    margin-left: auto;
+}
+
+.card-panel  > p{
+    display: inline-flex;
+    flex:auto;
+}
+.modal{
+     overflow-y: scroll !important; max-height: 100% !important; height: 100% !important; 
+}

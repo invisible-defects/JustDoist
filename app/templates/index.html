@@ -2,6 +2,7 @@
 <head>
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="../static/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -9,114 +10,11 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <script src="../static/js/showdown.min.js"></script>
 <script src="../static/js/Chart.min.js"></script>
+<link rel="icon" href="../static/img/logo.png">
 
 </head>
 
 <body id="content">
-    <style>
-        
-        @import url('https://fonts.googleapis.com/css?family=Unica+One');
-        .red{
-            background: #e44332ff !important;
-        }
-        
-        h4,h5{
-            font-family: 'Unica One', cursive;
-        }
-        nav > div > ul > li > .active{
-            border-bottom: 1.5px solid white;
-            margin-top: -1.5px;
-        }
-        nav  a{
-            font-family: 'Unica One', cursive;
-        }
-        nav a img{
-            display: inline-flex;
-            height: 2.6rem;
-            flex: auto;
-            margin: 0 0.2rem;
-            margin-top:-0.6rem;
-        }
-        nav > div > a{ 
-            font-weight: 400 !important;
-            text-transform: uppercase;
-            display: flex !important;
-            align-content: center;
-            align-items: center;
-            text-align: justify;
-            justify-content: center; 
-            font-size: 3rem !important;
-        }
-        .nav-wrapper{
-            max-width: 85%;
-            margin: 0 auto;
-        }
-        .stats-crytery{
-            margin: 1rem 0;
-        }
-        .stats-crytery > a{
-            color:black;
-        }
-        .stats-crytery > a > span{
-            color:black;
-            font-weight: 600;
-        }
-        .stats-crytery > a > p{
-            display: inline-block;
-            float: right;
-            text-align: right;
-            color:black;
-            font-weight: 600;
-        }
-        .stats-slider{
-            display: block;
-            width: 100%;
-            height: 3px;
-            background: #dedede;
-        }
-        .stats-slider div{
-            display: block;
-            height: 3px;
-            width:0;
-        }
-        .grad-plus{
-            margin-left:50%;
-            background: rgb(125,185,232);
-            background: -moz-linear-gradient(left, rgb(125,185,232) 0%, rgb(45,229,52) 99%);
-            background: -webkit-linear-gradient(left, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
-            background: linear-gradient(to right, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
-        }
-        .grad-minus{
-            margin-right:50%;
-            
-            float: right;
-            background: rgb(235,87,87);
-            background: -moz-linear-gradient(left, rgb(235,87,87) 0%, rgb(242,153,74) 100%);
-            background: -webkit-linear-gradient(left, rgb(235,87,87) 0%,rgb(242,153,74) 100%); 
-            background: linear-gradient(to right, rgb(235,87,87) 0%,rgb(242,153,74) 100%);
-        }
-        #problem-text p{
-            margin: 1rem 0;
-            font-size: 1.3rem;
-        }
-        #problem-text p u{
-            text-decoration: none;
-            font-style: italic;
-            margin: 1rem 0;
-        }
-        @media only screen and (max-width: 992px){
-            nav .brand-logo.left {
-                margin:0 !important;
-            }
-        }
-        .dropdown-top{
-            overflow: hidden;
-            margin-top: 65px !important;
-        }
-        .dropdown-top > li{
-            color: black;
-        }
-    </style>
 <!--  Menu  -->
 <!--
 
@@ -130,9 +28,9 @@
 -->
 <nav class="red">
 <div class="nav-wrapper red">
-  <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
+  <a href="" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
   <ul class="right">
-    <li><a href="index" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
+    <li><a href="" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
 <!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
     <li><a href="contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
@@ -152,7 +50,7 @@
             <div id="problem-text"></div>
 <!--            TODO            -->
             {% if butt %}
-            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="document.location='profile/add'">Do It!</button>
+            <button type="button" class="waves-effect waves-light btn red pulse" style="margin-left: auto;display: block;" onclick="redirect_on_add();">Do It!</button>
             {% endif %}
         </div>
     </div> 
@@ -164,30 +62,19 @@
 </div>
     
 <div class="col s12 l5">
-    <!--<div class="card">-->
-        <!--<div class="card-content">-->
-            <!--<h5><b>YOUR STATISTICS</b></h5>-->
-            <!--<span>Last week</span>-->
-            <!--<div class="stats-crytery">-->
-                <!--<a>You comleted <span>99</span> tasks <p>+10%</p></a>-->
-                <!--<div class="stats-slider">-->
-                    <!--<div data="10"></div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="stats-crytery">-->
-                <!--<a>You postponed <span>99</span> tasks <p>-70%</p></a>-->
-                <!--<div class="stats-slider">-->
-                    <!--<div data="-70"></div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="stats-crytery">-->
-                <!--<a>You missed <span>99</span> deadlines <p>-10%</p></a>-->
-                <!--<div class="stats-slider">-->
-                    <!--<div data="-10"></div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div> -->
+    <div class="card">
+        <div class="card-content">
+            <h5><b>YOUR STATISTICS</b></h5>
+            <span>Last week</span>
+            <div class="stats-crytery">
+                <a>Your karma <p>+10%</p></a>
+                <div class="stats-slider">
+                    <div data="10"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
     
     
     
@@ -200,12 +87,13 @@
     </div> 
    
     <script>
+        
         $.ajax({
               url: '/statistics',
               type: "GET",
               async: true,
               success: onAjaxSuccess,
-              error: function(jqXHR, exception) {alert(jqXHR);}
+              error: function(jqXHR, exception) {console.log(jqXHR);}
         });
         function onAjaxSuccess(data){
             data = JSON.parse(data)["graph"];
@@ -237,6 +125,18 @@
                     legend: {display:false}
                 }
             });
+        }
+        function redirect_on_add(){
+            $.ajax({
+              url: 'profile/add',
+              type: "GET",
+              async: true,
+              success: onAjaxSuccess,
+              error: function(jqXHR, exception) {alert(jqXHR);}
+            });
+            function onAjaxSuccess(){
+                document.loaction="profile/no_add";
+            }
         }
     </script>
     
