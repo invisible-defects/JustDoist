@@ -67,9 +67,9 @@
             <h5><b>YOUR STATISTICS</b></h5>
             <span>Last week</span>
             <div class="stats-crytery">
-                <a>Your karma <p>{{percentage}}%</p></a>
+                <a>Your karma <p>{{stats["percentage"]}}%</p></a>
                 <div class="stats-slider">
-                    <div data="{{percentage}}"></div>
+                    <div data="{{stats["percentage"]}}"></div>
                 </div>
             </div>
 
@@ -96,18 +96,14 @@
               error: function(jqXHR, exception) {console.log(jqXHR);}
         });
         function onAjaxSuccess(data){
+
             data = JSON.parse(data)["graph"];
             var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
             var day = new Date().getDay();
             f_part = week.slice(0, day);
             s_part = week.slice(day-7);
             week_labels = s_part.concat(f_part);
-            
-            
-            stats = [];
-            for (i of data){
-                stats.push(i.karma_avg)
-            }
+
 
             var ctx = document.getElementById("myChart").getContext('2d');
             var myLineChart = new Chart(ctx, {
@@ -115,7 +111,7 @@
                 data: {
                     labels: week_labels,
                     datasets: [{
-                        data: stats,
+                        data: {{stats["graph"]}},
                         label: "Karma",
                         borderColor: "#e44332ff",
                         fill: "origin"
