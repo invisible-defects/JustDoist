@@ -18,5 +18,7 @@ def get_stats(api):
         stats_linear_graph = int(int(stats_for_graph[0]["karma_avg"]) / int(stats_for_graph[-1]["karma_avg"]) * 100)
 
     stats_for_linear_graph_completed = sum(map(lambda x: x['total_completed'], statistics["days_items"]))
-    
-    return {"graph": stats_for_graph, "percentage": stats_linear_graph}
+    stats_for_graph_optimized = []
+    for i in stats_for_graph:
+        stats_for_graph_optimized.append(i["karma_avg"])
+    return {"graph": stats_for_graph_optimized, "percentage": stats_linear_graph}

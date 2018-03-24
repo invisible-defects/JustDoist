@@ -34,8 +34,9 @@ def index():
     else:
         prob_raw = Problem.query.filter_by(num=problem_q['problem'].problem_num).first()
         problem = prob_raw.body
-    stats = current_user.get_stats()["percentage"]
-    return render_template('index.html', problem_text=problem, butt=butt, percentage=stats)
+    stats = current_user.get_stats()
+    
+    return render_template('index.html', problem_text=problem, butt=butt, stats=stats)
 
 
 # Start login page w button
