@@ -63,10 +63,12 @@ class User(UserMixin, db.Model):
         data = parser.get_combined_problems(api)
         for problem in self.possible_problems:
             val = data[problem]
-            prob = ProblemProbability.query.filter_by(problem_num=problem).first()
+            prob = ProblemProbability.query.filter_by(problem_num=problem).filter_by(
+                user_token=self.todoist_token).first() 
             if prob is None:
                 prob = ProblemProbability(val=val, problem_num=problem, user_token=self.todoist_token,
                                           steps_completed=0)
+            # TODO: Add probability upd on every call
             db.session.add(prob)
             db.session.commit()
 
@@ -80,7 +82,6 @@ class User(UserMixin, db.Model):
     def add_problem(self, text, pr_id):
         if not self.check_todoist():
             return False
-        
         prob = ProblemProbability.query.filter_by(user_token=self.todoist_token).filter_by(problem_num=pr_id).first()
         prob.steps_completed += 1
         db.session.add(prob)

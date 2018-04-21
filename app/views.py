@@ -6,6 +6,7 @@ from .models import User, ProblemProbability, Problem
 from .oauth import OAuthSignIn
 import json
 
+
 DEBUG = True
 
 
@@ -26,6 +27,7 @@ def before_request():
         code = 301
         return redirect(url, code=code)
     
+    
 @app.after_request
 def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -35,14 +37,21 @@ def add_header(r):
     return r
 
 
+# Decorator for pages which need autorization
+def authorized_page(view_func):
+    def new_func(self, *args, **kwargs):
+        if current_user.is_anonymous:
+            alert('anonymous trying to go index!')
+            return redirect(url_for('login'))
+        return view_func(self, *args, **kwargs)
+    return new_func
+
+
 # Main (problems) page
 @app.route('/')
 @app.route('/index')
+@authorized_page
 def index():
-    if current_user.is_anonymous:
-        print('anonymous trying to go index!')
-        return redirect(url_for('login'))
-
     problem_q = current_user.get_problem()
     butt = True
 
@@ -105,6 +114,7 @@ def oauth_callback(provider):
 
 
 @app.route('/logout')
+@authorized_page
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -112,6 +122,7 @@ def logout():
 
 # "My problems" page
 @app.route('/profile/<data>')
+@authorized_page
 def profile(data):
     if data == 'add':
         pr = current_user.get_problem()['problem']
@@ -134,10 +145,13 @@ def profile(data):
 
 
 @app.route('/settings')
+@authorized_page
 def settings():
     return render_template('settings.html')
 
+
 @app.route('/contact_us')
+@authorized_page
 def contact_us():
     return render_template('contact_us.html')
 
@@ -149,19 +163,16 @@ def problem():
 
 
 @app.route('/add_task')
+@authorized_page
 def add_task():
     task_text = request.args.get('text')
     task_id = request.args.get('id')
     current_user.add_problem(task_text, task_id)
     return "true"
 
+
 @app.route('/statistics')
+@authorized_page
 def statistics():
     stats = current_user.get_stats()
     return json.dumps(stats)
-
-
-# @app.route('/static/css/<path:path>')
-# def send_css(path):
-#     return send_from_directory('/static/css/', path)
-
