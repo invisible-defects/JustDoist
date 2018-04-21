@@ -112,7 +112,7 @@ class ProblemProbability(db.Model):
     is_being_solved = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return '<ProblemProbability {} {}%>'.format(self.problem_num, self.val*100)
+        return '<ProblemProbability {} {}% being solved {}>'.format(self.problem_num, self.val*100, self.is_being_solved)
 
 
 @login.user_loader
