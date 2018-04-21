@@ -24,7 +24,10 @@ class User(UserMixin, db.Model):
 
     def check_todoist(self):
         api = todoist.TodoistAPI(self.todoist_token)
-        data = api.sync()
+        try:
+            data = api.sync()
+        except Exception as e:
+            return False
         if 'sync_token' in data:
             return True
         else:

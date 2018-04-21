@@ -18,7 +18,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(http://fonts.gstatic.com/s/materialicons/v36/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/materialicons/v36/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
 }
 
 .material-icons {
@@ -187,5 +187,29 @@ nav > div > a{
     flex:auto;
 }
 .modal{
-     overflow-y: scroll !important; max-height: 100% !important; height: 100% !important; 
+     overflow-y: scroll !important;
+     max-height: 100% !important; height: 100% !important;
+    width:80% !important;
+}
+.modal::-webkit-scrollbar { padding-top:2rem; padding-bottom:2rem; width: 4px; height:auto; background: #e0e0e0;}
+.modal::-webkit-scrollbar-button {  background-color: none; }
+.modal::-webkit-scrollbar-thumb { height: 50px; background-color: #6d6d6d; border-radius: 50px;}
+ol{padding-left: 1rem;}
+.modal-footer{
+padding: 24px !important;
+margin-top: -2rem;
+height: 100px !important;
+}
+.acolor{
+    margin-right: -5rem;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+}
+.color{
+    width: 1rem;
+    height: 1rem;
+    margin-top: -2px;
 }

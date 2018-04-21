@@ -14,6 +14,27 @@ def alert(message):
         print(message)
 
 
+# HTTPS redirect
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+    if request.url.startswith('https://www.'):
+        url = request.url.replace('https://www.', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+    
+@app.after_request
+def add_header(r):
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "60"
+    r.headers['Cache-Control'] = 'public, max-age=60'
+    return r
+
+
 # Main (problems) page
 @app.route('/')
 @app.route('/index')
@@ -138,3 +159,9 @@ def add_task():
 def statistics():
     stats = current_user.get_stats()
     return json.dumps(stats)
+
+
+# @app.route('/static/css/<path:path>')
+# def send_css(path):
+#     return send_from_directory('/static/css/', path)
+
