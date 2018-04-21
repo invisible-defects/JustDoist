@@ -39,17 +39,17 @@ def add_header(r):
 
 # Decorator for pages which need autorization
 def authorized_page(view_func):
-    def new_func(self, *args, **kwargs):
+    def new_func(*args, **kwargs):
         if current_user.is_anonymous:
             alert('anonymous trying to go index!')
             return redirect(url_for('login'))
-        return view_func(self, *args, **kwargs)
+        return view_func(*args, **kwargs)
     return new_func
 
 
 # Main (problems) page
-@app.route('/')
-@app.route('/index')
+@app.route('/', endpoint='index')
+@app.route('/index', endpoint='index')
 @authorized_page
 def index():
     problem_q = current_user.get_problem()
@@ -113,7 +113,7 @@ def oauth_callback(provider):
     return redirect(url_for('index'))
 
 
-@app.route('/logout')
+@app.route('/logout', endpoint='logout')
 @authorized_page
 def logout():
     logout_user()
@@ -121,7 +121,7 @@ def logout():
 
 
 # "My problems" page
-@app.route('/profile/<data>')
+@app.route('/profile/<data>', endpoint='profile')
 @authorized_page
 def profile(data):
     if data == 'add':
@@ -144,13 +144,13 @@ def profile(data):
     return render_template('profile.html', probs=problems)
 
 
-@app.route('/settings')
+@app.route('/settings', endpoint='settings')
 @authorized_page
 def settings():
     return render_template('settings.html')
 
 
-@app.route('/contact_us')
+@app.route('/contact_us', endpoint='contact_us')
 @authorized_page
 def contact_us():
     return render_template('contact_us.html')
@@ -162,7 +162,7 @@ def problem():
     return Problem.query.filter_by(num=prid).first().steps.replace("*", "")
 
 
-@app.route('/add_task')
+@app.route('/add_task', endpoint='add_task')
 @authorized_page
 def add_task():
     task_text = request.args.get('text')
@@ -171,7 +171,7 @@ def add_task():
     return "true"
 
 
-@app.route('/statistics')
+@app.route('/statistics', endpoint='statistics')
 @authorized_page
 def statistics():
     stats = current_user.get_stats()
