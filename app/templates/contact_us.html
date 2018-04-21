@@ -6,33 +6,56 @@
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
+<script type="text/javascript" src="../static/js/colorscheme.js"></script>
+
 <meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="../static/img/logo.png">
 
 </head>
-
+    
+<style id="style-color">
+    :root {
+      --color-red: #e44332ff;
+      --color-blue: #1B92C6;
+    }
+</style>
+    
 <body id="content">
-<nav class="red">
-<div class="nav-wrapper red">
-  <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
-  <ul class="right">
+  
+<nav class="layout-color">
+    
+<div class="nav-wrapper layout-color">
+  <a href="index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="../static/img/logo_red.svg"> stDoist</a>
+  <ul class="right hide-on-med-and-down">
     <li><a href="index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-<!--    <li><a href="../settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
-    <li><a href="" class="active"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
+<!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
+    <li><a href="contact_us" class="active"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
     <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a class="acolor" href="javascript:changecolor()"><div class="color layout-color-inv z-depth-5"></div></a></li>
   </ul>
+  <ul class="right hide-on-large-only">
+    <li><a href="index"><i class="material-icons ">description</i></a></li>
+    <li><a href="profile/no_add"><i class="material-icons ">equalizer</i></a></li>
+<!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
+    <li><a href="contact_us" class="active"><i class="material-icons ">info_outline</i></a></li>
+    <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a class="acolor" href="javascript:changecolor()"><div class="color layout-color-inv z-depth-5"></div></a></li>
+  </ul>
+
 </div>
 </nav>
 
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
     <div class="col s12">
+        <div class="card">
+        <div class="card-content">
         <h4>Contact us</h4>
         <p>
             If you're experiencing any problems with JustDoist feel free to contact us!<br>
-            Telegram: <a href="t.me/lifetimealone">@LifetimeAlone</a><br>
-            E-mail: <a href="mailto:vlad@htmlbook.ru">v-alexander@protonmail.com</a><br>
+            Telegram: <a href="http://t.me/lifetimealone" target="_blank">@LifetimeAlone</a><br>
+            E-mail: <a href="mailto:vlad@htmlbook.ru" target="_blank">v-alexander@protonmail.com</a><br>
         </p>
         <h4>FAQ</h4>
         <p>
@@ -49,7 +72,7 @@
             Premium accounts with more functionality coming soon!<br>
             At the moment, the best help would be sharing JustDoist with your friends and family.
         </p>
-    </div>
+    </div></div></div>
 </div></div>
     
 </body>
@@ -64,6 +87,7 @@ $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $(".dropdown-button").dropdown({hover:true});
+    drawcolor();
 });
 </script>
 </html>

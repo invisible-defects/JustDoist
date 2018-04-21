@@ -8,11 +8,20 @@
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
+<script type="text/javascript" src="../static/js/colorscheme.js"></script>
+    
 <meta http-equiv="Cache-Control" content="no-cache">
         <script src="../static/js/showdown.min.js"></script>
         <script src="../static/js/Chart.min.js"></script>
 <link rel="icon" href="../static/img/logo.png">
 </head>
+<style id="style-color">
+:root {
+  --color-red: #e44332ff;
+  --color-blue: #1B92C6;
+}
+</style>
+    
 <style>
 .stats-slider{
     position:absolute;
@@ -20,28 +29,29 @@
     left:0;
 }
 </style>
-<body id="content">
-<!--  Menu  -->
-<!--
-
-<ul id="dropdown1" class="dropdown-content dropdown-top">
-  <li><a href="#!">one</a></li>
-  <li><a href="#!">two</a></li>
-  <li class="divider"></li>
-  <li><a href="#!">three</a></li>
-</ul>
     
--->
-<nav class="red">
-<div class="nav-wrapper red">
-  <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
-  <ul class="right">
+<body id="content">
+    
+<nav class="layout-color">
+<div class="nav-wrapper layout-color">
+  <a href="../index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="../static/img/logo_red.svg"> stDoist</a>
+  <ul class="right hide-on-med-and-down">
     <li><a href="../index"><i class="material-icons left">description</i>PROBLEMS</a></li>
-    <li><a href="" class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-<!--    <li><a href="../settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
+    <li><a href="profile/no_add" class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
+<!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
     <li><a href="../contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
     <li><a href="../logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a class="acolor" href="javascript:changecolor()"><div class="color layout-color-inv z-depth-5"></div></a></li>
   </ul>
+  <ul class="right hide-on-large-only">
+    <li><a href="../index"><i class="material-icons ">description</i></a></li>
+    <li><a href="profile/no_add" class="active"><i class="material-icons ">equalizer</i></a></li>
+<!--    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>-->
+    <li><a href="../contact_us"><i class="material-icons ">info_outline</i></a></li>
+    <li><a href="../logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a class="acolor" href="javascript:changecolor()"><div class="color layout-color-inv z-depth-5"></div></a></li>
+  </ul>
+
 </div>
 </nav>
 
@@ -87,6 +97,7 @@
      
 <script>
 $(document).ready(function(){
+    drawcolor();
     $('.modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         startingTop: '0%', // Starting top style attribute
@@ -96,7 +107,6 @@ $(document).ready(function(){
     $('select').material_select();
     $(".dropdown-button").dropdown({hover:true});
     build_stats();
-    
 });
 function build_stats(){
     slid = $('.stats-slider > div');

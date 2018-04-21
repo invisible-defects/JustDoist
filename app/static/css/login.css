@@ -18,10 +18,10 @@
 
 html{
     background: #ff230c; /* Old Browsers */
-    background: -webkit-linear-gradient(top,#ff230c,#e44332); /*Safari 5.1-6*/
-    background: -o-linear-gradient(top,#ff230c,#e44332); /*Opera 11.1-12*/
-    background: -moz-linear-gradient(top,#ff230c,#e44332); /*Fx 3.6-15*/
-    background: linear-gradient(to bottom, #ff230c, #e44332); /*Standard*/
+    background: -webkit-linear-gradient(top,#ff230c,#ff3a3a); /*Safari 5.1-6  #ff3a3a*/
+    background: -o-linear-gradient(top,#ff230c,#ff3a3a); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(top,#ff230c,#ff3a3a); /*Fx 3.6-15*/
+    background: linear-gradient(to bottom, #ff230c, #ff3a3a); /*Standard*/
 }
 .wrapper{
     display: block;
