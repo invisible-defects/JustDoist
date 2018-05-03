@@ -1,41 +1,58 @@
-from app import app
-from flask import url_for, redirect, request
-from rauth import OAuth2Service
+import abc
 import json
+from justdoist.settings import OAUTH_CREDENTIALS
+from rauth import OAuth2Service
 
 
-class OAuthSignIn(object):
+class OAuthSignIn(object, metaclass=abc.ABCMeta):
     providers = None
 
-    def __init__(self, provider_name):
+    def __init__(self, provider_name, client_id, client_secret):
         self.provider_name = provider_name
-        credentials = app.config['OAUTH_CREDENTIALS'][provider_name]
-        self.client_id = credentials['id']
-        self.client_secret = credentials['secret']
+        self.client_id = client_id
+        self.client_secret = client_secret
 
+    @abc.abstractmethod
     def authorize(self):
         pass
 
+    @abc.abstractmethod
     def callback(self):
         pass
 
-    def get_callback_url(self):
-        return url_for('oauth_callback', provider=self.provider_name,
-                       _external=True)
+    def get_callback_url(self) -> str:
+        """
+        Generates callback url
+        :return:
+        """
+        return url_for(
+            'oauth_callback',
+            provider=self.provider_name,
+            _external=True
+        )
 
     @classmethod
-    def get_provider(self, provider_name):
-        if self.providers is None:
-            self.providers = {}
-            for provider_class in self.__subclasses__():
+    def get_provider(cls, provider_name):
+        if cls.providers is None:
+            cls.providers = {}
+            for provider_class in cls.__subclasses__():
                 provider = provider_class()
-                self.providers[provider.provider_name] = provider
-        return self.providers[provider_name]
+                cls.providers[provider.provider_name] = provider
+        return cls.providers[provider_name]
 
 
 class TodoistSignIn(OAuthSignIn):
+
     def __init__(self):
-        super(TodoistSignIn, self).__init__('todoist')
+        """
+        Encapsulates logic for Todoist OAuth.
+        """
+        super().__init__(
+            'todoist',
+            OAUTH_CREDENTIALS['todois']['id'],
+            OAUTH_CREDENTIALS['todois']['secret'],
+        )
+
         self.service = OAuth2Service(
             name='todoist',
             client_id=self.client_id,
@@ -66,4 +83,3 @@ class TodoistSignIn(OAuthSignIn):
             decoder=decode_json
         )
         return (token)
-

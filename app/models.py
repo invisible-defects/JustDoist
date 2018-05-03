@@ -5,6 +5,7 @@ from flask_login import UserMixin
 
 from app import db, login, parser
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -26,12 +27,13 @@ class User(UserMixin, db.Model):
         api = todoist.TodoistAPI(self.todoist_token)
         try:
             data = api.sync()
-        except Exception as e:
+        except Exception:
             return False
+
         if 'sync_token' in data:
             return True
-        else:
-            return False
+
+        return False
 
     def get_problem(self):
         if self.last_problem_shown is not None:
@@ -116,7 +118,7 @@ class ProblemProbability(db.Model):
     is_being_solved = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return '<ProblemProbability {} {}% being solved {}>'.format(self.problem_num, self.val*100, self.is_being_solved)
+        return '<ProblemProbability {} {}% being solved {}>'.format(self.problem_num, self.val * 100, self.is_being_solved)
 
 
 @login.user_loader
