@@ -1,20 +1,21 @@
 ﻿<html>
 <head>
-    
-<link type="text/css" rel="stylesheet" href="../static/css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection"/>
+<meta http-equiv="Cache-Control" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
+
+{% load staticfiles %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../static/js/materialize.min.js"></script>
-<script type="text/javascript" src="../static/js/colorscheme.js"></script>
-<meta http-equiv="Cache-Control" content="no-cache">
-<script src="../static/js/showdown.min.js"></script>
-<script src="../static/js/Chart.min.js"></script>
-<link rel="icon" href="../static/img/logo.png">
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
+<script src="{% static 'js/showdown.min.js' %}"></script>
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<link rel="icon" href="{% static 'img/logo.png' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"  media="screen,projection"/>
+
 
 </head>
-
 <style id="style-color">
     :root {
       --color-red: #e44332ff;

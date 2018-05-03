@@ -171,3 +171,5 @@ pip-selfcheck.json
 .idea/
 .vscode
 .vscode/
+*.sqlite3
+*.db

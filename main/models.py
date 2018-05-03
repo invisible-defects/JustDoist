@@ -2,16 +2,19 @@ from datetime import datetime
 
 import todoist
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from requests import HTTPError
 
 from main.api_utils import get_stats, get_combined_problems
+from main.presets import PredefinedProblems
 
 
+# TODO: write comments
 class JustdoistUser(User):
     possible_problems = [2, 3]
 
-    todoist_token = models.CharField(unique=True, max_length=128, required=False)
+    todoist_token = models.CharField(unique=True, max_length=128)
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
 
@@ -34,7 +37,7 @@ class JustdoistUser(User):
             return False
 
     def _get_highest_probability(self) -> "ProblemProbability":
-        return self.suggested_problems.objects.filter(
+        return self.suggested_problems.all().filter(
             is_being_solved=False
         ).order_by('-value').first()
 
@@ -64,28 +67,33 @@ class JustdoistUser(User):
         data = get_combined_problems(api)
         for problem in self.possible_problems:
             value = data[problem]
-            proba = self.suggested_problems.object.get(suggest_problem=problem).first()
+            proba = self.suggested_problems.all().get(suggest_problem=problem).first()
+
             if proba is None:
+                sgs_problem = SuggestedProblem.get(problem)
                 proba = ProblemProbability(
                     value=value,
-                    suggested_problem=problem,
+                    suggested_problem=sgs_problem,
                     user=self
                 )
                 proba.save()
 
         return True
 
-    def get_inbox_id(self, api):
+    def get_inbox_id(self, api: todoist.TodoistAPI) -> int:
         if self.inbox_id is not None:
             return self.inbox_id
+
         for project in api.state['projects']:
             if project['inbox_project']:
                 return project['id']
 
+        return -1
+
     def add_problem(self, text: str, problem_id: int) -> bool:
         if not self.check_todoist():
             return False
-        proba = self.suggested_problems.objects.filter_by(problem_id).first()
+        proba = self.suggested_problems.all().filter(uid=problem_id).first()
         proba.steps_completed += 1
         proba.save()
         api = todoist.TodoistAPI(self.todoist_token)
@@ -94,24 +102,33 @@ class JustdoistUser(User):
         return True
 
 
-class Problem(models.Model):
-    user = models.ForeignKey(JustdoistUser, on_delete=models.CASCADE, related_name="problems")
+class SuggestedProblem(models.Model):
+    uid = models.IntegerField(primary_key=True, unique=True)
     title = models.CharField(max_length=128)
     body = models.CharField(max_length=10000)
     steps = models.CharField(max_length=10000)
     steps_num = models.IntegerField(default=1)
 
+    @classmethod
+    def get(cls, uid: int) -> "SuggestedProblem":
+        try:
+            return cls.objects.get(uid=uid)
+        except ObjectDoesNotExist:
+            problem = cls(**PredefinedProblems.get_problem(uid))
+            problem.save()
+            return problem
+
     def __str__(self):
-        return f"<Problem {self.pk} \"{self.title}\">"
+        return f"<SuggestedProblem {self.uid} \"{self.title}\">"
 
 
 class ProblemProbability(models.Model):
     value = models.FloatField()
-    suggested_problem = models.IntegerField()
     user = models.ForeignKey(JustdoistUser, on_delete=models.CASCADE, related_name="suggested_problems")
+    suggested_problem = models.ForeignKey(SuggestedProblem, on_delete=models.CASCADE, related_name="probabilities")
     steps_completed = models.IntegerField(default=0)
     is_being_solved = models.BooleanField(default=False)
 
     def __str__(self):
-        return (f"<ProblemProbability [{self.problem.pk}] "
+        return (f"<ProblemProbability [{self.suggested_problem.uid}] "
                 f"{self.value * 100:.2f}%, being solved: {self.is_being_solved}>")

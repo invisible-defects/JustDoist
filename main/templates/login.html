@@ -1,24 +1,36 @@
 <html>
-    
 <head>
-<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.css') }}"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"  media="screen,projection"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-<link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}">
 <meta http-equiv="Cache-Control" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
+
+{% load staticfiles %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
+<script src="{% static 'js/showdown.min.js' %}"></script>
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<link rel="icon" href="{% static 'img/logo.png' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/login.css' %}"  media="screen,projection"/>
+
+
 </head>
-    
+<style id="style-color">
+    :root {
+      --color-red: #e44332ff;
+      --color-blue: #1B92C6;
+    }
+</style>
+
 <body>
-    
 <div class="wrapper">
 <div class="cont">
     <div class="logotext">
-    J<img src="{{ url_for('static', filename='img/logo.svg') }}">STDOIST
+    {% load staticfiles %}
+    <img src="{% static 'img/logo.svg' %}">
     </div>
-    <button type="button" name="signin" class="waves-effect waves-light btn white" onclick="document.location='authorize/todoist'">Sign Up with Todoist</button>
+    <button type="button" name="signin" class="waves-effect waves-light btn white" onclick="document.location='/authorize/todoist'">Sign Up with Todoist</button>
 </div>
 </div>
     
