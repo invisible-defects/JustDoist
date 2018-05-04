@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ['.justdoist.com']
+ALLOWED_HOSTS = ['.justdoist.com', "just.whatever.team"]
 if DEBUG: ALLOWED_HOSTS.append("*")
 
 # Application definition
@@ -92,7 +92,7 @@ else:
             'USER': os.environ.get("DB_USER", "postgres"),
             'HOST': os.environ.get("DB_HOST", 'localhost'),  # set in docker-compose.yml
             'PORT': os.environ.get("DB_PORT", 5432),  # default postgresql port
-            'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "postgres"),
+            'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
         }
     }
 
