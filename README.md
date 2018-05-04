@@ -36,6 +36,6 @@ sudo docker-compose up
 
 Note: by default, only `justdoist.com` domain is allowed in the production mode. 
 So you won't be able to access any page without adding `*` 
-(that may cause an [XSS-attack](https://en.wikipedia.org/wiki/Cross-site_scripting))
- to `ALLOWED_HOSTS` in `settings.py`. 
+ to `ALLOWED_HOSTS` ((that may cause an [XSS-attack](https://en.wikipedia.org/wiki/Cross-site_scripting))
+ in `settings.py`. 
  
