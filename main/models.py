@@ -19,7 +19,7 @@ class JustdoistUser(AbstractUser):
 
     def get_stats(self) -> dict:
         if not self.check_todoist():
-            raise ValueError("Missing todoist token")
+            return {}
         api = todoist.TodoistAPI(self.todoist_token)
         return get_stats(api)
 

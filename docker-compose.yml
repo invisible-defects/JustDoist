@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    env_file: production.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - "5432"
+
+  web:
+    restart: always
+    build: .
+    command: sh /justdoist/entrypoint.sh uwsgi --ini /justdoist/uwsgi.ini
+    env_file: production.env
+    volumes:
+      - .:/jsutdoist
+    ports:
+      - "8181:8000"
+    depends_on:
+      - db
+   
+volumes:
+  postgres_data:

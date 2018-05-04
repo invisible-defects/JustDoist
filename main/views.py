@@ -28,11 +28,7 @@ def index(request):
     else:
         problem = problem_q['problem'].suggests_problem.body
 
-    try:
-        stats = request.user.get_stats()
-    except ValueError:
-        stats = {}
-
+    stats = request.user.get_stats()
     context = {
         "problem_text": problem,
         "button": button,

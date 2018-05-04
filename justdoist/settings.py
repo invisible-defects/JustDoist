@@ -77,13 +77,24 @@ AUTH_USER_MODEL = "main.JustdoistUser"
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get("DB_NAME", "postgres"),
+            'USER': os.environ.get("DB_USER", "postgres"),
+            'HOST': os.environ.get("DB_HOST", 'localhost'),  # set in docker-compose.yml
+            'PORT': os.environ.get("DB_PORT", 5432),  # default postgresql port
+            'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "postgres"),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
