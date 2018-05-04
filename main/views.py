@@ -46,10 +46,8 @@ def login(request):
         return redirect("index")
     return render(request, 'login.html')
 
-
+@login_required
 def authorize(request, provider):
-    if not request.user.is_authenticated:
-        return redirect('index')
     oauth = OAuthSignIn.get_provider(provider)
     return redirect(oauth.authorize(request))
 
@@ -128,9 +126,9 @@ def add_task(request):
 
 
 @login_required
-def link(request, provider):
+def link(request, service):
     # TODO: add better handler
-    if provider == 'todoist':
+    if service == 'todoist':
         return render(request, "todoist_login.html")
     return redirect("index.html")
 

@@ -48,8 +48,8 @@ class TodoistSignIn(OAuthSignIn):
         """
         super().__init__(
             'todoist',
-            OAUTH_CREDENTIALS['todois']['id'],
-            OAUTH_CREDENTIALS['todois']['secret'],
+            OAUTH_CREDENTIALS['todoist']['id'],
+            OAUTH_CREDENTIALS['todoist']['secret'],
         )
 
         self.service = OAuth2Service(
