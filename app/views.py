@@ -64,6 +64,7 @@ def index():
     else:
         prob_raw = Problem.query.filter_by(num=problem_q['problem'].problem_num).first()
         problem = prob_raw.body
+
     stats = current_user.get_stats()
     
     return render_template('index.html', problem_text=problem, butt=butt, stats=stats)
@@ -147,7 +148,21 @@ def profile(data):
 @app.route('/settings', endpoint='settings')
 @authorized_page
 def settings():
-    return render_template('settings.html')
+    name = current_user.get_info()["name"]
+    img = current_user.get_info()["img"]
+    email = current_user.get_info()["email"]
+
+    #TODO: add in User DBmodel column "premium"
+    # user = User.query.filter_by(todoist_token=current_user.todoist_token).first()
+    # premium = user.is_pemium
+
+    premium = True
+
+    color = None
+    #
+    # if premium == True:
+
+    return render_template('settings.html', name=name, img=img, email=email, premium=premium, color=color)
 
 
 @app.route('/contact_us', endpoint='contact_us')
