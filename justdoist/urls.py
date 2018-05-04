@@ -23,8 +23,8 @@ from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    url(r'^accounts/login/$', dj_views.login, {'template_name': 'login.html'}),
-    url(r'^accounts/logout/$', dj_views.logout_then_login, name="logout"),
+    url(r'^login/$', dj_views.login, {'template_name': 'login.html'}),
+    url(r'^logout/$', dj_views.logout_then_login, name="logout"),
 
     path('', views.index),
     path('index', views.index, name='index'),
