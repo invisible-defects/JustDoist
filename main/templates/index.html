@@ -64,7 +64,7 @@
         </div>
     </div> 
     <script>
-        text = '{{problem_text.replace("\n", "\\n\\r")}}'
+        text = '{{ problem_text }}'
         txt = new showdown.Converter({underline: true}).makeHtml(text);
         $('#problem-text').html(txt);
     </script>
@@ -76,12 +76,13 @@
             <h5><b>YOUR STATISTICS</b></h5>
             <span>Last week</span>
             <div class="stats-crytery">
-                <a>Your karma <p>{{stats["percentage"]}}%</p></a>
+                {% if stats %}
+                <a>Your karma <p>{{ stats.percentage }}%</p></a>
                 <div class="stats-slider">
-                    <div data="{{stats["percentage"]}}"></div>
+                    <div data="{{ stats.percentage }}"></div>
                 </div>
+            {% endif %}
             </div>
-
         </div>
     </div>
     
@@ -120,7 +121,7 @@
                 data: {
                     labels: week_labels,
                     datasets: [{
-                        data: {{stats["graph"]}},
+                        data: {% if stats %} {{ stats.graph }} {% else %} {} {% endif %},
                         label: "Karma",
                         borderColor: "#e44332ff",
                         fill: "origin"

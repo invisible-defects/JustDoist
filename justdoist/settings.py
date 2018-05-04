@@ -72,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'justdoist.wsgi.application'
 
+AUTH_USER_MODEL = "main.JustdoistUser"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -95,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django .contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',

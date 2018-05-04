@@ -76,7 +76,7 @@ def login():
         alert('REDIRECTING TO INDEX BC NOT ANONYMOUS')
         return redirect(url_for('index'))
 
-    return render_template('login.html')
+    return render_template('todoist_login.html')
 
 
 # Authorization page
@@ -131,6 +131,7 @@ def profile(data):
         db.session.add(pr)
         db.session.add(current_user)
         db.session.commit()
+
     problem_probs = ProblemProbability.query.filter_by(user_token=current_user.todoist_token, is_being_solved=True)
     problems = []
     for prob in problem_probs:

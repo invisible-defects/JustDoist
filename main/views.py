@@ -3,7 +3,10 @@ import datetime
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
+from main.forms import UserForm
 from main.models import SuggestedProblem
 from main.oauth import OAuthSignIn
 
@@ -25,7 +28,11 @@ def index(request):
     else:
         problem = problem_q['problem'].suggests_problem.body
 
-    stats = request.user.get_stats()
+    try:
+        stats = request.user.get_stats()
+    except ValueError:
+        stats = {}
+
     context = {
         "problem_text": problem,
         "button": button,
@@ -71,7 +78,7 @@ def profile(request, data):
         request.user.save()
 
     problems = []
-    problem_probs = request.user.problems.all().filter(is_being_solved=True)
+    problem_probs = request.user.suggested_problems.all().filter(is_being_solved=True)
     for prob in problem_probs:
         prob_raw = prob.suggested_problem
         problems.append({
@@ -121,6 +128,28 @@ def add_task(request):
 
 
 @login_required
+def link(request, provider):
+    # TODO: add better handler
+    if provider == 'todoist':
+        return render(request, "todoist_login.html")
+    return redirect("index.html")
+
+
+@login_required
 def statistics(request):
     stats = request.user.get_stats()
     return JsonResponse(stats, status=200)
+
+
+class Register(CreateView):
+    success_url = reverse_lazy('index')
+    template_name = "registration.html"
+    form_class = UserForm
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        password = form.cleaned_data['password']
+        user.set_password(password)
+        user.save()
+
+        return super().form_valid(form)

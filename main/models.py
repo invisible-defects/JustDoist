@@ -3,7 +3,7 @@ from datetime import datetime
 import todoist
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from requests import HTTPError
 
 from main.api_utils import get_stats, get_combined_problems
@@ -11,17 +11,15 @@ from main.presets import PredefinedProblems
 
 
 # TODO: write comments
-class JustdoistUser(User):
+class JustdoistUser(AbstractUser):
     possible_problems = [2, 3]
-
-    todoist_token = models.CharField(unique=True, max_length=128)
+    todoist_token = models.CharField(unique=True, max_length=128, null=True)
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def get_stats(self) -> dict:
+        if not self.check_todoist():
+            raise ValueError("Missing todoist token")
         api = todoist.TodoistAPI(self.todoist_token)
         return get_stats(api)
 
@@ -33,7 +31,7 @@ class JustdoistUser(User):
         try:
             data = api.sync()
             return "sync_token" in data
-        except (HTTPError, ValueError):
+        except (HTTPError, ValueError, TypeError):
             return False
 
     def _get_highest_probability(self) -> "ProblemProbability":
