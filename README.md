@@ -18,7 +18,8 @@ cd JustDoist
 sudo docker-compose up
 ```
 3. Server will be listening on localhost:8181.
-3.1 Note: by default, only `justdoist.com` domain is allowed in the production mode. 
+
+Note: by default, only `justdoist.com` domain is allowed in the production mode. 
 So you won't be able to access any page without adding `*` 
 (that may cause an [XSS-attack](https://en.wikipedia.org/wiki/Cross-site_scripting))
  to `ALLOWED_HOSTS` in `settings.py`. 
