@@ -26,7 +26,7 @@ python runserver localhost:8181
 
 
 **Production mode**  
-1. Install Docker and Docker-compose (apt users probably want to install Docker-compose directly from github)
+1. Install Docker and Docker-compose (apt users probably [want](https://stackoverflow.com/questions/42139982/version-in-docker-compose-yml-is-unsupported-you-might-be-seeing-this-error) to install Docker-compose directly from github)
 2. Run Docker-compose in the porject directory
 ```bash 
 cd JustDoist
@@ -38,4 +38,3 @@ Note: by default, only `justdoist.com` domain is allowed in the production mode.
 So you won't be able to access any page without adding `*` 
  to `ALLOWED_HOSTS` (that may cause an [XSS-attack](https://en.wikipedia.org/wiki/Cross-site_scripting))
  in `settings.py`. 
- 
