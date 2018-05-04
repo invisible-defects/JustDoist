@@ -6,6 +6,8 @@ COPY ./* /justdoist/
 
 WORKDIR /justdoist/
 
+MKDIR static
+
 RUN pip install -r requirements.txt
 
 EXPOSE 8000

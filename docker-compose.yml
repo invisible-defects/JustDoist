@@ -16,7 +16,7 @@ services:
     command: sh /justdoist/entrypoint.sh uwsgi --ini /justdoist/uwsgi.ini
     env_file: production.env
     volumes:
-      - .:/jsutdoist
+      - .:/justdoist
     ports:
       - "8181:8000"
     depends_on:
