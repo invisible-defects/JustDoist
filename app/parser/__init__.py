@@ -1,4 +1,5 @@
 from .problems import *
+from .data import *
 
 
 def get_combined_problems(api):
@@ -7,6 +8,8 @@ def get_combined_problems(api):
     problems_dict[2] = has_preferred_tasks(api)
     problems_dict[3] = does_use_regularly(api)
     get_stats(api)
+
+
     return problems_dict
 
 def get_stats(api):
@@ -22,3 +25,6 @@ def get_stats(api):
     for i in stats_for_graph:
         stats_for_graph_optimized.append(i["karma_avg"])
     return {"graph": stats_for_graph_optimized, "percentage": stats_linear_graph}
+
+def get_info(api):
+    return user_info(api)

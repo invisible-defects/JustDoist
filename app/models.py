@@ -8,6 +8,11 @@ from app import db, login, parser
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+    #
+    # is_premium = db.Column(db.Boolean, default=False, nullable=False)
+    # color = db.Column(db.String(80))
+
+
     todoist_token = db.Column(db.String(128))
     problems = db.relationship('ProblemProbability', backref='owner', lazy='dynamic')
     last_problem_shown = db.Column(db.DateTime())
@@ -15,9 +20,14 @@ class User(UserMixin, db.Model):
 
     possible_problems = [2, 3]
 
+
     def get_stats(self):
         api = todoist.TodoistAPI(self.todoist_token)
         return parser.get_stats(api)
+
+    def get_info(self):
+        api = todoist.TodoistAPI(self.todoist_token)
+        return parser.get_info(api)
 
     def link_todoist(self, api_key):
         self.todoist_token = api_key
