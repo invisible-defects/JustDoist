@@ -26,7 +26,7 @@ def index(request):
         problem = "Come back tomorrow for more advice!\nYou can work on your current problems now."
         button = False
     else:
-        problem = problem_q['problem'].suggests_problem.body
+        problem = problem_q['problem'].suggested_problem.body
 
     stats = request.user.get_stats()
     context = {
@@ -52,7 +52,7 @@ def oauth_callback(request, provider):
     if not request.user.is_authenticated:
         return redirect("index")
     oauth = OAuthSignIn.get_provider(provider)
-    token = oauth.callback()
+    token = oauth.callback(request)
 
     # TODO: add failure page/message
     if token is None:

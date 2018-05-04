@@ -2,8 +2,7 @@ from todoist import TodoistAPI
 
 
 def has_preferred_tasks(api: TodoistAPI) -> bool:
-    max_prior = max(item.get("priority", -1000) for item in api.items.all())
-    max_prior = max(max_prior, 1)
+    max_prior = max((item.get("priority", -1000) for item in api.items.all()), default=1)
     return max_prior != 1
 
 
@@ -44,5 +43,5 @@ def get_stats(api: TodoistAPI) -> dict:
         )
 
     # stats_for_linear_graph_completed = sum(map(lambda x: x['total_completed'], statistics["days_items"]))
-    stats_for_graph_optimized = [s["kargma_avg"] for s in stats_for_graph]
+    stats_for_graph_optimized = [s.get("kargma_avg", None) for s in stats_for_graph]
     return {"graph": stats_for_graph_optimized, "percentage": stats_linear_graph}

@@ -28,6 +28,7 @@ class OAuthSignIn(object, metaclass=abc.ABCMeta):
         Generates callback url
         :return:
         """
+        print(get_current_site(request).domain)
         return f'{get_current_site(request).domain}/oauth_callback/{self.provider_name}/'
 
     @classmethod
@@ -70,7 +71,6 @@ class TodoistSignIn(OAuthSignIn):
         print(s)
         return s
 
-
     def callback(self, request):
         def decode_json(payload):
             return json.loads(payload.decode('utf-8'))
@@ -82,7 +82,7 @@ class TodoistSignIn(OAuthSignIn):
             data={'client_id': self.client_id,
                   'client_secret': self.client_secret,
                   'code': request.GET['code'],
-                  'redirect_uri': self.get_callback_url()},
+                  'redirect_uri': self.get_callback_url(request)},
             decoder=decode_json
         )
         return token
