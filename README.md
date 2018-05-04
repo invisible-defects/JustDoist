@@ -4,11 +4,26 @@
 justdoist.com 
 
 **To run JustDoist locally**
+1. Create virtualenv with python 3.6 (I'll use virtualenvwrapper)
+```bash
+mkvirtualenv justdoist --python=python3.6
+```
+2. Activate the environment
+```bash
+workon justdoist
+```
+3. Install requirements
+```bash
+pip install -r requirements.txt
+```
+4. Run dev server
 ```bash
 python manage.py makemigrations main
 python manage.py migrate
 python runserver localhost:8181
 ```
+5. Congrats! Now you can access the site on http://localhost:8181.
+
 
 **Production mode**  
 1. Install Docker and Docker-compose (apt users probably want to install Docker-compose directly from github)
