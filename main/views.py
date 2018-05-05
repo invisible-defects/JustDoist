@@ -105,9 +105,8 @@ def problem(request):
     if uid is None:
         return JsonResponse({"error": "missing `problem_id` param"}, status=422)
     problem = SuggestedProblem.get(uid) 
-    steps =  problem.steps.replace("*", "")
-    trackers = problem.steps_trackers
-    # TODO: Finish func
+    proba = SuggestedProblem.probabilities.all().filter(user=request.user).first()
+    return proba.json
 
 
 @login_required(login_url=LOGIN_URL)

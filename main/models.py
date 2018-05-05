@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 import todoist
 from django.db import models
@@ -141,8 +142,16 @@ class ProblemProbability(models.Model):
 
     @property
     def json():
-        # TODO: finish func
-        pass
+        data = []
+        for tracker in self.steps_trackers:
+            step = tracker.step
+            data.append({
+                "step_id": step.number,
+                "step_text": step.description,
+                "step_solve": step.task,
+                "step_status": tracker.is_completed
+            })
+        return json.dumps(data)
 
     def __str__(self):
         return (f"<ProblemProbability [{self.suggested_problem.uid}] "
