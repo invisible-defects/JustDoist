@@ -23,3 +23,4 @@ if __name__ == "__main__":
                 task = step_data['task']
             )
             step.save()
+    print("[INFO] SUCCESSFULLY CREATED PRESET PROBLEMS")
