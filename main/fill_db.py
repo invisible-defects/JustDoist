@@ -24,4 +24,3 @@ if __name__ == "__main__":
             )
             step.save()
     print("[INFO] SUCCESSFULLY CREATED PRESET PROBLEMS")
-    
