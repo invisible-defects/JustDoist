@@ -91,18 +91,5 @@
                 "task": "Read 5 pages of “High Performance Habits” daily"
             }
         ]
-    },
-    {
-        "uid": 100,
-        "title": "",
-        "body": "",
-        "steps_num": 0,
-        "steps":[
-            {
-                "number": 0,
-                "description": "",
-                "task": ""
-            }
-        ]
     }
 ]
