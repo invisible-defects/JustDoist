@@ -1,14 +1,15 @@
 ﻿<html>
 <head>
-<link type="text/css" rel="stylesheet" href="../static/css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection"/>
+{% load staticfiles %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"  media="screen,projection"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../static/js/materialize.min.js"></script>
-<script type="text/javascript" src="../static/js/colorscheme.js"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
-<link rel="icon" href="../static/img/logo.png">
+<link rel="icon" href="{% static 'img/logo.png' %}">
 </head>
 <style id="style-color">
     :root {
@@ -21,7 +22,8 @@
 
 <nav class="layout-color">
 <div class="nav-wrapper layout-color">
-  <a href="" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="../static/img/logo_red.svg"> stDoist</a>
+  {% load staticfiles %}
+  <a href="" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="{% static 'img/logo_red.svg' %}"> stDoist</a>
   <ul class="right hide-on-med-and-down">
     <li><a href="index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
@@ -53,8 +55,8 @@
     <h4 style="margin-top: -0.5rem;">Personal Information</h4>
 
     <div class="valign-wrapper">
-    <div class="col s2"><img class="circle responsive-img" src="{{img}}" style="max-width:100px;"></div>
-    <div class="col s10" style="margin-left: -1rem;"><span class="flow-text">{{name}}</span><br><span class="flow-text red-text small">{{email}}</span></div>
+    <div class="col s2"><img class="circle responsive-img" src="{{ img }}" style="max-width:100px;"></div>
+    <div class="col s10" style="margin-left: -1rem;"><span class="flow-text">{{name}}</span><br><span class="flow-text red-text small">{{ email }}</span></div>
     </div>
     </div></div>
 

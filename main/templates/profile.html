@@ -1,19 +1,18 @@
 ﻿<html>
 <head>
-<link type="text/css" rel="stylesheet" href="../static/css/materialize.css"  media="screen,projection"/>
-    
-    <link type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection"/>
-
+{% load staticfiles %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"  media="screen,projection"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../static/js/materialize.min.js"></script>
-<script type="text/javascript" src="../static/js/colorscheme.js"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
     
 <meta http-equiv="Cache-Control" content="no-cache">
-        <script src="../static/js/showdown.min.js"></script>
-        <script src="../static/js/Chart.min.js"></script>
-<link rel="icon" href="../static/img/logo.png">
+        <script src="{% static 'js/showdown.min.js' %}"></script>
+        <script src="{% static 'js/Chart.min.js' %}"></script>
+<link rel="icon" href="{% static 'img/logo.png' %}">
 </head>
 <style id="style-color">
 :root {
@@ -34,20 +33,21 @@
     
 <nav class="layout-color">
 <div class="nav-wrapper layout-color">
-  <a href="../index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="../static/img/logo_red.svg"> stDoist</a>
+  {% load staticfiles %}
+  <a href="index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="{% static 'img/logo_red.svg' %}"> stDoist</a>
   <ul class="right hide-on-med-and-down">
-    <li><a href="../index"><i class="material-icons left">description</i>PROBLEMS</a></li>
+    <li><a href="index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile/no_add" class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-    <li><a href="../settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
-    <li><a href="../contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
-    <li><a href="../logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
+    <li><a href="contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
+    <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
   <ul class="right hide-on-large-only">
-    <li><a href="../index"><i class="material-icons ">description</i></a></li>
+    <li><a href="index"><i class="material-icons ">description</i></a></li>
     <li><a href="profile/no_add" class="active"><i class="material-icons ">equalizer</i></a></li>
-    <li><a href="../settings"><i class="material-icons">settings</i></a></li>
-    <li><a href="../contact_us"><i class="material-icons ">info_outline</i></a></li>
-    <li><a href="../logout"><i class="material-icons">exit_to_app</i></a></li>
+    <li><a href="settings"><i class="material-icons">settings</i></a></li>
+    <li><a href="contact_us"><i class="material-icons ">info_outline</i></a></li>
+    <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
 
 </div>
