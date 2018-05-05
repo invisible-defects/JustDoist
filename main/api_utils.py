@@ -43,5 +43,6 @@ def get_stats(api: TodoistAPI) -> dict:
         )
 
     # stats_for_linear_graph_completed = sum(map(lambda x: x['total_completed'], statistics["days_items"]))
-    stats_for_graph_optimized = [s.get("kargma_avg", None) for s in stats_for_graph]
+    stats_for_graph_optimized = [s.get("karma_avg", None) for s in stats_for_graph]
+    print(stats_for_graph_optimized)
     return {"graph": stats_for_graph_optimized, "percentage": stats_linear_graph}
