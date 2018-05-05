@@ -145,9 +145,9 @@ class ProblemProbability(models.Model):
     is_being_solved = models.BooleanField(default=False)
 
     @property
-    def json():
+    def json(self):
         data = []
-        for tracker in self.steps_trackers:
+        for tracker in self.steps_trackers.all():
             step = tracker.step
             data.append({
                 "step_id": step.number,
@@ -176,8 +176,8 @@ class StepTracker(models.Model):
     todoist_task_id = models.IntegerField(default=0)
 
     @property
-    def is_completed():
-        if self.task_id == 0:
+    def is_completed(self):
+        if self.todoist_task_id == 0:
             return False
         api = todoist.TodoistAPI(self.user.todoist_token)
         item = api.items.get_by_id(self.todoist_task_id)
