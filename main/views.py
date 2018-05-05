@@ -106,7 +106,7 @@ def problem(request):
     if uid is None:
         return JsonResponse({"error": "missing `problem_id` param"}, status=422)
     problem = SuggestedProblem.get(uid) 
-    proba = SuggestedProblem.probabilities.all().filter(user=request.user).first()
+    proba = problem.probabilities.all().filter(user=request.user).first()
     return proba.json
 
 
