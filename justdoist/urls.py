@@ -20,6 +20,7 @@ from django.urls import path
 from django.contrib.auth import views as dj_views
 from main import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -30,9 +31,9 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('register', views.Register.as_view(), name='register'),
     path('link/<slug:service>/', views.link, name='link'),
-    path('authorize/<slug:provider>', views.authorize),
-    path('callback/<slug:provider>', views.oauth_callback),
-    path('profile/<slug:data>', views.profile),
+    path('authorize/<slug:provider>/', views.authorize),
+    path('callback/<slug:provider>/', views.oauth_callback),
+    path('profile/<slug:data>/', views.profile),
     path('settings', views.settings),
     path('contact_us', views.contact_us),
     path('problem', views.problem),

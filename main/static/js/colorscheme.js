@@ -7,7 +7,7 @@ function getCookie(name) {
 
 function drawcolor(){
     cook = getCookie('color');
-    console.log(cook)
+    // console.log(cook)
     if (cook === undefined){
         document.cookie = "color=red; path=/";
         cook = 'red';
@@ -22,7 +22,7 @@ function drawcolor(){
         $('#style-color').append('.layout-color{background: var(--color-blue);}'+
                             '.layout-color-inv{background: var(--color-red);}');
     }
-    console.log(document.cookie);
+    // console.log(document.cookie);
 }
 
 function changecolor(){
