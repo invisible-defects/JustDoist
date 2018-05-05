@@ -42,3 +42,12 @@ def detect_lack_priorities(api: TodoistAPI) -> bool:
 
     return len([task for task in get_user_tasks(api.token) if task["priority"] != 1]) > 0
 
+def detect_regular_use(api: TodoistAPI) -> bool:
+    """Detect if user uses Todoist regularly
+    
+    Arguments:
+        api {TodoistAPI} -- todoist api
+    """
+
+    return sum(map(lambda x: x['total_completed'],
+        api.completed.get_stats()['days_items'])) < 7
