@@ -16,8 +16,20 @@ class JustdoistUser(AbstractUser):
     todoist_token = models.CharField(unique=True, max_length=128, null=True)
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
-    is_premium = models.BooleanField(default=False)
-    premium_end = models.DateTimeField(null=True)
+
+    def get_subscription(self):
+        try:
+            return self.subscription
+        except JustdoistUser.subscription.RelatedObjectDoesNotExist:
+            return None
+
+    def unsubscribe(self):
+        self.subscription.delete()
+        return self
+
+    @property
+    def has_subscription(self):
+        return self.get_subscription() is not None
 
     def get_stats(self) -> dict:
         if not self.check_todoist():
@@ -35,10 +47,6 @@ class JustdoistUser(AbstractUser):
             return "sync_token" in data
         except (HTTPError, ValueError, TypeError):
             return False
-
-    def get_premium(self, days: int=7):
-        self.is_premium = True
-        self.premium_end = datetime.now() + timedelta(days=days)
 
     def _get_highest_probability(self) -> "ProblemProbability":
         return self.suggested_problems.all().filter(
@@ -105,6 +113,12 @@ class JustdoistUser(AbstractUser):
         api.commit()
         return True
 
+    def __str__(self):
+        return f"<JustdoistUser: {self.username}, premium: {self.has_subscription}>"
+
+    def __repr__(self):
+        return str(self)
+
 
 class SuggestedProblem(models.Model):
     uid = models.IntegerField(primary_key=True, unique=True)
@@ -136,3 +150,25 @@ class ProblemProbability(models.Model):
     def __str__(self):
         return (f"<ProblemProbability [{self.suggested_problem.uid}] "
                 f"{self.value * 100:.2f}%, being solved: {self.is_being_solved}>")
+
+
+# TODO: Implement supervisor to disable outdated subscriptions
+class PremiumSubscription(models.Model):
+    VALUES = {"weekly": 7}
+    KINDS = frozenset(VALUES.keys())
+
+    user = models.OneToOneField(JustdoistUser,on_delete=models.CASCADE, related_name="subscription")
+    charge_id = models.CharField(max_length=256)
+    days = models.IntegerField(default=7)
+    end = models.DateField()
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("days", 7)
+        kwargs['end'] = datetime.now() + timedelta(days=kwargs['days'])
+        super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        return f"<PremiumSubscription: {(self.end - datetime.now()).days}d, U: {self.user.username}>"
+
+    def __repr__(self):
+        return str(self)

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Our apps
     'main',
 ]
 
@@ -148,3 +149,9 @@ OAUTH_CREDENTIALS = {
         'secret': os.environ.get("TODOIST_SECRET", '157199b7531547b9a379b43f1b43da44'),
     }
 }
+
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_SECRET_KEY", "pk_test_lVoperTigPyVUr0ti58PxtD9")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_nhlYKipeW7h6773CWLRQku3M")
+
+PREMIUM_PRICE_PER_DAY = 0.25
+PREMIUM_PRICE_PER_WEEK = PREMIUM_PRICE_PER_DAY * 7
