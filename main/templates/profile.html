@@ -123,7 +123,9 @@ function open_problem_modal(id, e){
         data = JSON.parse(data);
         text = '';
         data.forEach(function(item, i) {
-          text += '<p>' + (i+1) + '. ' + item.step_text + '</p>';
+          if (item.step_text !== ""){
+              text += '<p>' + (i+1) + '. ' + item.step_text + '</p>';
+          }
           text += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + item.step_solve + '</p>';
           icon = '';
           button = false;
