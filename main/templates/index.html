@@ -49,9 +49,31 @@
     
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
+
+
+
     {% if stats %}
 <div class="col s12 l7">
-    
+
+    <div class="card" id="premium">
+        <div class="card-content">
+            {% load staticfiles %}
+            <div class="row" style="margin:0;">
+            <div class="col s6"><img src="{% static 'img/premium.svg' %}" class="responsive-img"></div>
+            <div class="col s6">
+                <h4 style="margin-top:0;"> Premium Account</h4>
+                <p class="flow-text" style="font-size:1.2rem;">
+                Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!
+                </p>
+
+                <button type="button" class="waves-effect waves-light btn red right" style="margin-top:3rem; margin-bottom:0;"  onclick="document.location='payment'">Buy now!</button>
+                <button type="button" class="waves-effect waves-light btn-flat left" style="margin-top:3rem; margin-bottom:0;"  onclick="document.getElementById('premium').remove()">Buy later</button>
+
+            </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-content">
             <h4><i class="material-icons">error</i><b> PROBLEM</b></h4>

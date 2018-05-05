@@ -1,0 +1,67 @@
+<svg width="1975" height="1127" viewBox="0 0 1975 1127" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Canvas" fill="none">
+<g id="Premium" clip-path="url(#clip0)">
+<rect id="Rectangle" x="-5" y="-5" width="1930" height="1072" rx="15" transform="translate(22 26)" stroke="#4F4F4F" stroke-width="10"/>
+<g id="Group" clip-path="url(#clip1)">
+<g id="Header">
+<rect id="Header block" width="1920" height="144" transform="translate(22 26)" fill="#E44332"/>
+</g>
+<g id="Rectangle_2" filter="url(#filter0_d)">
+<rect width="1287" height="895" transform="translate(24 193)" fill="#F2F2F2"/>
+</g>
+<g id="Rectangle_3" filter="url(#filter1_d)">
+<rect width="569" height="304" transform="translate(1373 193)" fill="#F2F2F2"/>
+</g>
+<g id="Rectangle_4" filter="url(#filter2_d)">
+<rect width="569" height="559" transform="translate(1373 529)" fill="#F2F2F2"/>
+</g>
+<rect id="Rectangle 2" width="378" height="42" transform="translate(89 274)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.6" width="188" height="42" transform="translate(1415 274)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.8" width="188" height="42" transform="translate(1415 598)" fill="#C4C4C4"/>
+<path id="Vector" d="M 0 326.5C 1 276.833 27.6 176.9 126 174.5C 249 171.5 336.5 187 336.5 93.5C 336.5 18.7 411.833 0 449.5 0L 449.5 326.5L 0 326.5Z" transform="translate(1428 671.5)" stroke="#E44332" stroke-width="10"/>
+<rect id="Rectangle 2.7" width="453" height="12" transform="translate(1415 403)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.1" width="1125" height="28" transform="translate(89 381)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.2" width="1125" height="28" transform="translate(89 469)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.3" width="1125" height="28" transform="translate(89 543)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.4" width="1125" height="28" transform="translate(89 631)" fill="#C4C4C4"/>
+<rect id="Rectangle 2.5" width="766" height="28" transform="translate(89 708)" fill="#C4C4C4"/>
+<rect id="Rectangle 3" width="169" height="67" rx="10" transform="translate(1045 931)" fill="#E44332"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d" x="9" y="182" width="1317" height="925" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<filter id="filter1_d" x="1358" y="182" width="599" height="334" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<filter id="filter2_d" x="1358" y="518" width="599" height="589" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<clipPath id="clip0">
+<rect width="1975" height="1127" fill="white"/>
+</clipPath>
+<clipPath id="clip1">
+<rect width="1920" height="1062" fill="white" transform="translate(22 26)"/>
+</clipPath>
+</defs>
+</svg>
