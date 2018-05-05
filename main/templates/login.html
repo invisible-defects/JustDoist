@@ -6,64 +6,64 @@
 
 {% load staticfiles %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/login.css' %}"  media="screen,projection"/>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
 <script src="{% static 'js/showdown.min.js' %}"></script>
 <script src="{% static 'js/Chart.min.js' %}"></script>
+
 <link rel="icon" href="{% static 'img/logo.png' %}">
 <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"  media="screen,projection"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    {% block script %} {% endblock %}
-
 
 </head>
-<style id="style-color">
-    :root {
-      --color-red: #e44332ff;
-      --color-blue: #1B92C6;
-    }
-</style>
-<body>
-<div id='content' class="container main_cont mt-2">
-        <div class="row justify-content-md-center main_row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-                <div class="card text-center shad">
-                    <div class="card-header">
-                        <h1>Authorization</h1>
-                    </div>
-                    <div class="card-body">
-                        <form class="needs-validation"  action=" " method="post" novalidate>{% csrf_token %}
-                            <div class="form-group">
-                                {% if form.non_field_errors.0 %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form.non_field_errors.0 }}
-                                </div>
-                                {% endif %}
-                                <h5>Username:</h5>
-                                {{ form.username }}
-                                <small id="usernameHelp" class="text-danger">
-                                    {{ form.errors.username.0 }}
-                                </small>
-                                <h5>Password:</h5>
-                                {{ form.password }}
-                                <small id="passwordHelp" class="text-danger text-left">
-                                    {{ form.errors.password.0 }}
-                                </small>
-                            </div>
-                            <input class="btn btn-block btn-success mt-3 badge-pill" type="submit" value="Войти" />
-                        </form>
-                    </div>
-                    <div class="card-footer">
-                        <div class="alert alert-info" role="alert">
-                            Sign in to your account
-                            <a href="{% url 'register' %}">Don't have one? Register!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body id="content">
+<div class="wrapper">
+<div class="cont">
+    <div class="row">
+    <div class="logotext">
+    J<img src="{% static 'img/logo.svg' %}">STDOIST
     </div>
+    <li class="divider white"></li>
+    </div>
+    <div class="row">
+        <div class="flow-text white-text">Authorization</div><br>
+        <form class="col s12" action="" method="post" novalidate>{% csrf_token %}
+            {% if form.non_field_errors.0 %}
+            <div class="row yellow-text lighten-2">
+                {{ form.non_field_errors.0 }}
+            </div>
+            {% endif %}
+            <div class="row">
+            <div class="input-field col s12">
+                {{ form.username }}
+                <label for="id_username">Username</label>
+                <small id="usernameHelp" class="text-danger yellow-text lighten-2">
+                    {{ form.errors.username.0 }}
+                </small>
+            </div>
+            <div class="input-field col s12">
+                {{ form.password }}
+                <label for="id_password">Password</label>
+                <small id="passwordHelp" class="text-danger yellow-text lighten-2">
+                    {{ form.errors.password.0 }}
+                </small>
+            </div>
+            </div>
+
+
+
+            <button type="submit" class="waves-effect waves-light btn white right">Sign In</button>
+             <div class="white-text left" style="line-height: 1.3;">
+                Sign in to your account<br>
+                <a href="{% url 'register' %}" class="yellow-text lighten-2">Don't have one? Register!</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+</div>
 
 </body>
 <script>

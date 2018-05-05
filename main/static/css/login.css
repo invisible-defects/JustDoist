@@ -52,7 +52,6 @@ h5{
     box-sizing: border-box;
     overflow: hidden;
     transition: .2s;
-
 }
 .continue{
     background: none;
@@ -105,4 +104,73 @@ h5{
         color:#e44332ff !important;
         margin: 0 auto !important;
         display: block !important;
+    }
+
+    /* label color */
+   .input-field label {
+     color: #fff !important;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #fff !important;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #fff !important;
+   }
+
+
+
+
+
+   .input-field input[type=password]:focus + label {
+     color: #fff !important;
+   }
+   /* label underline focus color */
+   .input-field input[type=password]:focus {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+   }
+   /* valid color */
+   .input-field input[type=password].valid {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+   }
+   /* invalid color */
+   .input-field input[type=password].invalid {
+     border-bottom: 1px solid #fff !important;
+     box-shadow: 0 1px 0 0 #fff !important;
+   }
+
+    .col{
+        margin-left:0 !important;
+        margin-right:0 !important;
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+    .form-control{
+        color:white;
+    }
+    .text-danger{
+        display: block;
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+    }
+    input[type=text], input[type=password]{
+        border-bottom: 1px solid #fff !important;
     }
