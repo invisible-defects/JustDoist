@@ -2,10 +2,10 @@ from todoist import TodoistAPI
 
 
 def has_preferred_tasks(api: TodoistAPI) -> bool:
-    max_prior = max((item['priority'] for item in api.items.all()), default=1)
+    max_prior = max((item.data.get("priority", -1000) for item in api.items.all()), default=1)
     return max_prior == 1
 
-
+  
 def does_use_regularly(api: TodoistAPI) -> float:
     return int(
         sum(map(lambda x: x['total_completed'],

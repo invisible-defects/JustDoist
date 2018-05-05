@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.defaults import page_not_found
 from django.urls import path
 from django.contrib.auth import views as dj_views
+
 from main import views
 
 
@@ -30,10 +32,18 @@ urlpatterns = [
     path('', views.index),
     path('index', views.index, name='index'),
     path('register', views.Register.as_view(), name='register'),
+
     path('link/<slug:service>/', views.link, name='link'),
     path('authorize/<slug:provider>/', views.authorize),
     path('callback/<slug:provider>/', views.oauth_callback),
     path('profile/<slug:data>/', views.profile, name="profile"),
+    path('profile/', views.default_profile, name="profile"),
+
+    path('payment', views.payment, name="payment"),
+    path('checkout/<slug:kind>', views.checkout, name="checkout"),
+    path('failure', views.failure, name="failure"),
+    path('success', views.success, name="success"),
+
     path('settings', views.settings),
     path('contact_us', views.contact_us),
     path('problem', views.problem),
@@ -42,3 +52,6 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+handler404 = 'main.views.handler404'
+handler500 = handler404

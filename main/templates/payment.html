@@ -1,0 +1,96 @@
+<html>
+<head>
+{% load staticfiles %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"  media="screen,projection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JustDoist</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
+<meta http-equiv="Cache-Control" content="no-cache">
+<link rel="icon" href="{% static 'img/logo.png' %}">
+</head>
+<style id="style-color">
+    :root {
+      --color-red: #e44332ff;
+      --color-blue: #1B92C6;
+    }
+</style>
+
+<body id="content">
+
+<nav class="layout-color">
+<div class="nav-wrapper layout-color">
+  {% load staticfiles %}
+  <a href="" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="{% static 'img/logo_red.svg' %}"> stDoist</a>
+  <ul class="right hide-on-med-and-down">
+    <li><a href="/index"><i class="material-icons left">description</i>PROBLEMS</a></li>
+    <li><a href="/profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
+    <li><a href="" class="active"><i class="material-icons left">settings</i>SETTINGS</a></li>
+    <li><a href="/contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
+    <li><a href="/logout"><i class="material-icons">exit_to_app</i></a></li>
+  </ul>
+  <ul class="right hide-on-large-only">
+    <li><a href="/index"><i class="material-icons">description</i></a></li>
+    <li><a href="/profile/no_add"><i class="material-icons">equalizer</i></a></li>
+    <li><a href="" class="active"><i class="material-icons">settings</i></a></li>
+    <li><a href="/contact_us"><i class="material-icons">info_outline</i></a></li>
+    <li><a href="/logout"><i class="material-icons">exit_to_app</i></a></li>
+  </ul>
+
+</div>
+</nav>
+    <style>
+    .small{
+        font-size: 1.2rem;
+    }
+    </style>
+<!--  Main  -->
+<div class="container" style="width:85%;"><div class="row">
+
+<div class="col s12">
+    <div class="card">
+        <div class="card-content">
+            <h4 style="margin-top: -0.5rem;">Buy weekly subscription</h4>
+            <div class="valign-wrapper">
+                <div class="col s2">
+                    <img class="circle responsive-img" src="{{ img }}" style="max-width:100px;"></div>
+                <div class="col s10" style="margin-left: -1rem;">
+                    <form action="/checkout/weekly" method="POST">
+                        {% csrf_token %}
+                        {% load staticfiles %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{ stripe_key }}"
+                            data-amount="{{ price_weekly }}"
+                            data-name="JustDoist subscription"
+                            data-description="7-day subscription"
+                            data-image="{% static 'img/logo_red.svg' %}"
+                            data-currency="usd">
+                        </script>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div></div>
+
+
+</body>
+
+<script>
+$(document).ready(function(){
+    $('.modal').modal({
+        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        startingTop: '0%', // Starting top style attribute
+        endingTop: '0%' // Ending top style attribute
+    });
+    $('.tooltipped').tooltip({delay: 50});
+    $('select').material_select();
+    $(".dropdown-button").dropdown({hover:true});
+    drawcolor();
+});
+</script>
+</html>
