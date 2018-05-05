@@ -8,6 +8,8 @@ if __name__ == "__main__":
         problems = json.loads(f.read())
 
     for problem in problems:
+        if not SuggestedProblem.objects.filter(uid=problem['uid']):
+            continue
         suggestion = SuggestedProblem(
             uid = problem['uid'],
             title = problem['title'],
