@@ -49,7 +49,7 @@
     
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
-    
+    {% if stats %}
 <div class="col s12 l7">
     
     <div class="card">
@@ -97,42 +97,30 @@
     </div> 
    
     <script>
-        
-        $.ajax({
-              url: '/statistics',
-              type: "GET",
-              async: true,
-              success: onAjaxSuccess,
-              error: function(jqXHR, exception) {console.log(jqXHR);}
+        var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
+        var day = new Date().getDay();
+        f_part = week.slice(0, day);
+        s_part = week.slice(day-7);
+        week_labels = s_part.concat(f_part);
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: week_labels,
+                datasets: [{
+                    data: {% if stats %} {{ stats.graph }} {% else %} {} {% endif %},
+                    label: "Karma",
+                    borderColor: "#e44332ff",
+                    fill: "origin"
+                  }]
+            },
+            options: {
+                title: {display: true},
+                legend: {display:false}
+            }
         });
-        function onAjaxSuccess(data){
-
-            data = JSON.parse(data)["graph"];
-            var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
-            var day = new Date().getDay();
-            f_part = week.slice(0, day);
-            s_part = week.slice(day-7);
-            week_labels = s_part.concat(f_part);
 
 
-            var ctx = document.getElementById("myChart").getContext('2d');
-            var myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: week_labels,
-                    datasets: [{
-                        data: {% if stats %} {{ stats.graph }} {% else %} {} {% endif %},
-                        label: "Karma",
-                        borderColor: "#e44332ff",
-                        fill: "origin"
-                      }]
-                },
-                options: {
-                    title: {display: true},
-                    legend: {display:false}
-                }
-            });
-        }
         function redirect_on_add(){
             $.ajax({
               url: 'profile/add',
@@ -146,7 +134,9 @@
             }
         }
     </script>
-    
+    {% else %}
+    <h4 onclick="document.location='link/todoist'">Link your ToDoist</h4>
+    {% endif %}
     
 </div>
         
