@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.shortcuts import redirect
+from django.views.defaults import page_not_found
 from django.urls import path
 from django.contrib.auth import views as dj_views
 
@@ -44,7 +44,7 @@ urlpatterns = [
     path('failure', views.failure, name="failure"),
     path('success', views.success, name="success"),
 
-    path('settings', views.settings, name='settings'),
+    path('settings', views.settings),
     path('contact_us', views.contact_us),
     path('problem', views.problem),
     path('add_task', views.add_task),
@@ -53,4 +53,5 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 
-handler404 = 'main.views.not_found_404'
+handler404 = 'main.views.handler404'
+handler500 = handler404
