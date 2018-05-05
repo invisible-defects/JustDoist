@@ -8,7 +8,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
-    
+{% load staticfiles %}
 <meta http-equiv="Cache-Control" content="no-cache">
         <script src="{% static 'js/showdown.min.js' %}"></script>
         <script src="{% static 'js/Chart.min.js' %}"></script>
@@ -26,6 +26,8 @@
     position:absolute;
     bottom:0;
     left:0;
+
+
 }
 </style>
     
@@ -33,9 +35,10 @@
     
 <nav class="layout-color">
 <div class="nav-wrapper layout-color">
-  {% load staticfiles %}
-  <a href="/index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="{% static 'img/logo_red.svg' %}"> stDoist</a>
-  <ul class="right hide-on-med-and-down">
+{% load staticfiles %}
+    <a href="" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J
+        <img id="logo_img" src="{% static 'img/logo_red.svg' %}"> stDoist</a>
+   <ul class="right hide-on-med-and-down">
     <li><a href="/index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="/profile/no_add" class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
     <li><a href="/settings"><i class="material-icons left">settings</i>SETTINGS</a></li>

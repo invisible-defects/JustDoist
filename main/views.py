@@ -69,7 +69,7 @@ def profile(request, data):
     if data == 'add':
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
-        request.user.last_problem_shown = datetime.datetime.now(tz=localtz)
+        request.user.last_problem_shown = datetime.datetime.now()
         request.user.save()
 
     problems = []

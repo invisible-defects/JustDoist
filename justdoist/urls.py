@@ -33,7 +33,7 @@ urlpatterns = [
     path('link/<slug:service>/', views.link, name='link'),
     path('authorize/<slug:provider>/', views.authorize),
     path('callback/<slug:provider>/', views.oauth_callback),
-    path('profile/<slug:data>/', views.profile),
+    path('profile/<slug:data>/', views.profile, name="profile"),
     path('settings', views.settings),
     path('contact_us', views.contact_us),
     path('problem', views.problem),
