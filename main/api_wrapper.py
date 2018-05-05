@@ -10,5 +10,5 @@ def get_user_tasks(token, **kwargs):
     return requests.get(
         "https://beta.todoist.com/API/v8/tasks",
         headers={
-            "Authorization": "Bearer %s" % token
+            "Authorization": f"Bearer {token}"
         }).json()
