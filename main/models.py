@@ -4,6 +4,7 @@ import todoist
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import ValidationError
 from requests import HTTPError
 
 from main.api_utils import get_stats, get_combined_problems
@@ -172,3 +173,14 @@ class PremiumSubscription(models.Model):
 
     def __repr__(self):
         return str(self)
+
+
+class Achievment(models.Model):
+    title = models.CharField(max_length=256)
+    text = models.CharField(max_length=1000)
+    image = models.URLField(max_length=500)
+    users = models.ManyToManyField(JustdoistUser, related_name="achievements")
+    is_premium = models.BooleanField()
+
+    def __str__(self):
+        return f"<Achievement `{self.title}`, Premium: {self.is_premium}>"

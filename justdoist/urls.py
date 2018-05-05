@@ -44,7 +44,7 @@ urlpatterns = [
     path('failure', views.failure, name="failure"),
     path('success', views.success, name="success"),
 
-    path('settings', views.settings, name='settings'),
+    path('settings', views.settings),
     path('contact_us', views.contact_us),
     path('problem', views.problem),
     path('add_task', views.add_task),
@@ -53,4 +53,5 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 
-handler404 = 'main.views.not_found_404'
+handler404 = views.not_found_404
+
