@@ -134,7 +134,7 @@ function open_problem_modal(id, e){
             text += '<a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ id + ', '+ item.step_id + ')"><i class="material-icons">add</i></a>';
           }
           else if (item.step_status === 'time'){
-            text += '<i class="material-icons">time</i>';
+            text += '<i class="material-icons">timer</i>';
           }
           else if (item.step_status === 'done'){
             text += '<i class="material-icons green-text">done</i>';
