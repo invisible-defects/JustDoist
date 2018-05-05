@@ -154,7 +154,7 @@ function add_to_todoist(e, id){
     $(e).addClass('scale-out');
     $.ajax({
           url: '/add_task',
-          data: {text: text, id: id},
+          data: {text: text, id: id, step: 0}, // TODO: add step handling
           type: "GET",
           async: true,
           error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);}

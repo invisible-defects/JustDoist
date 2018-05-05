@@ -104,13 +104,17 @@ def problem(request):
     uid = request.GET.get('problem_id', None)
     if uid is None:
         return JsonResponse({"error": "missing `problem_id` param"}, status=422)
-    return SuggestedProblem.get(uid).steps.replace("*", "")
+    problem = SuggestedProblem.get(uid) 
+    steps =  problem.steps.replace("*", "")
+    trackers = problem.steps_trackers
+    # TODO: Finish func
 
 
 @login_required(login_url=LOGIN_URL)
 def add_task(request):
     task_text = request.GET.get('text', None)
     task_id = request.GET.get('id', None)
+    step_num = request.GET.get('step', None)
 
     if task_text is None:
         return JsonResponse({"error": "missing `text` param"}, status=422)
@@ -118,7 +122,10 @@ def add_task(request):
     if task_id is None:
         return JsonResponse({"error": "missing `id` param"}, status=422)
 
-    request.user.add_problem(task_text, task_id)
+    if step_num is None:
+        return JsonResponse({"error": "missing `step` param"}, status=422)
+
+    request.user.add_problem(task_text, task_id, step_num)
     return JsonResponse({"status": "ok"}, sttus=200)
 
 
