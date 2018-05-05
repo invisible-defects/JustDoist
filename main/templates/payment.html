@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
 {% load staticfiles %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
@@ -50,61 +50,29 @@
 <div class="container" style="width:85%;"><div class="row">
 
 <div class="col s12">
-
-    <div class="card"><div class="card-content">
-    <h4 style="margin-top: -0.5rem;">Personal Information</h4>
-
-    <div class="valign-wrapper">
-    <div class="col s2"><img class="circle responsive-img" src="{{ img }}" style="max-width:100px;"></div>
-    <div class="col s10" style="margin-left: -1rem;"><span class="flow-text">{{name}}</span><br><span class="flow-text red-text small">{{ email }}</span></div>
+    <div class="card">
+        <div class="card-content">
+            <h4 style="margin-top: -0.5rem;">Buy weekly subscription</h4>
+            <div class="valign-wrapper">
+                <div class="col s2">
+                    <img class="circle responsive-img" src="{{ img }}" style="max-width:100px;"></div>
+                <div class="col s10" style="margin-left: -1rem;">
+                    <form action="/checkout/weekly" method="POST">
+                        {% csrf_token %}
+                        {% load staticfiles %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{ stripe_key }}"
+                            data-amount="{{ price_weekly }}"
+                            data-name="JustDoist subscription"
+                            data-description="7-day subscription"
+                            data-image="{% static 'img/logo_red.svg' %}"
+                            data-currency="usd">
+                        </script>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    </div></div>
-
-
-
-    {% if premium %}
-
-    <div class="card"><div class="card-content">
-    <h4>Premium Account</h4>
-    Парампампам, я исповедую Ислам...
-    Лучше премиум, чем нет.
-    Вот такой тебе ответ...
-    </div></div>
-
-
-    <div class="card"><div class="card-content">
-    <h4>Themes</h4>
-    <style>
-        #red + label:after{
-            background: var(--color-red);
-            border: 2px solid var(--color-red);
-        }
-        #blue + label:after{
-            background: var(--color-blue);
-            border: 2px solid var(--color-blue);
-        }
-        #green + label:after{
-            background: var(--color-green);
-            border: 2px solid var(--color-green);
-        }
-    </style>
-    <p>
-      <input name="group1" type="radio" id="red" checked />
-      <label for="red">Red</label>
-    </p>
-    <p>
-      <input name="group1" type="radio" id="blue" />
-      <label for="blue">Blue</label>
-    </p>
-    <p>
-      <input name="group1" type="radio" id="green" />
-      <label for="green">Green</label>
-    </p>
-
-    </div></div>
-
-    {% endif %}
-
 </div>
 
 </div></div>
