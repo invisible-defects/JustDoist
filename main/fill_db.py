@@ -3,7 +3,7 @@ import json
 from load_django import load_django
 load_django()
 
-from models import SuggestedProblem, ProblemStep
+from main.models import SuggestedProblem, ProblemStep
 
 with open('fill_db_data.json', 'r') as f:
     problems = json.loads(f.read())

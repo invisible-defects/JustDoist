@@ -76,6 +76,7 @@ class JustdoistUser(AbstractUser):
                     user=self
                 )
                 proba.save()
+                proba.init_tasks()
 
         return True
 
@@ -157,12 +158,11 @@ class ProblemProbability(models.Model):
         return (f"<ProblemProbability [{self.suggested_problem.uid}] "
                 f"{self.value * 100:.2f}%, being solved: {self.is_being_solved}>")
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(self, args, kwargs)
-        for index in range(0, self.suggested_problem.steps_num):
+    def init_tasks(self):
+        for step in self.suggested_problem.steps.all():
             tracker = StepTracker(
                 related_problem_prob = self,
-                step = index
+                step = step
             )
             tracker.save()
 
