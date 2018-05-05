@@ -2,7 +2,7 @@ from todoist import TodoistAPI
 
 
 def has_preferred_tasks(api: TodoistAPI) -> bool:
-    max_prior = max((item.get("priority", -1000) for item in api.items.all()), default=1)
+    max_prior = max((item['priority'] for item in api.items.all()), default=1)
     return max_prior != 1
 
 
