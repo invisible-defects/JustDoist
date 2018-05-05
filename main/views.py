@@ -107,7 +107,7 @@ def problem(request):
         return JsonResponse({"error": "missing `problem_id` param"}, status=422)
     problem = SuggestedProblem.get(uid) 
     proba = problem.probabilities.all().filter(user=request.user).first()
-    return proba.json
+    return JsonResponse(proba.json, status=200, safe=False)
 
 
 @login_required(login_url=LOGIN_URL)
