@@ -20,9 +20,9 @@ pip install -r requirements.txt
 ```bash
 python manage.py makemigrations main
 python manage.py migrate
-python runserver localhost:8181
+python manage.py runserver localhost:5000
 ```
-5. Congrats! Now you can access the site on http://localhost:8181.
+5. Congrats! Now you can access the site on http://localhost:5000.
 
 
 **Production mode**  
