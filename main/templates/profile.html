@@ -121,9 +121,10 @@ function open_problem_modal(id, e){
     $.get("/problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
         data = JSON.parse(data);
+        console.log(data);
         text = '';
-        data.forEach(function(item) {
-          text += '<p>' + item.step_id + '. ' + item.step_text + '</p>';
+        data.forEach(function(item, i) {
+          text += '<p>' + (i+1) + '. ' + item.step_text + '</p>';
           text += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + item.step_solve + '</p>';
           icon = '';
           button = false;
