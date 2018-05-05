@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from django.contrib.auth import views as dj_views
 from main import views
@@ -22,13 +23,13 @@ from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    url(r'^accounts/login/$', dj_views.login, {'template_name': 'login.html'}),
-    url(r'^accounts/logout/$', dj_views.logout_then_login, name="logout"),
+    url(r'^login/$', dj_views.login, {'template_name': 'login.html'}),
+    url(r'^logout/$', dj_views.logout_then_login, name="logout"),
 
     path('', views.index),
     path('index', views.index, name='index'),
     path('register', views.Register.as_view(), name='register'),
-    path('link/<slug:service>', views.link, name='link'),
+    path('link/<slug:service>/', views.link, name='link'),
     path('authorize/<slug:provider>', views.authorize),
     path('callback/<slug:provider>', views.oauth_callback),
     path('profile/<slug:data>', views.profile),
@@ -38,3 +39,5 @@ urlpatterns = [
     path('add_task', views.add_task),
     path('statistics', views.statistics),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

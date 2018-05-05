@@ -61,15 +61,16 @@ class TodoistSignIn(OAuthSignIn):
             base_url='https://todoist.com/api/v7'
         )
 
+    def get_callback_url(self, request):
+        return super().get_callback_url(request)
+
     def authorize(self, request):
         s = self.service.get_authorize_url(
             scope='data:read_write',
             response_type='code',
             redirect_uri=self.get_callback_url(request)
         )
-        print(s)
         return s
-
 
     def callback(self, request):
         def decode_json(payload):
@@ -82,7 +83,7 @@ class TodoistSignIn(OAuthSignIn):
             data={'client_id': self.client_id,
                   'client_secret': self.client_secret,
                   'code': request.GET['code'],
-                  'redirect_uri': self.get_callback_url()},
+                  'redirect_uri': self.get_callback_url(request)},
             decoder=decode_json
         )
         return token

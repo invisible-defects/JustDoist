@@ -65,7 +65,7 @@ class JustdoistUser(AbstractUser):
         data = get_combined_problems(api)
         for problem in self.possible_problems:
             value = data[problem]
-            proba = self.suggested_problems.all().get(suggest_problem=problem).first()
+            proba = self.suggested_problems.all().filter(suggested_problem=problem).first()
 
             if proba is None:
                 sgs_problem = SuggestedProblem.get(problem)

@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ['.justdoist.com']
+ALLOWED_HOSTS = ['.justdoist.com', "just.whatever.team"]
 if DEBUG: ALLOWED_HOSTS.append("*")
 
 # Application definition
@@ -92,7 +92,7 @@ else:
             'USER': os.environ.get("DB_USER", "postgres"),
             'HOST': os.environ.get("DB_HOST", 'localhost'),  # set in docker-compose.yml
             'PORT': os.environ.get("DB_PORT", 5432),  # default postgresql port
-            'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "postgres"),
+            'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
         }
     }
 
@@ -140,14 +140,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "main/static"),
 ]
 
+LOGIN_URL = "/login"
 
 OAUTH_CREDENTIALS = {
     'todoist': {
-        # Localhost keys
-        'id': '6a8efb2da8924399b729d69754d20306',
-        'secret': '157199b7531547b9a379b43f1b43da44',
-
-        # 'id': '30b562cc54f74cd39d46960f68b9b612',
-        # 'secret': '9c218fd301af493497799fc26cb482ac',
+        'id': os.environ.get('TODOIST_ID', '6a8efb2da8924399b729d69754d20306'),
+        'secret': os.environ.get("TODOIST_SECRET", '157199b7531547b9a379b43f1b43da44'),
     }
 }

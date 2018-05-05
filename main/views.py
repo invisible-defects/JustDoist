@@ -9,12 +9,13 @@ from django.views.generic import CreateView
 from main.forms import UserForm
 from main.models import SuggestedProblem
 from main.oauth import OAuthSignIn
+from justdoist.settings import LOGIN_URL
 
 
 # NOTE: for better project scalability
 # we should consider to replace function-based views with class-based views
 # and (probably) implement a RESTful API.
-@login_required()
+@login_required(login_url=LOGIN_URL)
 def index(request):
     problem_q = request.user.get_problem()
     button = True
@@ -26,7 +27,7 @@ def index(request):
         problem = "Come back tomorrow for more advice!\nYou can work on your current problems now."
         button = False
     else:
-        problem = problem_q['problem'].suggests_problem.body
+        problem = problem_q['problem'].suggested_problem.body
 
     stats = request.user.get_stats()
     context = {
@@ -42,17 +43,17 @@ def login(request):
         return redirect("index")
     return render(request, 'login.html')
 
-@login_required
+
+@login_required(login_url=LOGIN_URL)
 def authorize(request, provider):
     oauth = OAuthSignIn.get_provider(provider)
     return redirect(oauth.authorize(request))
 
 
+@login_required(login_url=LOGIN_URL)
 def oauth_callback(request, provider):
-    if not request.user.is_authenticated:
-        return redirect("index")
     oauth = OAuthSignIn.get_provider(provider)
-    token = oauth.callback()
+    token = oauth.callback(request)
 
     # TODO: add failure page/message
     if token is None:
@@ -63,7 +64,7 @@ def oauth_callback(request, provider):
     return redirect('index')
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def profile(request, data):
     if data == 'add':
         pr = request.user.get_problem()['problem']
@@ -88,17 +89,17 @@ def profile(request, data):
     return render(request, 'profile.html', context={"probs": problems})
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def settings(request):
     return render(request, 'settings.html')
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def contact_us(request):
     return render(request, 'contact_us.html')
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def problem(request):
     uid = request.GET.get('problem_id', None)
     if uid is None:
@@ -106,7 +107,7 @@ def problem(request):
     return SuggestedProblem.get(uid).steps.replace("*", "")
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def add_task(request):
     task_text = request.GET.get('text', None)
     task_id = request.GET.get('id', None)
@@ -121,7 +122,7 @@ def add_task(request):
     return JsonResponse({"status": "ok"}, sttus=200)
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def link(request, service):
     # TODO: add better handler
     if service == 'todoist':
@@ -129,7 +130,7 @@ def link(request, service):
     return redirect("index.html")
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 def statistics(request):
     stats = request.user.get_stats()
     return JsonResponse(stats, status=200)
