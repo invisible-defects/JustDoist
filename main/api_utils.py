@@ -3,7 +3,7 @@ from todoist import TodoistAPI
 
 def has_preferred_tasks(api: TodoistAPI) -> bool:
     max_prior = max((item['priority'] for item in api.items.all()), default=1)
-    return max_prior != 1
+    return max_prior == 1
 
 
 def does_use_regularly(api: TodoistAPI) -> float:

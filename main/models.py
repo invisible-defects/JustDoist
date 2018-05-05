@@ -42,7 +42,7 @@ class JustdoistUser(AbstractUser):
 
     def get_problem(self) -> dict:
         if self.last_problem_shown is not None:
-            delta = datetime.now() - self.last_problem_shown
+            delta = datetime.now() - self.last_problem_shown.replace(tzinfo=None)
             if delta.days < 1:
                 return {"status": 'time', 'problem': None}
 
@@ -77,6 +77,9 @@ class JustdoistUser(AbstractUser):
                 )
                 proba.save()
                 proba.init_tasks()
+            else:
+                proba.value = value
+                proba.save()
 
         return True
 

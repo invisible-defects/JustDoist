@@ -31,7 +31,7 @@ def index(request):
 
     stats = request.user.get_stats()
     context = {
-        "problem_text": problem,
+        "problem_text": problem.replace('\n', '\\n'),
         "button": button,
         "stats": stats,
     }
@@ -69,6 +69,7 @@ def profile(request, data):
     if data == 'add':
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
+        pr.save()
         request.user.last_problem_shown = datetime.datetime.now()
         request.user.save()
 
@@ -83,7 +84,7 @@ def profile(request, data):
                 int(int(prob.steps_completed) / int(prob_raw.steps_num) * 100),
                 100
             ),
-            'id': prob.problem_num
+            'id': prob.suggested_problem.uid
         })
 
     return render(request, 'profile.html', context={"probs": problems})
