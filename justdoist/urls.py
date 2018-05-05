@@ -53,5 +53,5 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 
-handler404 = 'main.views.handler404'
-handler500 = handler404
+# handler404 = 'main.views.handler404'
+# handler500 = handler404
