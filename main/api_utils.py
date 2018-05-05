@@ -53,6 +53,19 @@ def detect_regular_use(api: TodoistAPI) -> bool:
         api.completed.get_stats()['days_items'])) < 7
 
 
+def get_combined_problems(api: TodoistAPI) -> dict:
+    # is_premium(api)
+    # get_stats(api)
+    problems_dict = {}
+
+    problems_dict["task_grouping"] = uses_task_grouping(api)
+    problems_dict["exhaustion"] = detect_exhaustion(api)
+    problems_dict["lack_priorities"] = detect_lack_priorities(api)
+    problems_dict["regular_use"] = detect_regular_use(api)
+
+    return problems_dict
+
+
 def get_stats(api: TodoistAPI) -> dict:
     statistics = api.completed.get_stats()
     stats_for_graph = statistics["karma_graph_data"]
