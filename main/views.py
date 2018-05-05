@@ -90,6 +90,11 @@ def profile(request, data):
 
 
 @login_required(login_url=LOGIN_URL)
+def order_subscription(request, days):
+    pass
+
+
+@login_required(login_url=LOGIN_URL)
 def settings(request):
     return render(request, 'settings.html')
 

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import todoist
 from django.db import models
@@ -16,6 +16,8 @@ class JustdoistUser(AbstractUser):
     todoist_token = models.CharField(unique=True, max_length=128, null=True)
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
+    is_premium = models.BooleanField(default=False)
+    premium_end = models.DateTimeField(null=True)
 
     def get_stats(self) -> dict:
         if not self.check_todoist():
@@ -33,6 +35,10 @@ class JustdoistUser(AbstractUser):
             return "sync_token" in data
         except (HTTPError, ValueError, TypeError):
             return False
+
+    def get_premium(self, days: int=7):
+        self.is_premium = True
+        self.premium_end = datetime.now() + timedelta(days=days)
 
     def _get_highest_probability(self) -> "ProblemProbability":
         return self.suggested_problems.all().filter(
