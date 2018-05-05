@@ -1,0 +1,95 @@
+[
+    {
+        "uid": 1,
+        "title": "Goal not exact enough",
+        "body": ["You should be more exact when settings your objectives: determine the task accomplishment criteria, date or deadline, place, etc.",
+                "<i>For example, instead of “workout” there should be “90 minutes of workout in Superhero Gym on Sunday”</i>",
+                "<b>Why does it work?</b>",
+                "When our brain is unsure how big the job to be done is, or when the circumstances are not exact, it’s harder and less likely to complete the task, as it’s psychologically scary and uncomfortable to complete uncertain tasks."],
+        "steps_num": 4,
+        "steps": [
+            {
+                "number": 0,
+                "description": "One of the greatest objective setting techniques is SMART - it’s a complex of criterias of a good goal. Its concept is very easy - it will take 5 minutes to get into it.",
+                "task": "Read about SMART - https://en.wikipedia.org/wiki/SMART_criteria"
+            },
+            {
+                "number": 1,
+                "description": "Try to analyze your objectives - make your today’s tasks fit SMART criteria.",
+                "task": "Make today’s tasks fit SMART criteria" 
+            },
+            {
+                "number": 2,
+                "description": " If want to know more about SMART and other great techniques, <i>The 7 Habits of Highly Effective</i> People by Stephen Covey would be a great choice.",
+                "task": "Buy or download The 7 Habits of Highly Effective People by Stephen Covey"
+            },
+            {
+                "number": 3,
+                "description": "",
+                "task": "Read 5 pages of “7 Habits” daily" 
+            }
+        ]
+    },
+    {
+        "uid": 2,
+        "title": "No prioritization",
+        "body": ["You should use ToDoist’s “Priority” function, to prioritise most important tasks. Use “p1”, …, “p4” tags to determine tasks’ importance.",
+                "<i>For example, “p1 Meeting with Tom on Sunday” will be automatically detected as Priority 1 by ToDoist</i>",
+                "<b>Why does it work?</b>",
+                "Tasks prioritization helps you to concentrate on what is truly important for you. Some people start off with some easy tasks in the beginning of the day, and often find out that they haven’t done anything important by the end of the day. Prioritizing always reminds you of what should be done first and where should the most effort be put."],
+        "steps_num": 4,
+        "steps":[
+            {
+                "number": 0,
+                "description": "Brendon Burchard, world's leading high performance coach, has a great video on prioritizing. It gives 3 simple ideas on the topic, which might be extremely useful.",
+                "task": "Watch the video - https://www.youtube.com/watch?v=kDAYUN92i70"
+            },
+            {
+                "number": 1,
+                "description": "Try to prioritize your daily tasks for today! Try to follow your priorities throughout the day and pay the most attention to specified tasks.",
+                "task": "Prioritize today’s objectives"
+            },
+            {
+                "number": 2,
+                "description": "There are some interesting advanced methods of objective prioritizing, like Eisenhower Method or POSEC Method. Choose one that suits you best!",
+                "task": "Read about different prioritizing techniques - https://en.wikipedia.org/wiki/Time_management#Setting_priorities_and_goals"
+            },
+            {
+                "number": 3,
+                "description": "",
+                "task": "Implement chosen technique into daily habit"
+            }
+        ]
+    },
+    {
+        "uid": 3,
+        "title": "Irregular ToDoist use",
+        "body": ["Try to use ToDoist regularly, it should become your daily habit: setting the goals and marking their execution. It might be hard for the first couple of days or weeks, but then it will get a lot easier!",
+                "<i>A little effort makes a big difference over time. 0.99^365 =  0.02, 1.01^365 = 37.78</i>",
+                "<b>Why does it work?</b>",  
+                "Using ToDoist daily will help you to concentrate on what is truly important for you. It will help you to manage time more easily and effectively, and will also decrease procrastination."],
+        "steps_num": 4,
+        "steps":[
+            {
+                "number": 0,
+                "description": "Some inspiration first! Watch a part of speech by Jim Kwik - famous learning expert.",
+                "task": "Watch video - https://www.youtube.com/watch?v=x1vQx2uIu4s"
+            },
+            {
+                "number": 1,
+                "description": "Don’t keep your objectives in your head - keeping them in your ToDoist app is a way easier. Try to put your goals into ToDoist and check it every time you are to do something.",
+                "task": "Check ToDoist and add today’s task every day"
+            },
+            {
+                "number": 2,
+                "description": "If you want to know more about habits and how they can change your life, <i>High Performance Habits</i> by Brendon Burchard would be a great choice.",
+                "task": "Buy or download High Performance Habits by Brendon Burchard"
+            },
+            {
+                "number": 3,
+                "description": "",
+                "task": "Read 5 pages of “High Performance Habits” daily"
+            }
+        ]
+    }
+]

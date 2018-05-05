@@ -1,13 +1,19 @@
-import sys; sys.path.append("../")
-from config import Config
+from todoist.api import TodoistAPI
 from main.api_wrapper import get_user_tasks
 
-from todoist.api import TodoistAPI
 
+def has_preferred_tasks(api: TodoistAPI) -> bool:
+    max_prior = max((item.data.get("priority", -1000) for item in api.items.all()), default=1)
+    return max_prior == 1
 
-api_token = "a7ced8b476ac01b1e96ee80fbe185f7bbea4decf"
+  
+def does_use_regularly(api: TodoistAPI) -> float:
+    return int(
+        sum(map(lambda x: x['total_completed'],
+            api.completed.get_stats()['days_items'])) < 7
+    )
 
-
+  
 def uses_task_grouping(api: TodoistAPI) -> bool :
     """Detects if user uses the task grouping feature.
     
@@ -83,5 +89,5 @@ def get_stats(api: TodoistAPI) -> dict:
         )
 
     # stats_for_linear_graph_completed = sum(map(lambda x: x['total_completed'], statistics["days_items"]))
-    stats_for_graph_optimized = [s.get("kargma_avg", None) for s in stats_for_graph]
+    stats_for_graph_optimized = [s.get("karma_avg", None) for s in stats_for_graph]
     return {"graph": stats_for_graph_optimized, "percentage": stats_linear_graph}
