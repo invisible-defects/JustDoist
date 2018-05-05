@@ -1,15 +1,22 @@
 import datetime
 
+import stripe
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 
 from main.forms import UserForm
-from main.models import SuggestedProblem
+from main.models import SuggestedProblem, PremiumSubscription
 from main.oauth import OAuthSignIn
-from justdoist.settings import LOGIN_URL
+from justdoist.settings import (
+    LOGIN_URL, STRIPE_PUBLIC_KEY,
+    STRIPE_SECRET_KEY, PREMIUM_PRICE_PER_DAY, PREMIUM_PRICE_PER_WEEK
+)
+stripe.api_key = STRIPE_SECRET_KEY
 
 
 # NOTE: for better project scalability
@@ -36,6 +43,10 @@ def index(request):
         "stats": stats,
     }
     return render(request, 'index.html', context=context)
+
+
+def not_found_404(request):
+    return render(request, "404.html")
 
 
 def login(request):
@@ -86,12 +97,24 @@ def profile(request, data):
             'id': prob.problem_num
         })
 
-    return render(request, 'profile.html', context={"probs": problems})
+    context = {
+        "probs": problems,
+    }
+    return render(request, 'profile.html', context=context)
+
+@login_required(login_url=LOGIN_URL)
+def default_profile(request):
+    return redirect("/profile/no_add")
 
 
 @login_required(login_url=LOGIN_URL)
 def settings(request):
-    return render(request, 'settings.html')
+    context = {
+        "premium": request.user.has_subscription,
+        "email": request.user.email,
+        "name": request.user.username,
+    }
+    return render(request, 'settings.html', context=context)
 
 
 @login_required(login_url=LOGIN_URL)
@@ -148,3 +171,64 @@ class Register(CreateView):
         user.save()
 
         return super().form_valid(form)
+
+
+@login_required(login_url=LOGIN_URL)
+def payment(request):
+    # Redirect in the case of missing SMI integration
+    if request.user.todoist_token is None:
+        return redirect("index")
+
+    # Redirect if user is already subscribed
+    if request.user.has_subscription:
+        return redirect("already_has_subscription")
+
+    context = {
+        "stripe_key": STRIPE_PUBLIC_KEY,
+        "price_weekly": PREMIUM_PRICE_PER_WEEK,
+    }
+    return render(request, 'payment.html', context)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+@login_required(login_url=LOGIN_URL)
+def checkout(request, kind):
+    if kind not in PremiumSubscription.KINDS:
+        return render(
+            request, "failure",
+            context={"error": "Invalid subscription type"},
+            status=422
+        )
+
+    try:
+        days = PremiumSubscription.VALUES[kind]
+        charge = stripe.Charge.create(
+            # Stripe accepts amount in cents
+            amount=int(days * PREMIUM_PRICE_PER_DAY * 100),
+            currency="usd",
+            source=request.POST.get("stripeToken"),
+            description=f"{days}d subscription to JustDoist Premium"
+        )
+    except stripe.InvalidRequestError as e:
+        return render(request, "failure", context={"error": e}, status=400)
+    except stripe.error.CardError as e:
+        return render(request, "failure", context={"error": e}, status=422)
+
+    sub = PremiumSubscription(
+        user=request.user,
+        days=PremiumSubscription.VALUES[kind],
+        charge_id=charge.id
+    )
+    sub.save()
+    return redirect("success")
+
+
+@login_required(login_url=LOGIN_URL)
+def failure(request):
+    return render(request, "failure.html")
+
+
+@login_required(login_url=LOGIN_URL)
+def success(request):
+    return render(request, "success.html")
