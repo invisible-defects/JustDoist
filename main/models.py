@@ -178,10 +178,12 @@ class StepTracker(models.Model):
     @property
     def is_completed(self):
         if self.todoist_task_id == 0:
-            return False
+            return 'to_work'
         api = todoist.TodoistAPI(self.user.todoist_token)
         item = api.items.get_by_id(self.todoist_task_id)
-        return item.checked
+        if item.checked == 0:
+            return 'time'
+        return 'done'
 
         def __str__(self):
             return (f"<ProblemSolvingStep [{self.related_problem_prob.suggested_problem.uid}] "
