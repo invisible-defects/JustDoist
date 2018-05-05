@@ -10,24 +10,15 @@
 <script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
 
 <meta http-equiv="Cache-Control" content="no-cache">
-        <script src="{% static 'js/showdown.min.js' %}"></script>
-        <script src="{% static 'js/Chart.min.js' %}"></script>
 <link rel="icon" href="{% static 'img/logo.png' %}">
 </head>
+
+
 <style id="style-color">
-:root {
-  --color-red: #e44332ff;
-  --color-blue: #1B92C6;
-}
-</style>
-    
-<style>
 .stats-slider{
     position:absolute;
     bottom:0;
     left:0;
-
-
 }
 </style>
     
@@ -128,35 +119,45 @@ function open_problem_modal(id, e){
     
     $.get("/problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
-        txt = new showdown.Converter({underline: true}).makeHtml(data);
-        txt = txt.split('&lt;&gt;');
-        newtext = '';
-        for (i = 0; i < txt.length; i++){
-            if (i % 2 != 0){
-                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ id + ')"><i class="material-icons">add</i></a></div></div>';
-            }
+        data = JSON.parse(data);
+        text = '';
+        data.forEach(function(item, i) {
+          if (item.step_text !== ""){
+              text += '<p>' + (i+1) + '. ' + item.step_text + '</p>';
+          }
+          text += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + item.step_solve + '</p>';
+          icon = '';
+          button = false;
+          text += '<div>';
+          if (item.step_status === 'to_work'){
+            text += '<a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ id + ', '+ item.step_id + ')"><i class="material-icons">add</i></a>';
+          }
+          else if (item.step_status === 'time'){
+            text += '<i class="material-icons">timer</i>';
+          }
+          else if (item.step_status === 'done'){
+            text += '<i class="material-icons green-text">done</i>';
+          }
 
-            else{
-                newtext += txt[i];
-            }
-        }
-        title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
-        text = title + newtext;
+          text += '</div></div>';
+        });
         $('.modal-content').html(text);
         $("#modal1").modal("open");
         $('.tooltipped').tooltip({delay: 50});
     }
 }
-function add_to_todoist(e, id){
+function add_to_todoist(e, id, step_id){
     text = e.parentElement.previousSibling.innerText;
     console.log(e.parentElement.previousSibling.innerText);
     $(e).addClass('scale-out');
+    console.log(e);
     $.ajax({
           url: '/add_task',
-          data: {text: text, id: id},
+          data: {text: text, id: id, step: step_id}, // TODO: add step handling
           type: "GET",
           async: true,
-          error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);}
+          error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);},
+          success: function(data){console.log('succes'); $(e).replaceWith('<i class="material-icons">time</i>')}
     });
 }
 </script>

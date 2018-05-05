@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta
 
 import todoist
@@ -56,7 +57,7 @@ class JustdoistUser(AbstractUser):
 
     def get_problem(self) -> dict:
         if self.last_problem_shown is not None:
-            delta = datetime.now() - self.last_problem_shown
+            delta = datetime.now() - self.last_problem_shown.replace(tzinfo=None)
             if delta.days < 1:
                 return {"status": 'time', 'problem': None}
 
@@ -90,6 +91,10 @@ class JustdoistUser(AbstractUser):
                     user=self
                 )
                 proba.save()
+                proba.init_tasks()
+            else:
+                proba.value = value
+                proba.save()
 
         return True
 
@@ -103,15 +108,18 @@ class JustdoistUser(AbstractUser):
 
         return -1
 
-    def add_problem(self, text: str, problem_id: int) -> bool:
+    def add_problem(self, text: str, problem_id: int, step_num: int) -> bool:
         if not self.check_todoist():
             return False
-        proba = self.suggested_problems.all().filter(uid=problem_id).first()
+        proba = SuggestedProblem.objects.all().filter(uid=problem_id).first().probabilities.filter(user=self).first()
         proba.steps_completed += 1
         proba.save()
         api = todoist.TodoistAPI(self.todoist_token)
-        api.items.add(text, self.get_inbox_id(api))
+        item = api.items.add(text, self.get_inbox_id(api))
         api.commit()
+        tracker = SuggestedProblem.objects.all().filter(uid=problem_id).first().steps.filter(number=step_num).first().steps_trackers.filter(related_problem_prob=proba).first()
+        tracker.todoist_task_id = item['id']
+        tracker.save()
         return True
 
     def __str__(self):
@@ -125,7 +133,6 @@ class SuggestedProblem(models.Model):
     uid = models.IntegerField(primary_key=True, unique=True)
     title = models.CharField(max_length=128)
     body = models.CharField(max_length=10000)
-    steps = models.CharField(max_length=10000)
     steps_num = models.IntegerField(default=1)
 
     @classmethod
@@ -141,6 +148,16 @@ class SuggestedProblem(models.Model):
         return f"<SuggestedProblem {self.uid} \"{self.title}\">"
 
 
+class ProblemStep(models.Model):
+    related_problem = models.ForeignKey(SuggestedProblem, on_delete=models.CASCADE, related_name="steps")
+    number = models.IntegerField(default=-1)
+    description = models.CharField(max_length=10000)
+    task = models.CharField(max_length=10000)
+
+    def __str__(self):
+        return f"<ProblemStep {self.number} \"{self.related_problem.uid}\">"
+
+
 class ProblemProbability(models.Model):
     value = models.FloatField()
     user = models.ForeignKey(JustdoistUser, on_delete=models.CASCADE, related_name="suggested_problems")
@@ -148,11 +165,52 @@ class ProblemProbability(models.Model):
     steps_completed = models.IntegerField(default=0)
     is_being_solved = models.BooleanField(default=False)
 
+    @property
+    def json(self):
+        data = []
+        for tracker in self.steps_trackers.all():
+            step = tracker.step
+            data.append({
+                "step_id": step.number,
+                "step_text": step.description,
+                "step_solve": step.task,
+                "step_status": tracker.is_completed
+            })
+        return json.dumps(data)
+
     def __str__(self):
         return (f"<ProblemProbability [{self.suggested_problem.uid}] "
                 f"{self.value * 100:.2f}%, being solved: {self.is_being_solved}>")
 
+    def init_tasks(self):
+        for step in self.suggested_problem.steps.all():
+            tracker = StepTracker(
+                related_problem_prob = self,
+                step = step
+            )
+            tracker.save()
 
+
+class StepTracker(models.Model):
+    related_problem_prob = models.ForeignKey(ProblemProbability, on_delete=models.CASCADE, related_name="steps_trackers")
+    step = models.ForeignKey(ProblemStep, on_delete=models.CASCADE, related_name="steps_trackers")
+    todoist_task_id = models.CharField(max_length=10000, default='0')
+
+    @property
+    def is_completed(self):
+        if self.todoist_task_id == '0':
+            return 'to_work'
+        api = todoist.TodoistAPI(self.related_problem_prob.user.todoist_token)
+        item = api.items.get_by_id(self.todoist_task_id)
+        if item['item']['checked'] == 0:
+            return 'time'
+        return 'done'
+
+    def __str__(self):
+        return (f"<StepTracker [{self.related_problem_prob.suggested_problem.uid}] "
+                f"Step {self.step}, completed: {self.is_completed}>")
+
+      
 # TODO: Implement supervisor to disable outdated subscriptions
 class PremiumSubscription(models.Model):
     VALUES = {"weekly": 7}
@@ -184,3 +242,4 @@ class Achievment(models.Model):
 
     def __str__(self):
         return f"<Achievement `{self.title}`, Premium: {self.is_premium}>"
+      

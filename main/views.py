@@ -38,7 +38,7 @@ def index(request):
 
     stats = request.user.get_stats()
     context = {
-        "problem_text": problem,
+        "problem_text": problem.replace('\n', '<br>'),
         "button": button,
         "stats": stats,
     }
@@ -80,6 +80,7 @@ def profile(request, data):
     if data == 'add':
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
+        pr.save()
         request.user.last_problem_shown = datetime.datetime.now()
         request.user.save()
 
@@ -94,7 +95,7 @@ def profile(request, data):
                 int(int(prob.steps_completed) / int(prob_raw.steps_num) * 100),
                 100
             ),
-            'id': prob.problem_num
+            'id': prob.suggested_problem.uid
         })
 
     context = {
@@ -127,13 +128,16 @@ def problem(request):
     uid = request.GET.get('problem_id', None)
     if uid is None:
         return JsonResponse({"error": "missing `problem_id` param"}, status=422)
-    return SuggestedProblem.get(uid).steps.replace("*", "")
+    problem = SuggestedProblem.get(uid) 
+    proba = problem.probabilities.all().filter(user=request.user).first()
+    return JsonResponse(proba.json, status=200, safe=False)
 
 
 @login_required(login_url=LOGIN_URL)
 def add_task(request):
     task_text = request.GET.get('text', None)
     task_id = request.GET.get('id', None)
+    step_num = request.GET.get('step', None)
 
     if task_text is None:
         return JsonResponse({"error": "missing `text` param"}, status=422)
@@ -141,8 +145,11 @@ def add_task(request):
     if task_id is None:
         return JsonResponse({"error": "missing `id` param"}, status=422)
 
-    request.user.add_problem(task_text, task_id)
-    return JsonResponse({"status": "ok"}, sttus=200)
+    if step_num is None:
+        return JsonResponse({"error": "missing `step` param"}, status=422)
+
+    request.user.add_problem(task_text, task_id, step_num)
+    return JsonResponse({"status": "ok"}, status=200)
 
 
 @login_required(login_url=LOGIN_URL)
