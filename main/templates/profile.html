@@ -10,24 +10,15 @@
 <script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
 {% load staticfiles %}
 <meta http-equiv="Cache-Control" content="no-cache">
-        <script src="{% static 'js/showdown.min.js' %}"></script>
-        <script src="{% static 'js/Chart.min.js' %}"></script>
 <link rel="icon" href="{% static 'img/logo.png' %}">
 </head>
-<style id="style-color">
-:root {
-  --color-red: #e44332ff;
-  --color-blue: #1B92C6;
-}
-</style>
-    
+
+
 <style>
 .stats-slider{
     position:absolute;
     bottom:0;
     left:0;
-
-
 }
 </style>
     
@@ -129,20 +120,31 @@ function open_problem_modal(id, e){
     
     $.get("/problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
-        txt = new showdown.Converter({underline: true}).makeHtml(data);
-        txt = txt.split('&lt;&gt;');
-        newtext = '';
-        for (i = 0; i < txt.length; i++){
-            if (i % 2 != 0){
-                newtext += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + txt[i] + '</p><div><a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ id + ')"><i class="material-icons">add</i></a></div></div>';
-            }
-
-            else{
-                newtext += txt[i];
-            }
-        }
-        title = "<h4>" + e.children[0].children[0].outerText + "</h4>";
-        text = title + newtext;
+        data = JSON.parse(data);
+        text = '';
+        data.forEach(function(item) {
+          text += '<p>' + item.step_id + '. ' + item.step_text + '</p>';
+          text += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + item.step_solve + '</p>';
+          icon = '';
+          button = false;
+          if (item.step_status === 'to_work'){
+            button = true;
+          }
+          else if (item.step_status === 'time'){
+            icon = 'timer';
+          }
+          else if (item.step_status === 'done'){
+            icon = 'done';
+          }
+          text += '<div>';
+          if (button === true){
+            text += '<a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ item.step_id + ')"><i class="material-icons">add</i></a>';
+          }
+          else{
+            text += '<i class="material-icons">' + icon + '</i>';
+          }
+          text += '</div></div>';
+        });
         $('.modal-content').html(text);
         $("#modal1").modal("open");
         $('.tooltipped').tooltip({delay: 50});

@@ -213,3 +213,11 @@ height: 100px !important;
     height: 1rem;
     margin-top: -2px;
 }
+
+
+:root {
+  --color-red: #e44332ff;
+  --color-blue: #1B92C6;
+  --color-green: #48d34e;
+  --color-black: #303330;
+}
