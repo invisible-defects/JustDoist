@@ -63,7 +63,7 @@
         </div>
     </div> 
     <script>
-        text = '{{ problem_text }}';
+        text = '{{ problem_text | safe}}';
         text = text.replace('\n', '<br />');
         txt = new showdown.Converter({underline: true}).makeHtml(text);
         $('#problem-text').html(txt);

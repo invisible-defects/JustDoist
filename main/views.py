@@ -31,7 +31,7 @@ def index(request):
 
     stats = request.user.get_stats()
     context = {
-        "problem_text": problem.replace('\n', '\\n'),
+        "problem_text": problem.replace('\n', '<br>'),
         "button": button,
         "stats": stats,
     }
