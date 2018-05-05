@@ -1,157 +1,115 @@
 ﻿<html>
 <head>
-<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="../static/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../static/js/materialize.min.js"></script>
+<script type="text/javascript" src="../static/js/colorscheme.js"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
-        <script src="../static/js/showdown.min.js"></script>
-        <script src="../static/js/Chart.min.js"></script>
-
+<link rel="icon" href="../static/img/logo.png">
 </head>
+<style id="style-color">
+    :root {
+      --color-red: #e44332ff;
+      --color-blue: #1B92C6;
+    }
+</style>
 
 <body id="content">
-    <style>
-        
-        @import url('https://fonts.googleapis.com/css?family=Unica+One');
-        .red{
-            background: #e44332ff !important;
-        }
-        
-        h4,h5{
-            font-family: 'Unica One', cursive;
-        }
-        nav > div > ul > li > .active{
-            border-bottom: 1.5px solid white;
-            margin-top: -1.5px;
-        }
-        nav  a{
-            font-family: 'Unica One', cursive;
-        }
-        nav a img{
-            display: inline-flex;
-            height: 2.6rem;
-            flex: auto;
-            margin: 0 0.2rem;
-            margin-top:-0.6rem;
-        }
-        nav > div > a{ 
-            font-weight: 400 !important;
-            text-transform: uppercase;
-            display: flex !important;
-            align-content: center;
-            align-items: center;
-            text-align: justify;
-            justify-content: center; 
-            font-size: 3rem !important;
-        }
-        .nav-wrapper{
-            max-width: 85%;
-            margin: 0 auto;
-        }
-        .stats-crytery{
-            margin: 1rem 0;
-        }
-        .stats-crytery > a{
-            color:black;
-        }
-        .stats-crytery > a > span{
-            color:black;
-            font-weight: 600;
-        }
-        .stats-crytery > a > p{
-            display: inline-block;
-            float: right;
-            text-align: right;
-            color:black;
-            font-weight: 600;
-        }
-        .stats-slider{
-            display: block;
-            width: 100%;
-            height: 3px;
-            background: #dedede;
-        }
-        .stats-slider div{
-            display: block;
-            height: 3px;
-            width:0;
-        }
-        .grad-plus{
-            margin-left:50%;
-            background: rgb(125,185,232);
-            background: -moz-linear-gradient(left, rgb(125,185,232) 0%, rgb(45,229,52) 99%);
-            background: -webkit-linear-gradient(left, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
-            background: linear-gradient(to right, rgb(125,185,232) 0%,rgb(45,229,52) 99%);
-        }
-        .grad-minus{
-            margin-right:50%;
-            
-            float: right;
-            background: rgb(235,87,87);
-            background: -moz-linear-gradient(left, rgb(235,87,87) 0%, rgb(242,153,74) 100%);
-            background: -webkit-linear-gradient(left, rgb(235,87,87) 0%,rgb(242,153,74) 100%); 
-            background: linear-gradient(to right, rgb(235,87,87) 0%,rgb(242,153,74) 100%);
-        }
-        #problem-text p{
-            margin: 1rem 0;
-            font-size: 1.3rem;
-        }
-        #problem-text p u{
-            text-decoration: none;
-            font-style: italic;
-            margin: 1rem 0;
-        }
-        @media only screen and (max-width: 992px){
-            nav .brand-logo.left {
-                margin:0 !important;
-            }
-        }
-        .dropdown-top{
-            overflow: hidden;
-            margin-top: 65px !important;
-        }
-        .dropdown-top > li{
-            color: black;
-        }
-    </style>
-<!--  Menu  -->
-<!--
 
-<ul id="dropdown1" class="dropdown-content dropdown-top">
-  <li><a href="#!">one</a></li>
-  <li><a href="#!">two</a></li>
-  <li class="divider"></li>
-  <li><a href="#!">three</a></li>
-</ul>
-    
--->
-<nav class="red">
-<div class="nav-wrapper red">
-  <a href="#!" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img src="../static/img/logo.svg"> stDoist</a>
-  <ul class="right">
-    <li><a href="index" class="active"><i class="material-icons left">description</i>PROBLEMS</a></li>
+<nav class="layout-color">
+<div class="nav-wrapper layout-color">
+  <a href="" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J <img id="logo_img" src="../static/img/logo_red.svg"> stDoist</a>
+  <ul class="right hide-on-med-and-down">
+    <li><a href="index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="profile/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-    <li><a href="settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
+    <li><a href="" class="active"><i class="material-icons left">settings</i>SETTINGS</a></li>
+    <li><a href="contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
     <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
+  <ul class="right hide-on-large-only">
+    <li><a href="index"><i class="material-icons">description</i></a></li>
+    <li><a href="profile/no_add"><i class="material-icons">equalizer</i></a></li>
+    <li><a href="" class="active"><i class="material-icons">settings</i></a></li>
+    <li><a href="contact_us"><i class="material-icons">info_outline</i></a></li>
+    <li><a href="logout"><i class="material-icons">exit_to_app</i></a></li>
+  </ul>
+
 </div>
 </nav>
-    
+    <style>
+    .small{
+        font-size: 1.2rem;
+    }
+    </style>
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
-    
-<div class="col s12">   
-   <h4>SETTINGS</h4>
+
+<div class="col s12">
+
+    <div class="card"><div class="card-content">
+    <h4 style="margin-top: -0.5rem;">Personal Information</h4>
+
+    <div class="valign-wrapper">
+    <div class="col s2"><img class="circle responsive-img" src="{{img}}" style="max-width:100px;"></div>
+    <div class="col s10" style="margin-left: -1rem;"><span class="flow-text">{{name}}</span><br><span class="flow-text red-text small">{{email}}</span></div>
+    </div>
+    </div></div>
+
+
+
+    {% if premium %}
+
+    <div class="card"><div class="card-content">
+    <h4>Premium Account</h4>
+    Парампампам, я исповедую Ислам...
+    Лучше премиум, чем нет.
+    Вот такой тебе ответ...
+    </div></div>
+
+
+    <div class="card"><div class="card-content">
+    <h4>Themes</h4>
+    <style>
+        #red + label:after{
+            background: var(--color-red);
+            border: 2px solid var(--color-red);
+        }
+        #blue + label:after{
+            background: var(--color-blue);
+            border: 2px solid var(--color-blue);
+        }
+        #green + label:after{
+            background: var(--color-green);
+            border: 2px solid var(--color-green);
+        }
+    </style>
+    <p>
+      <input name="group1" type="radio" id="red" checked />
+      <label for="red">Red</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="blue" />
+      <label for="blue">Blue</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="green" />
+      <label for="green">Green</label>
+    </p>
+
+    </div></div>
+
+    {% endif %}
+
 </div>
-     
+
 </div></div>
-    
-    
+
+
 </body>
-     
+
 <script>
 $(document).ready(function(){
     $('.modal').modal({
@@ -159,37 +117,10 @@ $(document).ready(function(){
         startingTop: '0%', // Starting top style attribute
         endingTop: '0%' // Ending top style attribute
     });
+    $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $(".dropdown-button").dropdown({hover:true});
-    build_stats();
-    
+    drawcolor();
 });
-function build_stats(){
-    slid = $('.stats-slider > div');
-    for (i = 0; i < slid.length; i++){
-        wid =  parseInt($(slid[i]).attr("data"));
-        if (wid < 0){
-            $(slid[i]).addClass("grad-minus");
-
-            $(slid[i]).animate({
-                "width": Math.abs(wid)/2 + "%"
-            }, 1000);
-            
-            $(slid[i]).css({
-                "width" : Math.abs(wid)/2 + "%",
-            })
-        }
-        else{
-            $(slid[i]).addClass("grad-plus");
-
-            $(slid[i]).animate({
-                "width" :  Math.abs(wid)/2 + "%",
-            })
-            $(slid[i]).css({
-                "width" :  Math.abs(wid)/2 + "%",
-            })
-        }
-    }
-}
 </script>
 </html>
