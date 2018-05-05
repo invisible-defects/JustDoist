@@ -127,22 +127,17 @@ function open_problem_modal(id, e){
           text += '<div class="card-panel z-depth-0 grey lighten-2"><p>' + item.step_solve + '</p>';
           icon = '';
           button = false;
-          if (item.step_status === 'to_work'){
-            button = true;
-          }
-          else if (item.step_status === 'time'){
-            icon = 'timer';
-          }
-          else if (item.step_status === 'done'){
-            icon = 'done';
-          }
           text += '<div>';
-          if (button === true){
+          if (item.step_status === 'to_work'){
             text += '<a class="btn-floating waves-effect waves-light red tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ item.step_id + ')"><i class="material-icons">add</i></a>';
           }
-          else{
-            text += '<i class="material-icons">' + icon + '</i>';
+          else if (item.step_status === 'time'){
+            text += '<i class="material-icons green-text">time</i>';
           }
+          else if (item.step_status === 'done'){
+            text += '<i class="material-icons">done</i>';
+          }
+
           text += '</div></div>';
         });
         $('.modal-content').html(text);
