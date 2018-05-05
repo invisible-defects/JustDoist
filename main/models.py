@@ -96,15 +96,15 @@ class JustdoistUser(AbstractUser):
     def add_problem(self, text: str, problem_id: int, step_num: int) -> bool:
         if not self.check_todoist():
             return False
-        proba = self.suggested_problems.all().filter(uid=problem_id).first()
+        proba = SuggestedProblem.objects.all().filter(uid=problem_id).first().probabilities.filter(user=self).first()
         proba.steps_completed += 1
         proba.save()
         api = todoist.TodoistAPI(self.todoist_token)
         item = api.items.add(text, self.get_inbox_id(api))
-        tracker = proba.steps_trackers.all().filter(step=step_num).first()
-        tracker.todoist_task_id = item.id
-        tracker.save()
         api.commit()
+        tracker = SuggestedProblem.objects.all().filter(uid=problem_id).first().steps.filter(number=step_num).first().steps_trackers.filter(related_problem_prob=proba).first()
+        tracker.todoist_task_id = item['id']
+        tracker.save()
         return True
 
 
@@ -134,7 +134,7 @@ class ProblemStep(models.Model):
     task = models.CharField(max_length=10000)
 
     def __str__(self):
-        return f"<ProblemStep {self.number} \"{self.related_name.uid}\">"
+        return f"<ProblemStep {self.number} \"{self.related_problem.uid}\">"
 
 
 class ProblemProbability(models.Model):
@@ -173,18 +173,18 @@ class ProblemProbability(models.Model):
 class StepTracker(models.Model):
     related_problem_prob = models.ForeignKey(ProblemProbability, on_delete=models.CASCADE, related_name="steps_trackers")
     step = models.ForeignKey(ProblemStep, on_delete=models.CASCADE, related_name="steps_trackers")
-    todoist_task_id = models.IntegerField(default=0)
+    todoist_task_id = models.CharField(max_length=10000, default='0')
 
     @property
     def is_completed(self):
-        if self.todoist_task_id == 0:
+        if self.todoist_task_id == '0':
             return 'to_work'
-        api = todoist.TodoistAPI(self.user.todoist_token)
+        api = todoist.TodoistAPI(self.related_problem_prob.user.todoist_token)
         item = api.items.get_by_id(self.todoist_task_id)
-        if item.checked == 0:
+        if item['item']['checked'] == 0:
             return 'time'
         return 'done'
 
-        def __str__(self):
-            return (f"<ProblemSolvingStep [{self.related_problem_prob.suggested_problem.uid}] "
-                    f"Step {self.step}, completed: {self.is_completed}>")
+    def __str__(self):
+        return (f"<StepTracker [{self.related_problem_prob.suggested_problem.uid}] "
+                f"Step {self.step}, completed: {self.is_completed}>")
