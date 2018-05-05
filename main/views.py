@@ -126,7 +126,7 @@ def add_task(request):
         return JsonResponse({"error": "missing `step` param"}, status=422)
 
     request.user.add_problem(task_text, task_id, step_num)
-    return JsonResponse({"status": "ok"}, sttus=200)
+    return JsonResponse({"status": "ok"}, status=200)
 
 
 @login_required(login_url=LOGIN_URL)

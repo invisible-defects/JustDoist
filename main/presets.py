@@ -8,13 +8,11 @@ class PredefinedProblems(object):
             "uid": 2,
             "title": "Problem #2",
             "body": "Description",
-            "steps": "1. Do it",
         },
         3: {
             "uid": 3,
             "title": "Problem #3",
             "body": "Description",
-            "steps": "1. Do it",
         },
     }
 

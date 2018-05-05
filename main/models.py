@@ -107,7 +107,6 @@ class SuggestedProblem(models.Model):
     uid = models.IntegerField(primary_key=True, unique=True)
     title = models.CharField(max_length=128)
     body = models.CharField(max_length=10000)
-    steps = models.CharField(max_length=10000)
     steps_num = models.IntegerField(default=1)
 
     @classmethod
@@ -123,12 +122,27 @@ class SuggestedProblem(models.Model):
         return f"<SuggestedProblem {self.uid} \"{self.title}\">"
 
 
+class ProblemStep(models.Model):
+    related_problem = models.ForeignKey(SuggestedProblem, on_delete=models.CASCADE, related_name="steps")
+    number = models.IntegerField(default=-1)
+    description = models.CharField(max_length=10000)
+    task = models.CharField(max_length=10000)
+
+    def __str__(self):
+        return f"<ProblemStep {self.number} \"{self.related_name.uid}\">"
+
+
 class ProblemProbability(models.Model):
     value = models.FloatField()
     user = models.ForeignKey(JustdoistUser, on_delete=models.CASCADE, related_name="suggested_problems")
     suggested_problem = models.ForeignKey(SuggestedProblem, on_delete=models.CASCADE, related_name="probabilities")
     steps_completed = models.IntegerField(default=0)
     is_being_solved = models.BooleanField(default=False)
+
+    @property
+    def json():
+        # TODO: finish func
+        pass
 
     def __str__(self):
         return (f"<ProblemProbability [{self.suggested_problem.uid}] "
@@ -137,16 +151,16 @@ class ProblemProbability(models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(self, args, kwargs)
         for index in range(0, self.suggested_problem.steps_num):
-            tracker = ProblemSolvingStep(
+            tracker = StepTracker(
                 related_problem_prob = self,
                 step = index
             )
             tracker.save()
 
 
-class ProblemSolvingStep(models.Model):
+class StepTracker(models.Model):
     related_problem_prob = models.ForeignKey(ProblemProbability, on_delete=models.CASCADE, related_name="steps_trackers")
-    step = models.IntegerField(default=-1)
+    step = models.ForeignKey(ProblemStep, on_delete=models.CASCADE, related_name="steps_trackers")
     todoist_task_id = models.IntegerField(default=0)
 
     @property
@@ -159,4 +173,4 @@ class ProblemSolvingStep(models.Model):
 
         def __str__(self):
             return (f"<ProblemSolvingStep [{self.related_problem_prob.suggested_problem.uid}] "
-                f"Step {self.step}, completed: {self.is_completed}>")
+                    f"Step {self.step}, completed: {self.is_completed}>")
