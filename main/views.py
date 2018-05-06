@@ -38,13 +38,18 @@ def index(request):
     else:
         problem = problem_q['problem'].suggested_problem.body
 
-    stats = request.user.get_stats()
+    # stats = request.user.get_stats()
     context = {
         "problem_text": problem.replace('\n', '<br>'),
         "button": button,
-        "stats": stats,
+        # "stats": stats,
     }
     return render(request, 'index.html', context=context, status=200)
+
+
+@login_required(login_url=LOGIN_URL)
+def get_stats(request):
+    return JsonResponse(request.user.get_stats(), status=200)
 
 
 def landingpage(request):

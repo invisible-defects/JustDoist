@@ -34,6 +34,7 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('register', views.Register.as_view(), name='register'),
 
+    path('stats', views.get_stats, name='stats'),
     path('link/<slug:service>/', views.link, name='link'),
     path('authorize/<slug:provider>/', views.authorize),
     path('callback/<slug:provider>/', views.oauth_callback),
