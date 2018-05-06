@@ -2,6 +2,7 @@ from todoist.api import TodoistAPI
 from main.api_wrapper import get_user_tasks
 from justdoist.settings import POSSIBLE_PROBLEMS
 
+
 def has_preferred_tasks(api: TodoistAPI) -> bool:
     max_prior = max((item.data.get("priority", -1000) for item in api.items.all()), default=1)
     return max_prior == 1
@@ -20,9 +21,7 @@ def uses_task_grouping(api: TodoistAPI) -> bool :
     Arguments:
         api {TodoistAPI} -- todoist api
     """
-
-    api.sync()
-
+    
     return len(api.state["projects"]) > 1
 
 
@@ -33,10 +32,8 @@ def detect_exhaustion(api: TodoistAPI, threshold: int=6) -> bool:
         api {TodoistAPI} -- todoist api
         threshold {int} -- how many tasks daily are considered too much (default: {6})
     """
-
-    tasks = get_user_tasks(api.token)
-
-    return len([task for task in tasks if task["due"]["date"] == tasks[0]["due"]["date"]]) > threshold
+    tasks = api.items.all()
+    return len([task["date_string"] for task in tasks if task == tasks[0]["date_string"]]) > threshold
 
 
 def detect_lack_priorities(api: TodoistAPI) -> bool:
@@ -46,7 +43,8 @@ def detect_lack_priorities(api: TodoistAPI) -> bool:
         api {TodoistAPI} -- todoist api
     """
 
-    return len([task for task in get_user_tasks(api.token) if task["priority"] != 1]) > 0
+    return len([task for task in api.items.all() if task["priority"] != 1]) > 0
+
 
 def detect_regular_use(api: TodoistAPI) -> bool:
     """Detect if user uses Todoist regularly
@@ -60,8 +58,6 @@ def detect_regular_use(api: TodoistAPI) -> bool:
 
 
 def get_combined_problems(api: TodoistAPI) -> dict:
-    # is_premium(api)
-    # get_stats(api)
     problems_dict = {}
 
     problems_dict["task_grouping"] = uses_task_grouping(api)
