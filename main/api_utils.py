@@ -1,5 +1,4 @@
 from todoist.api import TodoistAPI
-from api_wrapper import get_user_tasks
 
 
 def has_preferred_tasks(api: TodoistAPI) -> bool:
