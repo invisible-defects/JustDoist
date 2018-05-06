@@ -78,30 +78,30 @@
     </div></div>
 
 
-    <div class="card"><div class="card-content">
+    <div class="card"><div class="card-content {% if user.has_todoist_token %}light-green accent-1{% endif %}">
 
     <div class="row" style="margin:0;">
-    <div class="col s12"><h4 style="margin-top: -0.5rem;">ToDoist Account</h4></div>
+    <div class="col s11"><h4 style="margin:0">ToDoist Account</h4></div>
 
     {% if user.has_todoist_token %}
-    <i class="material-icons green-text" style="line-height: 1.5;">done</i>
+    <div class="col s1"><i class="material-icons green-text" style="line-height: 1.5;">done</i></div>
     {% else%}
-    <div class="col s11"><p class="flow-text">To start woking you need to link ToDoist account</p></div>
+    <div class="col s11"><p class="flow-text">To start woking you need to link ToDoist account!</p></div>
     <div class="col s1"><a class="waves-effect waves-light btn-floating red right" href="/authorize/todoist"><i class="material-icons">link</i> </a></div>
     {% endif %}
     </div>
     </div></div>
 
-    {% if premium %}
 
+    {% if user.has_todoist_token %}
     <div class="card"><div class="card-content">
-    <h4>Premium Account</h4>
-    Парампампам, я исповедую Ислам...
-    Лучше премиум, чем нет.
-    Вот такой тебе ответ...
+    <h4 style="margin-top: -0.5rem;">Premium Account</h4>
+    <p class="flow-text">Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!</p>
+    <div class="row" style="margin:0;"><a class="waves-effect waves-light btn red right" href="/payment">Buy Premium Account</a></div>
     </div></div>
+    {% endif %}
 
-
+    {% if premium %}
     <div class="card"><div class="card-content">
     <h4>Themes</h4>
     <style>
