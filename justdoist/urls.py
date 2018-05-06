@@ -31,7 +31,7 @@ urlpatterns = [
 
     path('landingpage', views.landingpage),
 
-    path('', views.index),
+    path('', views.landingpage),
     path('index', views.index, name='index'),
     path('register', views.Register.as_view(), name='register'),
 

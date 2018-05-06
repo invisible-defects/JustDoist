@@ -45,7 +45,9 @@ def index(request):
     return render(request, 'index.html', context=context, status=200)
 
 def landingpage(request):
-    return HttpResponseNotFound(render(request, "landingpage.html").content)
+    if request.user.is_authenticated:
+        return redirect("index")
+    return render(request, "landingpage.html")
 
 
 def handler404(request):
