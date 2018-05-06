@@ -1,7 +1,7 @@
 import datetime
 
 import stripe
-from django.http import JsonResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -93,10 +93,6 @@ def oauth_callback(request, provider):
 def progress(request, data):
     ac = None
     if data == 'add':
-        if not request.user.shown_first_task_ac:
-            ac = request.user.achievements.all().filter(uid=FIRST_TASK_ACHIEVEMENT_ID)
-            ac = None if not ac else ac[0]
-
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
         pr.save()
@@ -121,12 +117,19 @@ def progress(request, data):
         "probs": problems,
     }
 
+    if data == 'add':
+        return HttpResponse(request, status=200)
+    elif not request.user.shown_first_task_ac:
+        ac = request.user.achievements.all().filter(uid=FIRST_TASK_ACHIEVEMENT_ID)
+        ac = None if not ac else ac[0]
+
     if ac is not None:
-        ac.shown_first_task_ac = False
-        ac.save()
+        request.user.shown_first_task_ac = True
+        request.user.save()
         context['new_achievement'] = True
         context['achievement_image'] = ac.image
         context['achievement_text'] = ac.title
+        print(context)
 
     return render(request, 'progress.html', context=context)
 
