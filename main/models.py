@@ -32,6 +32,10 @@ class JustdoistUser(AbstractUser):
     def has_subscription(self):
         return self.get_subscription() is not None
 
+    @property
+    def has_todoist_token(self):
+        return self.todoist_token is not None
+
     def get_stats(self) -> dict:
         if not self.check_todoist():
             return {}
