@@ -96,6 +96,7 @@ html.fp-enabled,
     transition: none !important;
 }
 #fp-nav {
+
     position: fixed;
     z-index: 100;
     margin-top: -32px;
@@ -164,7 +165,7 @@ html.fp-enabled,
     height: 4px;
     width: 4px;
     border: 0;
-    background: #fff;
+    background: #000;
     left: 50%;
     top: 50%;
     margin: -2px 0 0 -2px;
