@@ -132,6 +132,7 @@ nav > div > a{
     nav .brand-logo.left {
         font-size:0 !important;
     }
+    #modal1{width:100% !important;}
     #logo_img{
         margin:0 !important;
     }
@@ -166,12 +167,13 @@ nav > div > a{
     margin-left: auto;
     padding-left:1rem;
     font-weight: 600;
-    width:2rem;
+    width:2.5rem;
 }
 
 .problem-card > div > p{
     display: inline-flex;
     flex:auto;
+    word-break: break-word;
 }
 .card-panel{
     display: flex;
@@ -192,10 +194,11 @@ nav > div > a{
 .card-panel  > p{
     display: inline-flex;
     flex:auto;
+    word-break: break-word;
 }
 .modal{
-     overflow-y: scroll !important;
-     max-height: 100% !important; height: 100% !important;
+    overflow-y: none !important;
+    max-height: 100% !important; height: 100% !important;
     width:80% !important;
 }
 .modal::-webkit-scrollbar { padding-top:2rem; padding-bottom:2rem; width: 4px; height:auto; background: #e0e0e0;}

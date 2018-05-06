@@ -145,9 +145,35 @@ class JustdoistUser(AbstractUser):
 
         return -1
 
-    def add_problem(self, text: str, problem_id: int, step_num: int) -> list:
+    def add_problem(self, text: str, problem_id: int, step_num: int, 
+                    project_id:int=None, due_date:datetime.date=None, priority:int=1) -> bool:
+        """Add JustDoist problem
+        
+        Arguments:
+            text {str} -- task description
+            problem_id {int} -- problem id
+            step_num {int} -- number of the step
+        
+        Keyword Arguments:
+            project_id {int} --  todoist project id, inbox used as default (default: {None})
+            due_date {datetime.date} -- due date of the task (default: {None})
+            priority {int} -- task priority 1-4 (default: {1})
+        
+        Returns:
+            bool -- Success
+        """
+
+        due_date_string = None
+
+        if due_date:
+            due_date_string = due_date.strftime("%Y-%m-%d")
+            due_date = due_date.strftime("%Y-%m-%dT%H:%M")
+
         if not self.check_todoist():
-            return []
+            return False
+
+        api = todoist.TodoistAPI(self.todoist_token)        
+        project_id = project_id or self.get_inbox_id(api)
 
         proba = SuggestedProblem.objects.all().filter(uid=problem_id).first().probabilities.filter(user=self).first()
         proba.steps_completed += 1
@@ -176,6 +202,13 @@ class JustdoistUser(AbstractUser):
 
         api = todoist.TodoistAPI(self.todoist_token)
         item = api.items.add(text, self.get_inbox_id(api))
+
+        item = api.items.add(text, 
+                             project_id, 
+                             date_string=due_date_string, 
+                             due_date_utc=due_date, 
+                             priority=priority)
+                             
         api.commit()
 
         tracker = SuggestedProblem.objects.filter(

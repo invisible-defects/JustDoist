@@ -6,87 +6,31 @@
 
 {% load staticfiles %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="{% static 'css/login.css' %}"  media="screen,projection"/>
+<link rel="icon" href="{% static 'img/logo.png' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/landingpage.css' %}"  media="screen,projection"/>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<script src="{% static 'js/showdown.min.js' %}"></script>
-<script src="{% static 'js/Chart.min.js' %}"></script>
-<link rel="icon" href="{% static 'img/logo.png' %}">
-<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"  media="screen,projection"/>
-
-
 </head>
+<style>
 
+</style>
 <body id="content">
-<div class="wrapper">
-<div class="cont">
-    <div class="row">
+<div class="section" id="first_section"><div>
+
     <div class="logotext">
-    J<img src="{% static 'img/logo.svg' %}">STDOIST
+    J<img src="/static/img/logo.svg">STDOIST
     </div>
-    <li class="divider white"></li>
-    </div>
-
-
-    <div class="row">
-        <div class="flow-text white-text">Registration</div><br>
-        <form class="col s12" action="" method="post" novalidate>
-            {% csrf_token %}
-            {% if form.non_field_errors.0 %}
-            <div class="row yellow-text lighten-2">
-                {{ form.non_field_errors.0 }}
-            </div>
-            {% endif %}
-            <div class="row">
-            <div class="input-field col s12">
-                {{ form.first_name }}
-                <label for="id_first_name"></label>
-                <small id="first_nameHelp" class="text-danger yellow-text lighten-2">
-                    {{ form.errors.first_name.0 }}
-                </small>
-            </div>
-            <div class="input-field col s12">
-                {{ form.last_name }}
-                <label for="id_last_name"></label>
-                <small id="last_nameHelp" class="text-danger yellow-text lighten-2">
-                    {{ form.errors.last_name.0 }}
-                </small>
-            </div>
-
-            <div class="input-field col s12">
-                {{ form.username }}
-                <label for="id_username"></label>
-                <small id="usernameHelp" class="text-danger yellow-text lighten-2">
-                    {{ form.username.help_text }}<br>
-                    {{ form.errors.username.0 }}
-                </small>
-            </div>
-            <div class="input-field col s12">
-                {{ form.password }}
-                <label for="id_password"></label>
-                <small id="passwordHelp" class="text-danger yellow-text lighten-2">
-                    {{ form.errors.password.0 }}
-                </small>
-            </div>
-
-            </div>
-
-            <button type="submit" class="waves-effect waves-light btn white right">Sign Up</button>
-
-        </form>
-    </div>
-
+    <h5>UNLEASH YOUR PRODUCTIVITY</h5>
+    <p class="flow-text">
+        JustDoist is an amazing service for learning personal<br> productivity and time-managment skills. <br>
+        Ger personalized tips on how to achieve your daily goals<br> and step-by-step guides on boosting your efficiency.<br><br>
+        We use advanced technology to analyse your planning habits <br> and create custom learning program.
+    </p>
+    <a href="/login" class="waves-effect waves-light btn-large white red-text" >Sign Up</a>
+    <h5>SEE JUSTDOIST IN ACTION</h5>
+    <a href="" class="waves-effect waves-light btn-floating white"><i class="material-icons red-text">arrow_downward</i></a>
 </div></div>
 
 
 </body>
-<script>
-    jQuery(function($){
-        $('#id_username, #id_password, #id_first_name, #id_last_name').addClass('form-control');
-        $('#id_username').attr('placeholder','Username...');
-        $('#id_password').attr('placeholder','Password...');
-        $('#id_first_name').attr('placeholder','First Name...');
-        $('#id_last_name').attr('placeholder','Second Name...');
-    });
-</script>
 </html>

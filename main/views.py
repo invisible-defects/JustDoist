@@ -54,6 +54,8 @@ def main_route(request):
 
 
 def landingpage(request):
+    if request.user.is_authenticated:
+        return redirect("index")
     return render(request, "landingpage.html")
 
 
