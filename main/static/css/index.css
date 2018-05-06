@@ -246,6 +246,9 @@ height: 100px !important;
 .layout-text{
     color: var(--color-layout);
 }
+.layout-background:hover{
+    background: var(--color-layout);
+}
 
 #logo_img{
     display: inline-flex;
