@@ -24,6 +24,8 @@ function stripeResponseHandler(status, response) {
         $('.submit-button').removeAttr("disabled");
         $(".payment-errors").html(response.error.message);
         $('.input-field > input').addClass('invalid');
+        $('#payment-form').removeClass("disabled");
+        $('.cont-center-preloader').hide();
     } else {
         var form$ = $("#payment-form");
         // token contains id, last4, and card type
@@ -37,6 +39,8 @@ function stripeResponseHandler(status, response) {
 $(document).ready(function() {
     $("#payment-form").submit(function(event) {
         $('.submit-button').attr("disabled", "disabled");
+        $('#payment-form').addClass("disabled");
+        $('.cont-center-preloader').show();
         var chargeAmount = 001;
 
         Stripe.createToken({
@@ -107,9 +111,7 @@ if (window.location.protocol === 'file:') {
 
 
     <style>
-    .small{
-        font-size: 1.2rem;
-    }
+
     .input-field label {
      color: #333 !important;
     }
@@ -140,7 +142,30 @@ if (window.location.protocol === 'file:') {
         <div class="card-content">
             <h4 style="margin-top: -0.5rem;">Buy weekly subscription</h4>
             <div class="valign-wrapper">
-                <div class="col s12" style="margin:0; padding:0;">
+                <div class="col s12" style="margin:0; padding:0;disply:flex;" id="payment-block">
+                    <style>
+                    .spinner-color-only{
+                        border-color: {{ user.color }};
+                    }
+                    .cont-center-preloader{
+                        position:absolute;
+                        top:50%; left:50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    </style>
+                    <div class="cont-center-preloader" style="display:none;">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-color-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
 
                     <form action="/checkout/weekly" method="POST" id="payment-form">
                         {% csrf_token %}

@@ -69,39 +69,27 @@
     .finished{
         border:2px #4CAF50  solid;
     }
-
-    {% if showSubscriptionToast %}
-    #toast-container {
-        bot: auto !important;
-        left: auto !important;
-        top: 6%;
-        right: 2%;
-    }
-    {% endif %}
 </style>
 
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
 
 <div class="col s12">
+    <div class="row">
 
-    <div class="card"><div class="card-content">
+    <div class="col s12 m6"><div class="card"><div class="card-content">
     <h4 style="margin-top: -0.5rem;">Personal Information</h4>
-
     <div class="valign-wrapper">
-
-    <div class="col ">
-        {% if user.has_avatar %} <img class="circle responsive-img" src="{{ user.avatar }}" style="max-width:100px;">
-        {% else %} <div class="circle layout-background">{{ user.first_name.0 }}{{ user.last_name.0 }}</div>
+    <div class="col">
+        {% if user.has_avatar %} <img class="circle_acvtar responsive-img" src="{{ user.avatar }}" style="max-width:100px;">
+        {% else %} <div class="circle_acvtar layout-background">{{ user.first_name.0 }}{{ user.last_name.0 }}</div>
         {% endif %}
     </div>
-
-    <div class="col" ><span class="flow-text">{{user.username}}</span><br><span class="flow-text layout-text small">Username</span></div>
+    <div class="col s8"><span class="flow-text truncate">{{user.username}}</span><span class="flow-text layout-text small">Username</span></div>
     </div>
+    </div></div></div>
 
-    </div></div>
-
-    <div class="card"><div class="card-content">
+    <div class="col s12 m6"><div class="card"><div class="card-content">
     <div class="row" style="margin:0;">
         <div class="col"><i class="material-icons" style="line-height: 1.5;">info_outline</i></div>
         <div class="col">
@@ -109,10 +97,12 @@
             <span class="flow-text">{{user.last_name}}</span><br><span class="flow-text layout-text small">Last name</span>
         </div>
     </div>
-    </div></div>
+    </div></div></div>
 
+    </div>
+    <div class="row">
 
-    <div class="card"><div class="card-content {% if user.has_todoist_token %}finished{% endif %}">
+    <div class="col s12 m6"><div class="card"><div class="card-content {% if user.has_todoist_token %}finished{% endif %}">
 
     <div class="row" style="margin:0;">
     <div class="col s11"><h4 style="margin:0">ToDoist Account</h4></div>
@@ -124,26 +114,27 @@
     <div class="col s1"><a class="waves-effect waves-light btn-floating layout-background right" href="/authorize/todoist"><i class="material-icons">link</i> </a></div>
     {% endif %}
     </div>
-    </div></div>
+    </div></div></div>
 
 
     {% if user.has_todoist_token %}
-    <div class="card"><div class="card-content {% if user.has_subscription %}finished{% endif %}">
+
+    <div class="col s12 m6"><div class="card"><div class="card-content {% if premium %}finished{% endif %}">
 
     <div class="row" style="margin:0;">
     <div class="col s11"><h4 style="margin:0">Premium Account</h4></div>
-    {% if user.has_subscription %}
+    {% if premium %}
     <div class="col s1"><i class="material-icons green-text" style="line-height: 1.5;">done</i></div>
     {% else %}
     <div class="col s12"><p class="flow-text">Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!</p></div>
     <div class="col s12" style="margin:0; margin-top:1rem;"><a class="waves-effect waves-light btn layout-background right" href="/payments">Buy Premium Account</a></div>
     {% endif %}
     </div>
-    </div></div>
+    </div></div></div>
     {% endif %}
 
-    {% if user.has_subscription %}
-    <div class="card"><div class="card-content">
+    {% if premium %}
+    <div class="col s12 m6"><div class="card"><div class="card-content">
     <h4>Themes</h4>
     <style>
         #red + label:after{
@@ -178,9 +169,10 @@
     <i class="material-icons right green-text" id="status" style="line-height: 36px; margin-right:1rem;"></i>
 
     </div></div>
-    </div>
     {% endif %}
 
+
+    </div>
 </div>
 
 </div></div>

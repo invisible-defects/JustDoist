@@ -220,7 +220,7 @@ height: 100px !important;
     height: 1rem;
     margin-top: -2px;
 }
-.circle{
+.circle_acvtar{
     display: inline-flex;
     border-radius: 50%;
     width: 6rem;
@@ -240,14 +240,11 @@ height: 100px !important;
     --color-black: #303330;
 }
 
-.layout-background{
+.layout-background, .layout-background:hover, .layout-background:active, .layout-background:focus{
     background: var(--color-layout);
 }
 .layout-text{
     color: var(--color-layout);
-}
-.layout-background:hover{
-    background: var(--color-layout);
 }
 
 #logo_img{
@@ -262,4 +259,11 @@ height: 100px !important;
     left: auto !important;
     bottom: 6%;
     right: 2%;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.2;
+}
+.small{
+    font-size: 1.2rem;
 }
