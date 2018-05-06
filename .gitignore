@@ -177,3 +177,7 @@ pip-selfcheck.json
 ./static
 ./static/
 ./static/*
+
+
+#migrations
+main/migrations/*
