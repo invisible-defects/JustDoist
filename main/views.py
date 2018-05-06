@@ -104,6 +104,19 @@ def progress(request, data):
     }
     return render(request, 'progress.html', context=context)
 
+
+@login_required(login_url=LOGIN_URL)
+def change_color(request):
+    if not request.user.has_subscription:
+        return JsonResponse({"error": "user has no premium"}, status=422)
+    color = request.GET.get('hex', None)
+    if color is None:
+        return JsonResponse({"error": "missing `hex` param"}, status=422)
+    request.user.color = color
+    request.user.save()
+    return JsonResponse({"success": "color was changed"}, status=200)
+
+
 @login_required(login_url=LOGIN_URL)
 def default_progress(request):
     return redirect("/progress/no_add")

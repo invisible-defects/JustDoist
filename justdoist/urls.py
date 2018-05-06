@@ -38,6 +38,7 @@ urlpatterns = [
     path('callback/<slug:provider>/', views.oauth_callback),
     path('progress/<slug:data>/', views.progress, name="progress"),
     path('progress/', views.default_progress, name="default_progress"),
+    path('color', views.change_color),
 
     path('payment', views.payment, name="payment"),
     path('checkout/<slug:kind>', views.checkout, name="checkout"),

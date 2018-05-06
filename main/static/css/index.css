@@ -227,8 +227,23 @@ height: 100px !important;
 }
 
 :root {
-  --color-red: #e44332ff;
-  --color-blue: #1B92C6;
-  --color-green: #48d34e;
-  --color-black: #303330;
+    --color-red: #e44332ff;
+    --color-blue: #1B92C6;
+    --color-green: #48d34e;
+    --color-black: #303330;
+}
+
+.layout-background{
+    background: var(--color-layout);
+}
+.layout-text{
+    color: var(--color-layout);
+}
+
+#logo_img{
+    display: inline-flex;
+    height: 2.6rem;
+    flex: auto;
+    margin: 0 0.2rem;
+    margin-top: -0.6rem;
 }
