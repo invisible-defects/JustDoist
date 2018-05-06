@@ -126,11 +126,10 @@ def progress(request, data):
     if ac is not None:
         request.user.shown_first_task_ac = True
         request.user.save()
-        context['new_achievement'] = True
-        context['achievement_image'] = ac.image
-        context['achievement_text'] = ac.title
-        print(context)
-
+        # context['new_achievement'] = True
+        # context['achievement_image'] = ac.image
+        # context['achievement_text'] = ac.title
+    
     return render(request, 'progress.html', context=context)
 
 
