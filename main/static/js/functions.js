@@ -1,6 +1,7 @@
-function makeAchievementToast(achievementImage, achievementText, many, color, duration) {
+function makeAchievementToast(achievementImage, achievementText, many, color, duration, endpoint) {
     color = color == undefined ? "red" : color;
     many = many == undefined ? 0 : many
+    endpoint = endpoint == undefined ? "/progress" : endpoint;
 
     unlockedText = "Achievement unlocked";
     if (many > 0) {
@@ -8,7 +9,7 @@ function makeAchievementToast(achievementImage, achievementText, many, color, du
     }
     unlockedText += ":";
 
-    const toastContent = '<img id="logo_img" src="' + achievementImage + '" style="max-width: 2rem;"><span style="margin-left: 3rem;">' + unlockedText + "<br>" + achievementText + '</span> <button onclick="' + "javascript:window.location.href='/settings'" + '" class="btn-flat toast-actоion white red-text">Check it out!</button>';
+    const toastContent = '<img id="logo_img" src="' + achievementImage + '" style="max-width: 2rem;"><span style="margin-left: 3rem;">' + unlockedText + "<br>" + achievementText + '</span> <button onclick="' + "javascript:window.location.href='" + endpoint + "'" + '" class="btn-flat toast-actоion white red-text">Check it out!</button>';
     if (color.indexOf("#") == -1) {
         Materialize.toast(toastContent, duration == undefined ? 10000 : duration, color);
     } else {
@@ -44,8 +45,13 @@ function changecolor(color) {
     };
     $('#fill_body').attr("fill", data[color]);
 }
-function init_color(color){
+
+function init_color(color) {
     $('#content').prepend('<style id="style-color">:root {--color-layout: ' + color + ';} .toast{background: ' + color + '!important;}</style>');
-    data = {"#e44332ff": "#C32127", "#1B92C6": "#235D77", "#48d34e": "#367439"};
+    data = {
+        "#e44332ff": "#C32127",
+        "#1B92C6": "#235D77",
+        "#48d34e": "#367439"
+    };
     $('#fill_body').attr("fill", data[color]);
 }

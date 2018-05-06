@@ -91,7 +91,7 @@
 <script>
 $(document).ready(function(){
     {% if new_achievement %}
-        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}", 0, undefined, 10000, "/settings");
     {% endif %}
     Materialize.updateTextFields();
     init_color('{{ user.color }}');
