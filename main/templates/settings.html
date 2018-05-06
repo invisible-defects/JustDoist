@@ -119,7 +119,7 @@
 
 
     {% if user.has_todoist_token %}
-    <div class="card"><div class="card-content {% if user.has_todoist_token %}finished{% endif %}">
+    <div class="card"><div class="card-content {% if premium %}finished{% endif %}">
 
     <div class="row" style="margin:0;">
     <div class="col s11"><h4 style="margin:0">Premium Account</h4></div>
@@ -183,6 +183,9 @@
 </script>
 <script>
 $(document).ready(function(){
+    {% if new_achievement %}
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+    {% endif %}
     init_color('{{ user.color }}');
 });
 </script>

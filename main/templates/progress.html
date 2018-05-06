@@ -122,6 +122,9 @@
 <script>
 $(document).ready(function(){
     init_color('{{ user.color }}');
+    {% if new_achievement %}
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+    {% endif %}
     $('.modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         startingTop: '0%', // Starting top style attribute
