@@ -6,6 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+
+
+
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
@@ -17,6 +21,41 @@
       --color-blue: #1B92C6;
     }
 </style>
+<script>
+Stripe.setPublishableKey('{{ stripe_key }}');
+function stripeResponseHandler(status, response) {
+    if (response.error) {
+        $('.submit-button').removeAttr("disabled");
+        $(".payment-errors").html(response.error.message);
+        $('.input-field > input').addClass('invalid');
+    } else {
+        var form$ = $("#payment-form");
+        // token contains id, last4, and card type
+        var token = response['id'];
+        // insert the token into the form so it gets submitted to the server
+        form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
+        // and submit
+        form$.get(0).submit();
+    }
+}
+$(document).ready(function() {
+    $("#payment-form").submit(function(event) {
+        $('.submit-button').attr("disabled", "disabled");
+        var chargeAmount = 1000;
+
+        Stripe.createToken({
+            number: $('.card-number').val(),
+            cvc: $('.card-cvc').val(),
+            exp_month: $('.card-expiry-month').val(),
+            exp_year: $('.card-expiry-year').val()
+        }, chargeAmount, stripeResponseHandler);
+        return false; // submit from callback
+    });
+});
+if (window.location.protocol === 'file:') {
+    alert("stripe.js does not work when included in pages served over file:// URLs. Try serving this page over a webserver. Contact support@stripe.com if you need assistance.");
+}
+</script>
 
 <body id="content">
 
@@ -45,6 +84,27 @@
     .small{
         font-size: 1.2rem;
     }
+    .input-field label {
+     color: #333 !important;
+    }
+    .input-field input[type=text]:focus + label {
+     color: #333 !important;
+    }
+    .input-field input[type=text]:focus {
+     border-bottom: 1px solid var(--color-red) !important;
+     box-shadow: 0 1px 0 0 var(--color-red) !important;
+    }
+    .input-field input[type=text].valid {
+     border-bottom: 1px solid green !important;
+     box-shadow: 0 1px 0 0 green !important;
+    }
+    .input-field input[type=text].invalid {
+     border-bottom: 1px solid red !important;
+     box-shadow: 0 1px 0 0 red !important;
+    }
+    .input-field .prefix.active {
+     color: #fff !important;
+    }
     </style>
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
@@ -54,21 +114,34 @@
         <div class="card-content">
             <h4 style="margin-top: -0.5rem;">Buy weekly subscription</h4>
             <div class="valign-wrapper">
-                <div class="col s2">
-                    <img class="circle responsive-img" src="{{ img }}" style="max-width:100px;"></div>
-                <div class="col s10" style="margin-left: -1rem;">
-                    <form action="/checkout/weekly" method="POST">
+                <div class="col s12" style="margin:0; padding:0;">
+
+                    <form action="/checkout/weekly" method="POST" id="payment-form">
                         {% csrf_token %}
                         {% load staticfiles %}
-                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="{{ stripe_key }}"
-                            data-amount="{{ price_weekly }}"
-                            data-name="JustDoist subscription"
-                            data-description="7-day subscription"
-                            data-image="{% static 'img/logo_red.svg' %}"
-                            data-currency="usd">
-                        </script>
+                        <p class="payment-errors"></p>
+                        <div class="row">
+                        <div class="input-field col s12">
+                            <label>Card Number</label>
+                            <input type="text" size="16" autocomplete="off" class="card-number" placeholder="0000 0000 0000 0000" />
+                        </div>
+                        <div class="input-field col s4">
+                            <label>CVC</label>
+                            <input type="text" size="3" autocomplete="off" class="card-cvc" placeholder="000"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <label>Expiration</label>
+                            <input type="text" size="2" placeholder="00" class="card-expiry-month"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="text" size="4" placeholder="0000"  class="card-expiry-year"/>
+                        </div>
+                        <div class="input-field col right">
+                        <button type="submit" class="submit-button aves-effect waves-light btn red right">Pay $ 0.01</button>
+                        </div>
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
