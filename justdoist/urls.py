@@ -40,7 +40,7 @@ urlpatterns = [
     path('progress/', views.default_progress, name="default_progress"),
     path('color', views.change_color),
 
-    path('payment', views.payment, name="payment"),
+    path('payments', views.payments, name="payments"),
     path('checkout/<slug:kind>', views.checkout, name="checkout"),
     path('failure', views.failure, name="failure"),
     path('success', views.success, name="success"),
