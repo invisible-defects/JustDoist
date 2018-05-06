@@ -10,15 +10,14 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
+
 <script src="{% static 'js/showdown.min.js' %}"></script>
 <script src="{% static 'js/Chart.min.js' %}"></script>
 <link rel="icon" href="{% static 'img/logo.png' %}">
 
 
 </head>
-<style id="style-color">
-    :root {--color-layout: {{ user.color }};}
-</style>
 <body id="content">
 
 <nav class="layout-background">
@@ -195,16 +194,8 @@
      
 <script>
 $(document).ready(function(){
-    $('.modal').modal({
-        dismissible: true, // Modal can be dismissed by clicking outside of the modal
-        startingTop: '0%', // Starting top style attribute
-        endingTop: '0%' // Ending top style attribute
-    });
-    $('select').material_select();
-    $(".dropdown-button").dropdown({hover:true});
+    init_color('{{ user.color }}');
     build_stats();
-    data = {"#e44332ff": "#C32127", "#1B92C6": "#235D77", "#48d34e": "#367439"};
-    $('#fill_body').attr("fill", data["{{ user.color }}"]);
 });
 function build_stats(){
     slid = $('.stats-slider > div');

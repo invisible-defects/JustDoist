@@ -11,13 +11,12 @@
 
 
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
+
 <meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="{% static 'img/logo.png' %}">
 
 </head>
-<style id="style-color">
-   :root {--color-layout: {{ user.color }};}
-</style>
 <script>
 Stripe.setPublishableKey('{{ stripe_key }}');
 function stripeResponseHandler(status, response) {
@@ -183,8 +182,7 @@ if (window.location.protocol === 'file:') {
 <script>
 $(document).ready(function(){
     Materialize.updateTextFields();
-    data = {"#e44332ff": "#C32127", "#1B92C6": "#235D77", "#48d34e": "#367439"};
-    $('#fill_body').attr("fill", data["{{ user.color }}"]);
+    init_color('{{ user.color }}');
 });
 </script>
 </html>
