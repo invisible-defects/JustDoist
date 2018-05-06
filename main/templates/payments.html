@@ -22,7 +22,9 @@ Stripe.setPublishableKey('{{ stripe_key }}');
 function stripeResponseHandler(status, response) {
     if (response.error) {
         $('.submit-button').removeAttr("disabled");
-        $(".payment-errors").html(response.error.message);
+        $("#alert_on_failure").show();
+        $("#alert_on_failure > p").html(response.error.message);
+
         $('.input-field > input').addClass('invalid');
         $('#payment-form').removeClass("disabled");
         $('.cont-center-preloader').hide();
@@ -170,7 +172,10 @@ if (window.location.protocol === 'file:') {
                     <form action="/checkout/weekly" method="POST" id="payment-form">
                         {% csrf_token %}
                         {% load staticfiles %}
-                        <p class="payment-errors"></p>
+                         <div class="card-panel orange lighten-5" id="alert_on_failure" style="display:none;">
+                            <i class="material-icons orange-text">warning</i><p></p>
+                         </div>
+                        <p class="card "></p>
                         <div class="row">
                         <div class="input-field col s12">
                             <label>Card Number</label>
@@ -188,7 +193,7 @@ if (window.location.protocol === 'file:') {
                             <input type="text" size="4" placeholder="YYYY"  class="card-expiry-year"/>
                         </div>
                         <div class="input-field col right">
-                        <button type="submit" class="submit-button aves-effect waves-light btn red right">Pay $ 0.01</button>
+                        <button type="submit" class="submit-button aves-effect waves-light btn layout-background right">Pay $ 0.01</button>
                         </div>
                         </div>
                     </form>
@@ -207,7 +212,7 @@ if (window.location.protocol === 'file:') {
 <script>
 $(document).ready(function(){
     {% if new_achievement %}
-        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}", color="{{ user.color }}");
     {% endif %}
     Materialize.updateTextFields();
     init_color('{{ user.color }}');
