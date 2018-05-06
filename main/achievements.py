@@ -6,7 +6,7 @@ def detect_achievements(user: "JustdoistUser") -> list:
     achievements = set()
 
     token = user.todoist_token
-    api = TodoistAPI(token)
+    # api = TodoistAPI(token)
     try:
         n_completed_steps = user.suggested_problems.all().first().steps_completed
     except ObjectDoesNotExist:
@@ -33,5 +33,10 @@ def detect_achievements(user: "JustdoistUser") -> list:
         achievements |= {4, 5}
     elif n_completed_steps >= 1:
         achievements |= {4}
-        
+
+    if not user.shown_first_task_ac:
+        user.shown_first_task_ac = True
+        user.save()
+        achievements |= {0}
+
     return list(achievements)

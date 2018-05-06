@@ -163,7 +163,7 @@ function open_problem_modal(id, e){
           icon = '';
           button = false;
           text += '<div>';
-          if (item.step_status === 'to_work'){
+          if (item.step_status === 'to_work') {
             text += '<a class="btn-floating waves-effect waves-light layout-background tooltipped scale-transition" data-position="left" data-delay="50" data-tooltip="Add task to ToDoist" onclick="add_to_todoist(this,'+ id + ', '+ item.step_id + ')"><i class="material-icons">add</i></a>';
           }
           else if (item.step_status === 'time'){
