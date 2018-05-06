@@ -7,19 +7,19 @@
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
 
 <meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="{% static 'img/logo.png' %}">
 </head>
 
 
-<style id="style-color">
+<style>
 .stats-slider{
     position:absolute;
     bottom:0;
     left:0;
 }
-:root {--color-layout: {{ user.color }};}
 </style>
 
 <body id="content">
@@ -121,16 +121,13 @@
 
 <script>
 $(document).ready(function(){
-    data = {"#e44332ff": "#C32127", "#1B92C6": "#235D77", "#48d34e": "#367439"};
-    $('#fill_body').attr("fill", data["{{ user.color }}"]);
+    init_color('{{ user.color }}');
     $('.modal').modal({
         dismissible: true, // Modal can be dismissed by clicking outside of the modal
         startingTop: '0%', // Starting top style attribute
         endingTop: '0%' // Ending top style attribute
     });
     $('.tooltipped').tooltip({delay: 50});
-    $('select').material_select();
-    $(".dropdown-button").dropdown({hover:true});
     build_stats();
 
 });
@@ -192,7 +189,7 @@ function add_to_todoist(e, id, step_id){
           type: "GET",
           async: true,
           error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);},
-          success: function(data){console.log('succes'); $(e).replaceWith('<i class="material-icons">time</i>')}
+          success: function(data){console.log('succes'); $(e).replaceWith('<i class="material-icons">timer</i>')}
     });
 };
 </script>

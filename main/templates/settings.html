@@ -7,12 +7,10 @@
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
 <meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="{% static 'img/logo.png' %}">
 </head>
-<style id="style-color">
-   :root {--color-layout: {{ user.color }};}
-</style>
 
 <body id="content">
 
@@ -185,29 +183,8 @@
 </script>
 <script>
 $(document).ready(function(){
-    $('select').material_select();
-    data = {"#e44332ff": "#C32127", "#1B92C6": "#235D77", "#48d34e": "#367439"};
-    $('#fill_body').attr("fill", data["{{ user.color }}"]);
+    init_color('{{ user.color }}');
 });
 </script>
-{% if premium %}
-<script>
-    function sendcolor(){
-    hex = $('input[type="radio"]:checked').val();
-        $.ajax({
-          url: '/color',
-          data: {hex: hex}, // TODO: add step handling
-          type: "GET",
-          async: true,
-          error: function(jqXHR, exception) {alert(jqXHR);},
-          success: function(data){$('#status').html('done');}
-        });
-    }
-    function changecolor(color){
-        $('#status').html('');
-        $('#style-color').html(':root {--color-layout: var(--color-'+color+')');
-        data = {"red": "#C32127", "blue": "#235D77", "green": "#367439"};
-        $('#fill_body').attr("fill", data[color]);
-    }
-</script>{% endif %}
+
 </html>
