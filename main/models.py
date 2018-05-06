@@ -8,7 +8,6 @@ from django.contrib.auth.models import AbstractUser
 from requests import HTTPError
 
 from main.api_utils import get_stats, get_combined_problems
-from main.presets import PredefinedProblems
 from justdoist.settings import POSSIBLE_PROBLEMS, PROBLEMS_TO_UID, is_available
 
 
@@ -157,12 +156,7 @@ class SuggestedProblem(models.Model):
 
     @classmethod
     def get(cls, uid: int) -> "SuggestedProblem":
-        try:
-            return cls.objects.get(uid=uid)
-        except ObjectDoesNotExist:
-            problem = cls(**PredefinedProblems.get_problem(uid))
-            problem.save()
-            return problem
+        return cls.objects.get(uid=uid)
 
     def __str__(self):
         return f"<SuggestedProblem {self.uid} \"{self.title}\">"
