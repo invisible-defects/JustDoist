@@ -50,6 +50,7 @@ class JustdoistUser(AbstractUser):
         api.user.sync()
         avatar = api.user.get("avatar_big", None)
         self.avatar = avatar
+        self.email = api.user.get("email", None)
         return self.has_avatar
 
     @property
