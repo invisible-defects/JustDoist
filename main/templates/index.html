@@ -139,6 +139,15 @@
     </div> 
    
     <script>
+        $.ajax({
+              url: '/stats',
+              type: "GET",
+              async: true,
+              success: onAjaxSuccess,
+              error: function(jqXHR, exception) {alert(jqXHR);}
+            });
+        function onAjaxSuccess(response){
+        response = response.graph;
         var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
         var day = new Date().getDay();
         f_part = week.slice(0, day);
@@ -150,7 +159,7 @@
             data: {
                 labels: week_labels,
                 datasets: [{
-                    data: {% if stats %} {{ stats.graph }} {% else %} {} {% endif %},
+                    data: response,
                     label: "Karma",
                     borderColor: "{{ user.color }}",
                     fill: "origin"
@@ -161,6 +170,8 @@
                 legend: {display:false}
             }
         });
+        }
+
 
 
         function redirect_on_add(){
