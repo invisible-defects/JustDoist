@@ -1,17 +1,5 @@
 from todoist.api import TodoistAPI
 
-
-def has_preferred_tasks(api: TodoistAPI) -> bool:
-    max_prior = max((item.data.get("priority", -1000) for item in api.items.all()), default=1)
-    return max_prior == 1
-
-  
-def does_use_regularly(api: TodoistAPI) -> float:
-    return int(
-        sum(map(lambda x: x['total_completed'],
-            api.completed.get_stats()['days_items'])) < 7
-    )
-
   
 def uses_task_grouping(api: TodoistAPI) -> bool :
     """Detects if user uses the task grouping feature.
