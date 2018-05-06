@@ -38,14 +38,14 @@
             <div class="row">
             <div class="input-field col s12">
                 {{ form.username }}
-                <label for="id_username">Username</label>
+                <label for="id_username"></label>
                 <small id="usernameHelp" class="text-danger yellow-text lighten-2">
                     {{ form.errors.username.0 }}
                 </small>
             </div>
             <div class="input-field col s12">
                 {{ form.password }}
-                <label for="id_password">Password</label>
+                <label for="id_password"></label>
                 <small id="passwordHelp" class="text-danger yellow-text lighten-2">
                     {{ form.errors.password.0 }}
                 </small>
@@ -67,8 +67,8 @@
 <script>
     jQuery(function($){
         $('#id_username, #id_password').addClass('form-control');
-        $('#id_username').attr('placeholder','Имя пользователя...');
-        $('#id_password').attr('placeholder','Пароль...');
+        $('#id_username').attr('placeholder','Username...');
+        $('#id_password').attr('placeholder','Password...');
     });
 </script>
 

@@ -40,14 +40,14 @@
             <div class="row">
             <div class="input-field col s12">
                 {{ form.first_name }}
-                <label for="id_first_name">First name</label>
+                <label for="id_first_name"></label>
                 <small id="first_nameHelp" class="text-danger yellow-text lighten-2">
                     {{ form.errors.first_name.0 }}
                 </small>
             </div>
             <div class="input-field col s12">
                 {{ form.last_name }}
-                <label for="id_last_name">Last Name</label>
+                <label for="id_last_name"></label>
                 <small id="last_nameHelp" class="text-danger yellow-text lighten-2">
                     {{ form.errors.last_name.0 }}
                 </small>
@@ -55,7 +55,7 @@
 
             <div class="input-field col s12">
                 {{ form.username }}
-                <label for="id_username">Username</label>
+                <label for="id_username"></label>
                 <small id="usernameHelp" class="text-danger yellow-text lighten-2">
                     {{ form.username.help_text }}<br>
                     {{ form.errors.username.0 }}
@@ -63,7 +63,7 @@
             </div>
             <div class="input-field col s12">
                 {{ form.password }}
-                <label for="id_password">Password</label>
+                <label for="id_password"></label>
                 <small id="passwordHelp" class="text-danger yellow-text lighten-2">
                     {{ form.errors.password.0 }}
                 </small>
@@ -83,10 +83,10 @@
 <script>
     jQuery(function($){
         $('#id_username, #id_password, #id_first_name, #id_last_name').addClass('form-control');
-        $('#id_username').attr('placeholder','Имя пользователя...');
-        $('#id_password').attr('placeholder','Пароль...');
-        $('#id_first_name').attr('placeholder','Имя...');
-        $('#id_last_name').attr('placeholder','Фамилия...');
+        $('#id_username').attr('placeholder','Username...');
+        $('#id_password').attr('placeholder','Password...');
+        $('#id_first_name').attr('placeholder','First Name...');
+        $('#id_last_name').attr('placeholder','Second Name...');
     });
 </script>
 </html>
