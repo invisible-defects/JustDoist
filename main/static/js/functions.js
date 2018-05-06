@@ -23,7 +23,7 @@ function changecolor(color){
     $('#fill_body').attr("fill", data[color]);
 }
 function init_color(color){
-    $('#content').prepend('<style id="style-color">:root {--color-layout: ' + color + ';}</style>');
+    $('#content').prepend('<style id="style-color">:root {--color-layout: ' + color + ';} .toast{background: ' + color + '!important;}</style>');
     data = {"#e44332ff": "#C32127", "#1B92C6": "#235D77", "#48d34e": "#367439"};
     $('#fill_body').attr("fill", data[color]);
 }

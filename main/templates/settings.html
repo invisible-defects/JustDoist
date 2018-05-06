@@ -97,7 +97,7 @@
             <span class="flow-text">{{user.last_name}}</span><br><span class="flow-text layout-text small">Last name</span>
             {% if user.email %}
             <span class="flow-text">{{user.email}}</span><br><span class="flow-text layout-text small">Email</span>
-                        {% if user.email %}
+                        {% endif %}
 
         </div>
     </div>
@@ -192,7 +192,7 @@
 {% endif %}
 
 $(document).ready(function(){
-    {% if new_achievement %}
+    {% if new_achievement == False %}
         makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
     {% endif %}
     init_color('{{ user.color }}');
