@@ -81,8 +81,8 @@
         <div class="card-content">
             {% load staticfiles %}
             <div class="row" style="margin:0;">
-            <div class="col s6"><img src="{% static 'img/premium.svg' %}" class="responsive-img"></div>
-            <div class="col s6">
+            <div class="col s12 m6"><img src="{% static 'img/premium.svg' %}" class="responsive-img"></div>
+            <div class="col s12 m6">
                 <h4 style="margin-top:0;"> Premium Account</h4>
                 <p class="flow-text" style="font-size:1.2rem;">
                 Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!
@@ -120,12 +120,10 @@
             <h5><b>YOUR STATISTICS</b></h5>
             <span>Last week</span>
             <div class="stats-crytery">
-                {% if stats %}
-                <a>Your karma <p>{{ stats.percentage }}%</p></a>
+                <a>Your karma <p>0%</p></a>
                 <div class="stats-slider">
-                    <div data="{{ stats.percentage }}"></div>
+                    <div data="0"></div>
                 </div>
-            {% endif %}
             </div>
         </div>
     </div>
@@ -139,28 +137,43 @@
     </div> 
    
     <script>
-        var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
-        var day = new Date().getDay();
-        f_part = week.slice(0, day);
-        s_part = week.slice(day-7);
-        week_labels = s_part.concat(f_part);
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: week_labels,
-                datasets: [{
-                    data: {% if stats %} {{ stats.graph }} {% else %} {} {% endif %},
-                    label: "Karma",
-                    borderColor: "{{ user.color }}",
-                    fill: "origin"
-                  }]
-            },
-            options: {
-                title: {display: true},
-                legend: {display:false}
-            }
-        });
+        $.ajax({
+              url: '/stats',
+              type: "GET",
+              async: true,
+              success: onAjaxSuccess,
+              error: function(jqXHR, exception) {alert(jqXHR);}
+            });
+        function onAjaxSuccess(response){
+            data = response.percentage;
+            $('.stats-crytery > a > p').html(data + '%');
+            $('.stats-slider > div').attr("data", data);
+            build_stats();
+            response = response.graph;
+            var week = ["mo", "tu", "we", "thu", "fr", "sat", "sun"];
+            var day = new Date().getDay();
+            f_part = week.slice(0, day);
+            s_part = week.slice(day-7);
+            week_labels = s_part.concat(f_part);
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: week_labels,
+                    datasets: [{
+                        data: response,
+                        label: "Karma",
+                        borderColor: "{{ user.color }}",
+                        fill: "origin"
+                      }]
+                },
+                options: {
+                    title: {display: true},
+                    legend: {display:false}
+                }
+            });
+        }
+
 
 
         function redirect_on_add(){
@@ -196,7 +209,7 @@ $(document).ready(function(){
         makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
     {% endif %}
     init_color('{{ user.color }}');
-    build_stats();
+
 });
 function build_stats(){
     slid = $('.stats-slider > div');

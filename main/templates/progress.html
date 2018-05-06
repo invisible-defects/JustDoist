@@ -92,7 +92,7 @@
     {% for problem in probs %}
     <div class="col s12 m4">
         <div class="card problem-card" onclick="open_problem_modal({{ problem.id }}, this)">
-            <div class="card-content">
+            <div class="card-content" id="stats-slider-{{ problem.id }}">
                 <p >{{ problem.title }}</p>
                 <span>{{ problem.percantage }}%</span>
                 <div class="stats-slider">
@@ -185,7 +185,7 @@ function add_to_todoist(e, id, step_id){
     text = e.parentElement.previousSibling.innerText;
     // console.log(e.parentElement.previousSibling.innerText);
     $(e).addClass('scale-out');
-    // console.log(e);
+    setTimeout( function(){$(e).replaceWith('<i class="material-icons">timer</i>');}, 1000);
     $.ajax({
           url: '/add_task',
           data: {text: text, id: id, step: step_id}, // TODO: add step handling
@@ -193,6 +193,12 @@ function add_to_todoist(e, id, step_id){
           async: true,
           error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);},
           success: (data) => {
+                $(e).replaceWith('<i class="material-icons">timer</i>');
+                current_int = parseInt($('#stats-slider-' + id + ' > span').html());
+                summ = current_int + (100/$('.card-panel').length);
+                $('#stats-slider-' + id + ' > span').html(summ + '%');
+                $('#stats-slider-' + id + ' > div > div').attr('data', summ);
+                build_stats();
                 if (data['achievement'].length !== 0) {
                     ach = data['achievement'];
                     makeAchievementToast(ach[1], ach[0], ach[2]);

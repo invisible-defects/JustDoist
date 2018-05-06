@@ -33,6 +33,12 @@ class JustdoistUser(AbstractUser):
     def unsubscribe(self):
         self.subscription.delete()
         return self
+    #
+    # def clear_problems(self):
+    #     proba = SuggestedProblem.objects.all().filter(uid=2).first().probabilities.filter(user=self).first()
+    #     proba.steps_completed = 0
+    #     proba.save()
+    #     return self
 
     def add_achievement(self, achievement_id: int) -> "Achievement, None":
         try:
