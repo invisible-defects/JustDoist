@@ -6,9 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-
-
 
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
@@ -54,14 +51,14 @@
    <ul class="right hide-on-med-and-down">
     <li><a href="/index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="/progress/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
-    <li><a href="" class="active"><i class="material-icons left">settings</i>SETTINGS</a></li>
+    <li><a href="/settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
     <li><a href="/contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
     <li><a href="/logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
   <ul class="right hide-on-large-only">
     <li><a href="/index"><i class="material-icons">description</i></a></li>
     <li><a href="/progress/no_add"><i class="material-icons">equalizer</i></a></li>
-    <li><a href="" class="active"><i class="material-icons">settings</i></a></li>
+    <li><a href="/settings"><i class="material-icons">settings</i></a></li>
     <li><a href="/contact_us"><i class="material-icons">info_outline</i></a></li>
     <li><a href="/logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
@@ -70,72 +67,17 @@
 </nav>
 
 
-    <style>
-    .small{
-        font-size: 1.2rem;
-    }
-    .input-field label {
-     color: #333 !important;
-    }
-    .input-field input[type=text]:focus + label {
-     color: #333 !important;
-    }
-    .input-field input[type=text]:focus {
-     border-bottom: 1px solid var(--color-red) !important;
-     box-shadow: 0 1px 0 0 var(--color-red) !important;
-    }
-    .input-field input[type=text].valid {
-     border-bottom: 1px solid green !important;
-     box-shadow: 0 1px 0 0 green !important;
-    }
-    .input-field input[type=text].invalid {
-     border-bottom: 1px solid red !important;
-     box-shadow: 0 1px 0 0 red !important;
-    }
-    .input-field .prefix.active {
-     color: #fff !important;
-    }
-    </style>
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
 
-<div class="col s12">
-    <div class="card">
-        <div class="card-content">
-            <h4 style="margin-top: -0.5rem;">Buy weekly subscription</h4>
-            <div class="valign-wrapper">
-                <div class="col s12" style="margin:0; padding:0;">
+<div style="margin:6rem auto; display:flex; align-items:center; flex-direction:column;">
 
-                    <form action="/checkout/weekly" method="POST" id="payment-form">
-                        {% csrf_token %}
-                        {% load staticfiles %}
-                        <p class="payment-errors"></p>
-                        <div class="row">
-                        <div class="input-field col s12">
-                            <label>Card Number</label>
-                            <input type="text" size="16" autocomplete="off" class="card-number" placeholder="0000 0000 0000 0000" />
-                        </div>
-                        <div class="input-field col s4">
-                            <label>CVC</label>
-                            <input type="text" size="3" autocomplete="off" class="card-cvc" placeholder="000"/>
-                        </div>
-                        <div class="input-field col s4">
-                            <label>Expiration</label>
-                            <input type="text" size="2" placeholder="00" class="card-expiry-month"/>
-                        </div>
-                        <div class="input-field col s4">
-                            <input type="text" size="4" placeholder="0000"  class="card-expiry-year"/>
-                        </div>
-                        <div class="input-field col right">
-                        <button type="submit" class="submit-button aves-effect waves-light btn red right">Pay $ 0.01</button>
-                        </div>
-                        </div>
-                    </form>
+<svg style="display:flex; width: 84px; height:84px;" viewBox="0 0 84 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+<circle class="border" cx="42" cy="42" r="40" stroke-linecap="round" stroke-width="4" stroke="#abe9d2" fill="none"></circle>
+<path class="checkmark" stroke-linecap="round" stroke-linejoin="round" d="M23.375 42.5488281 36.8840688 56.0578969 64.891932 28.0500338" stroke-width="4" stroke="#24b47e" fill="none"></path>
+</svg>
 
-                </div>
-            </div>
-        </div>
-    </div>
+<p class="flow-text">Congratultions! You`ve just bought a weekly subscription!</p>
 </div>
 
 </div></div>
