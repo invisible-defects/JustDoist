@@ -42,7 +42,7 @@ def index(request):
         "button": button,
         "stats": stats,
     }
-    return render(request, 'index.html', context=context)
+    return render(request, 'index.html', context=context, status=200)
 
 
 def handler404(request):
@@ -71,6 +71,7 @@ def oauth_callback(request, provider):
         return redirect('index')
 
     request.user.todoist_token = token
+    request.user.update_avatar()
     request.user.save()
     return redirect('index')
 

@@ -1,4 +1,6 @@
 from todoist.api import TodoistAPI
+from main.api_wrapper import get_user_tasks
+from justdoist.settings import POSSIBLE_PROBLEMS
 
 
 def has_preferred_tasks(api: TodoistAPI) -> bool:
@@ -23,17 +25,15 @@ def uses_task_grouping(api: TodoistAPI) -> bool :
     return len(api.state["projects"]) > 1
 
 
-def detect_exhaustion(api: TodoistAPI, threshold=6) -> bool:
+def detect_exhaustion(api: TodoistAPI, threshold: int=6) -> bool:
     """Detects if user assigns too many tasks daily
     
     Arguments:
         api {TodoistAPI} -- todoist api
         threshold {int} -- how many tasks daily are considered too much (default: {6})
     """
-
     tasks = api.items.all()
     return len([task["date_string"] for task in tasks if task == tasks[0]["date_string"]]) > threshold
-
 
 
 def detect_lack_priorities(api: TodoistAPI) -> bool:

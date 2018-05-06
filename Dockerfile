@@ -8,4 +8,6 @@ WORKDIR /justdoist/
 
 RUN pip install -r requirements.txt
 
+RUN pip install uwsgi
+
 EXPOSE 8000

@@ -5,19 +5,19 @@ import todoist
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import ValidationError
 from requests import HTTPError
 
 from main.api_utils import get_stats, get_combined_problems
 from main.presets import PredefinedProblems
+from justdoist.settings import POSSIBLE_PROBLEMS, PROBLEMS_TO_UID, is_available
 
 
 # TODO: write comments
 class JustdoistUser(AbstractUser):
-    possible_problems = [2, 3]
     todoist_token = models.CharField(unique=True, max_length=128, null=True)
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
+    avatar = models.CharField(max_length=256, null=True)
 
     def get_subscription(self):
         try:
@@ -30,8 +30,25 @@ class JustdoistUser(AbstractUser):
         return self
 
     @property
+    def has_avatar(self):
+        return self.avatar is not None
+
+    def update_avatar(self):
+        if not self.has_todoist_token:
+            return
+        api = todoist.TodoistAPI(self.todoist_token)
+        api.user.sync()
+        avatar = api.user.get("avatar_big", None)
+        self.avatar = avatar
+        return self.has_avatar
+
+    @property
     def has_subscription(self):
         return self.get_subscription() is not None
+
+    @property
+    def has_todoist_token(self):
+        return self.todoist_token is not None
 
     def get_stats(self) -> dict:
         if not self.check_todoist():
@@ -79,8 +96,11 @@ class JustdoistUser(AbstractUser):
 
         api = todoist.TodoistAPI(self.todoist_token)
         data = get_combined_problems(api)
-        for problem in self.possible_problems:
+        for problem in POSSIBLE_PROBLEMS:
+            if not is_available(problem):
+                continue
             value = data[problem]
+            problem = PROBLEMS_TO_UID[problem]
             proba = self.suggested_problems.all().filter(suggested_problem=problem).first()
 
             if proba is None:
