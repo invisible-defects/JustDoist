@@ -19,9 +19,7 @@ def uses_task_grouping(api: TodoistAPI) -> bool :
     Arguments:
         api {TodoistAPI} -- todoist api
     """
-
-    api.sync()
-
+    
     return len(api.state["projects"]) > 1
 
 
@@ -45,7 +43,8 @@ def detect_lack_priorities(api: TodoistAPI) -> bool:
         api {TodoistAPI} -- todoist api
     """
 
-    return len([task for task in get_user_tasks(api.token) if task["priority"] != 1]) > 0
+    return len([task for task in api.items.all() if task["priority"] != 1]) > 0
+
 
 def detect_regular_use(api: TodoistAPI) -> bool:
     """Detect if user uses Todoist regularly
@@ -59,8 +58,6 @@ def detect_regular_use(api: TodoistAPI) -> bool:
 
 
 def get_combined_problems(api: TodoistAPI) -> dict:
-    # is_premium(api)
-    # get_stats(api)
     problems_dict = {}
 
     problems_dict["task_grouping"] = uses_task_grouping(api)
