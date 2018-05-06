@@ -45,6 +45,9 @@ def index(request):
     }
     return render(request, 'index.html', context=context, status=200)
 
+def landingpage(request):
+    return HttpResponseNotFound(render(request, "landingpage.html").content)
+
 
 def handler404(request):
     return HttpResponseNotFound(render(request, "404.html").content)
