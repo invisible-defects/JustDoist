@@ -41,7 +41,7 @@ function stripeResponseHandler(status, response) {
 $(document).ready(function() {
     $("#payment-form").submit(function(event) {
         $('.submit-button').attr("disabled", "disabled");
-        var chargeAmount = 1000;
+        var chargeAmount = 001;
 
         Stripe.createToken({
             number: $('.card-number').val(),
@@ -49,7 +49,7 @@ $(document).ready(function() {
             exp_month: $('.card-expiry-month').val(),
             exp_year: $('.card-expiry-year').val()
         }, chargeAmount, stripeResponseHandler);
-        return false; // submit from callback
+        return false;
     });
 });
 if (window.location.protocol === 'file:') {
