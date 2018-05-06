@@ -95,6 +95,10 @@
         <div class="col">
             <span class="flow-text">{{user.first_name}}</span><br><span class="flow-text layout-text small">First name</span><br>
             <span class="flow-text">{{user.last_name}}</span><br><span class="flow-text layout-text small">Last name</span>
+            {% if user.email %}
+            <span class="flow-text">{{user.email}}</span><br><span class="flow-text layout-text small">Email</span>
+            {% endif %}
+
         </div>
     </div>
     </div></div></div>
