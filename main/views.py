@@ -71,6 +71,7 @@ def oauth_callback(request, provider):
         return redirect('index')
 
     request.user.todoist_token = token
+    request.user.update_avatar()
     request.user.save()
     return redirect('index')
 

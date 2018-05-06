@@ -17,6 +17,7 @@ class JustdoistUser(AbstractUser):
     todoist_token = models.CharField(unique=True, max_length=128, null=True)
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
+    avatar = models.CharField(max_length=256, null=True)
 
     def get_subscription(self):
         try:
@@ -27,6 +28,19 @@ class JustdoistUser(AbstractUser):
     def unsubscribe(self):
         self.subscription.delete()
         return self
+
+    @property
+    def has_avatar(self):
+        return self.avatar is not None
+
+    def update_avatar(self):
+        if not self.has_todoist_token:
+            return
+        api = todoist.TodoistAPI(self.todoist_token)
+        api.user.sync()
+        avatar = api.user.get("avatar_big", None)
+        self.avatar = avatar
+        return self.has_avatar
 
     @property
     def has_subscription(self):
