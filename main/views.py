@@ -195,7 +195,7 @@ class Register(CreateView):
 
 
 @login_required(login_url=LOGIN_URL)
-def payment(request):
+def payments(request):
     # Redirect in the case of missing SMI integration
     if request.user.todoist_token is None:
         return redirect("index")
@@ -208,7 +208,7 @@ def payment(request):
         "stripe_key": STRIPE_PUBLIC_KEY,
         "price_weekly": PREMIUM_PRICE_PER_WEEK,
     }
-    return render(request, 'payment.html', context)
+    return render(request, 'payments.html', context)
 
 
 @csrf_exempt

@@ -43,7 +43,7 @@ def detect_lack_priorities(api: TodoistAPI) -> bool:
         api {TodoistAPI} -- todoist api
     """
 
-    return len([task for task in api.items.all() if task["priority"] == 1]) > 0
+    return len([task for task in api.items.all() if task.data.get("priority", -1000) == 1]) > 0
 
 
 def detect_regular_use(api: TodoistAPI) -> bool:
