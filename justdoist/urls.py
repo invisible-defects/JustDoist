@@ -36,8 +36,8 @@ urlpatterns = [
     path('link/<slug:service>/', views.link, name='link'),
     path('authorize/<slug:provider>/', views.authorize),
     path('callback/<slug:provider>/', views.oauth_callback),
-    path('profile/<slug:data>/', views.profile, name="profile"),
-    path('profile/', views.default_profile, name="profile"),
+    path('progress/<slug:data>/', views.progress, name="progress"),
+    path('progress/', views.default_progress, name="default_progress"),
 
     path('payment', views.payment, name="payment"),
     path('checkout/<slug:kind>', views.checkout, name="checkout"),

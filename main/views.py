@@ -4,7 +4,7 @@ import stripe
 from django.http import JsonResponse, HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
@@ -77,7 +77,7 @@ def oauth_callback(request, provider):
 
 
 @login_required(login_url=LOGIN_URL)
-def profile(request, data):
+def progress(request, data):
     if data == 'add':
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
@@ -102,11 +102,11 @@ def profile(request, data):
     context = {
         "probs": problems,
     }
-    return render(request, 'profile.html', context=context)
+    return render(request, 'progress.html', context=context)
 
 @login_required(login_url=LOGIN_URL)
-def default_profile(request):
-    return redirect("/profile/no_add")
+def default_progress(request):
+    return redirect("/progress/no_add")
 
 
 @login_required(login_url=LOGIN_URL)

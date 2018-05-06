@@ -8,6 +8,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/colorscheme.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/achievments.js' %}"></script>
 
 <meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="{% static 'img/logo.png' %}">
@@ -20,11 +21,17 @@
     bottom:0;
     left:0;
 }
+#toast-container {
+    top: auto !important;
+    left: auto !important;
+    bottom: 6%;
+    right: 2%;
+}
 
 </style>
-    
+
 <body id="content">
-    
+
 <nav class="layout-color">
 <div class="nav-wrapper layout-color">
 {% load staticfiles %}
@@ -32,14 +39,14 @@
     <a href="/index" class="brand-logo left hide-on-large-only" style="font-weight: 600; margin-left: 1rem;"><img id="logo_img_mob" src="/static/img/logo_red.svg"></a>
    <ul class="right hide-on-med-and-down">
     <li><a href="/index"><i class="material-icons left">description</i>PROBLEMS</a></li>
-    <li><a href="/profile/no_add" class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
+    <li><a href="/progress/no_add" class="active"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
     <li><a href="/settings"><i class="material-icons left">settings</i>SETTINGS</a></li>
     <li><a href="/contact_us"><i class="material-icons left">info_outline</i>CONTACT US</a></li>
     <li><a href="/logout"><i class="material-icons">exit_to_app</i></a></li>
   </ul>
   <ul class="right hide-on-large-only">
     <li><a href="/index"><i class="material-icons">description</i></a></li>
-    <li><a href="/profile/no_add" class="active"><i class="material-icons">equalizer</i></a></li>
+    <li><a href="/progress/no_add" class="active"><i class="material-icons">equalizer</i></a></li>
     <li><a href="/settings"><i class="material-icons">settings</i></a></li>
     <li><a href="/contact_us"><i class="material-icons">info_outline</i></a></li>
     <li><a href="/logout"><i class="material-icons">exit_to_app</i></a></li>
@@ -63,7 +70,7 @@
         </div>
         {% endif %}
     </div>
-    
+
     {% for problem in probs %}
     <div class="col s4">
         <div class="card problem-card" onclick="open_problem_modal({{ problem.id }}, this)">
@@ -75,26 +82,25 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     {% endfor %}
-    
-    
+
+
 </div></div>
-    
-  
+
+
 <div id="modal1" class="modal">
 <div class="modal-content">
 <h4>Modal Header</h4>
-    
+
 </div>
 <div class="modal-footer">
 <a href="#!" class="modal-action modal-close waves-effect waves-light red btn">OK</a>
 </div>
 </div>
-    
 </body>
-     
+
 <script>
 $(document).ready(function(){
     drawcolor();
@@ -111,7 +117,7 @@ $(document).ready(function(){
 function build_stats(){
     slid = $('.stats-slider > div');
     for (i = 0; i < slid.length; i++){
-        
+
         wid =  parseInt($(slid[i]).attr("data"));
         $(slid[i]).animate({
             "width": Math.abs(wid) + "%"
@@ -120,12 +126,12 @@ function build_stats(){
             "width" : Math.abs(wid) + "%"
         })
         $(slid[i]).addClass("grad-plus");
-        
+
     }
 }
 
 function open_problem_modal(id, e){
-    
+
     $.get("/problem",{problem_id: id},onAjaxSuccess);
     function onAjaxSuccess(data){
         data = JSON.parse(data);
@@ -168,6 +174,7 @@ function add_to_todoist(e, id, step_id){
           error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);},
           success: function(data){console.log('succes'); $(e).replaceWith('<i class="material-icons">time</i>')}
     });
-}
+};
+
 </script>
 </html>
