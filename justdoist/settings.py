@@ -162,3 +162,5 @@ PROBLEMS_TO_UID = {
     "regular_use": 3,
 }
 is_available = lambda p: p in PROBLEMS_TO_UID
+
+PREMIUM_SUBSCRIPTION_ACHIEVEMENT_ID = 8

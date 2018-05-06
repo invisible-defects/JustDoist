@@ -14,7 +14,8 @@ from main.models import SuggestedProblem, PremiumSubscription
 from main.oauth import OAuthSignIn
 from justdoist.settings import (
     LOGIN_URL, STRIPE_PUBLIC_KEY,
-    STRIPE_SECRET_KEY, PREMIUM_PRICE_PER_DAY, PREMIUM_PRICE_PER_WEEK
+    STRIPE_SECRET_KEY, PREMIUM_PRICE_PER_DAY,
+    PREMIUM_PRICE_PER_WEEK, PREMIUM_SUBSCRIPTION_ACHIEVEMENT_ID
 )
 stripe.api_key = STRIPE_SECRET_KEY
 
@@ -242,13 +243,15 @@ def checkout(request, kind):
         charge_id=charge.id
     )
     sub.save()
-    # TODO: add achievement check
-    # request.user.achievements
+
+    result = request.user.add_achievement(
+        PREMIUM_SUBSCRIPTION_ACHIEVEMENT_ID,
+    )
 
     context = {
         "new_achievement": True,
-        "achievement_image": "/static/img/logo.svg",
-        "achievement_text": "Premium User",
+        "achievement_image": result.image,
+        "achievement_text": result.title,
     }
     return render(request, "success.html", context=context, status=200)
 

@@ -1,6 +1,7 @@
 from main.models import ProblemStep, JustdoistUser
 from todoist import TodoistAPI
 
+
 def detecet_achievements(user: JustdoistUser) -> set:
     achievements = set()
 

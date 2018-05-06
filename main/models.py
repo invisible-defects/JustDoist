@@ -29,6 +29,16 @@ class JustdoistUser(AbstractUser):
         self.subscription.delete()
         return self
 
+    def add_achievement(self, achievement_id: int) -> "Achievement, None":
+        try:
+            ac = Achievement.objects.get(uid=achievement_id)
+            if ac.is_premium and not self.has_subscription:
+                return None
+            self.achievements.add(ac)
+            return ac
+        except ObjectDoesNotExist:
+            return None
+
     @property
     def has_avatar(self):
         return self.avatar is not None
@@ -248,7 +258,8 @@ class PremiumSubscription(models.Model):
         return str(self)
 
 
-class Achievment(models.Model):
+class Achievement(models.Model):
+    uid = models.IntegerField()
     title = models.CharField(max_length=256)
     text = models.CharField(max_length=1000)
     image = models.URLField(max_length=500)
@@ -257,4 +268,3 @@ class Achievment(models.Model):
 
     def __str__(self):
         return f"<Achievement `{self.title}`, Premium: {self.is_premium}>"
-      
