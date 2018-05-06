@@ -104,6 +104,18 @@ def profile(request, data):
     }
     return render(request, 'profile.html', context=context)
 
+
+@login_required(login_url=LOGIN_URL)
+def change_color(request):
+    if not request.user.has_subscription:
+        return JsonResponse({"error": "user has no premium"}, status=422)
+    color = request.GET.get('hex', None)
+    if color is None:
+        return JsonResponse({"error": "missing `hex` param"}, status=422)
+    request.user.color = color
+    request.user.save()
+
+
 @login_required(login_url=LOGIN_URL)
 def default_profile(request):
     return redirect("/profile/no_add")
