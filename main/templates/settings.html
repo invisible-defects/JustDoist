@@ -69,8 +69,6 @@
     .finished{
         border:2px #4CAF50  solid;
     }
-
-    
 </style>
 
 <!--  Main  -->
@@ -97,6 +95,10 @@
         <div class="col">
             <span class="flow-text">{{user.first_name}}</span><br><span class="flow-text layout-text small">First name</span><br>
             <span class="flow-text">{{user.last_name}}</span><br><span class="flow-text layout-text small">Last name</span>
+            {% if user.email %}
+            <span class="flow-text">{{user.email}}</span><br><span class="flow-text layout-text small">Email</span>
+            {% endif %}
+
         </div>
     </div>
     </div></div></div>
@@ -120,15 +122,12 @@
 
 
     {% if user.has_todoist_token %}
-<<<<<<< HEAD
+
     <div class="col s12 m6"><div class="card"><div class="card-content {% if premium %}finished{% endif %}">
-=======
-    <div class="card"><div class="card-content {% if user.has_subscription %}finished{% endif %}">
->>>>>>> 4ad83024e08d3e1d85f26cdd623230a99fe80da8
 
     <div class="row" style="margin:0;">
     <div class="col s11"><h4 style="margin:0">Premium Account</h4></div>
-    {% if user.has_subscription %}
+    {% if premium %}
     <div class="col s1"><i class="material-icons green-text" style="line-height: 1.5;">done</i></div>
     {% else %}
     <div class="col s12"><p class="flow-text">Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!</p></div>
@@ -138,13 +137,8 @@
     </div></div></div>
     {% endif %}
 
-<<<<<<< HEAD
     {% if premium %}
     <div class="col s12 m6"><div class="card"><div class="card-content">
-=======
-    {% if user.has_subscription %}
-    <div class="card"><div class="card-content">
->>>>>>> 4ad83024e08d3e1d85f26cdd623230a99fe80da8
     <h4>Themes</h4>
     <style>
         #red + label:after{
@@ -178,7 +172,6 @@
     <button type="submit" class="submit-button waves-effect waves-light btn layout-background right" onclick="sendcolor()">Save colortheme</button></p>
     <i class="material-icons right green-text" id="status" style="line-height: 36px; margin-right:1rem;"></i>
 
-    </div></div>
     </div></div>
     {% endif %}
 

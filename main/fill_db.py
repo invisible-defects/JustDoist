@@ -33,7 +33,7 @@ if __name__ == "__main__":
         ach = Achievement(
             uid = reward['uid'],
             title = reward['title'],
-            image = reward['icon']
+            image = reward['icon'],
             is_premium = reward['is_premium']
         )
         ach.save()
