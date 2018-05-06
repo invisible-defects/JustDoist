@@ -114,6 +114,7 @@ def change_color(request):
         return JsonResponse({"error": "missing `hex` param"}, status=422)
     request.user.color = color
     request.user.save()
+    return JsonResponse({"success": "color was changed"}, status=200)
 
 
 @login_required(login_url=LOGIN_URL)
