@@ -128,7 +128,14 @@ nav > div > a{
         margin:0 !important;
     }
 }
-
+@media only screen and (max-width: 550px){
+    nav .brand-logo.left {
+        font-size:0 !important;
+    }
+    #logo_img{
+        margin:0 !important;
+    }
+}
 .dropdown-top{
     overflow: hidden;
     margin-top: 65px !important;
@@ -246,4 +253,10 @@ height: 100px !important;
     flex: auto;
     margin: 0 0.2rem;
     margin-top: -0.6rem;
+}
+#toast-container {
+    top: auto !important;
+    left: auto !important;
+    bottom: 6%;
+    right: 2%;
 }
