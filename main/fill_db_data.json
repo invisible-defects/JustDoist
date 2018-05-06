@@ -33,7 +33,7 @@
     {
         "uid": 2,
         "title": "No prioritization",
-        "body": ["You should use ToDoist’s “Priority” function, to prioritise most important tasks. Use “p1”, …, “p4” tags to determine tasks’ importance.",
+        "body": ["You should use ToDoist’s “Priority” function, to prioritise most important tasks. Use “p1”, …, “p4” tags to determine task’s importance.",
                 "<i>For example, “p1 Meeting with Tom on Sunday” will be automatically detected as Priority 1 by ToDoist</i>",
                 "<b>Why does it work?</b>",
                 "Tasks prioritization helps you to concentrate on what is truly important for you. Some people start off with some easy tasks in the beginning of the day, and often find out that they haven’t done anything important by the end of the day. Prioritizing always reminds you of what should be done first and where should the most effort be put."],
