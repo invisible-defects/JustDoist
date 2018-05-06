@@ -155,3 +155,10 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_nhlYKipeW7h6773
 
 PREMIUM_PRICE_PER_DAY = 0.25
 PREMIUM_PRICE_PER_WEEK = PREMIUM_PRICE_PER_DAY * 7
+
+POSSIBLE_PROBLEMS = ["task_grouping", "exhaustion", "lack_priorities", "regular_use"]
+PROBLEMS_TO_UID = {
+    "lack_priorities": 2,
+    "regular_use": 3,
+}
+is_available = lambda p: p in PROBLEMS_TO_UID

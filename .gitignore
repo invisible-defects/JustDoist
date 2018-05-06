@@ -176,3 +176,4 @@ pip-selfcheck.json
 */test.py
 ./static
 ./static/
+./static/*
