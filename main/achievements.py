@@ -1,15 +1,18 @@
-from main.models import ProblemStep, JustdoistUser
 from todoist import TodoistAPI
+from django.core.exceptions import ObjectDoesNotExist
 
 
-def detecet_achievements(user: JustdoistUser) -> set:
+def detect_achievements(user: "JustdoistUser") -> list:
     achievements = set()
 
     token = user.todoist_token
     api = TodoistAPI(token)
-    
-    n_completed_steps = len(user.steps_completed.all())
-    n_added_tasks = len(api.items.all())
+    try:
+        n_completed_steps = user.suggested_problems.all().first().steps_completed
+    except ObjectDoesNotExist:
+        return []
+
+    n_added_tasks = len(user.suggested_problems.all())
 
     # task adding related achievements
     if n_added_tasks >= 25:
@@ -21,7 +24,7 @@ def detecet_achievements(user: JustdoistUser) -> set:
     elif n_added_tasks >= 1:
         achievements |= {0}
 
-    # step solvin related achievements
+    # step solving related achievements
     if n_completed_steps >= 25:
         achievements |= {4, 5, 6 , 7}
     elif n_completed_steps >= 10:
@@ -31,4 +34,4 @@ def detecet_achievements(user: JustdoistUser) -> set:
     elif n_completed_steps >= 1:
         achievements |= {4}
         
-    return achievements
+    return list(achievements)

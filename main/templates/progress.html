@@ -152,7 +152,7 @@ function build_stats(){
 
 function open_problem_modal(id, e){
 
-    $.get("/problem",{problem_id: id},onAjaxSuccess);
+    $.get("/problem",{problem_id: id}, onAjaxSuccess);
     function onAjaxSuccess(data){
         data = JSON.parse(data);
         text = '';
@@ -181,19 +181,27 @@ function open_problem_modal(id, e){
         $('.tooltipped').tooltip({delay: 50});
     }
 }
+
 function add_to_todoist(e, id, step_id){
     text = e.parentElement.previousSibling.innerText;
-    console.log(e.parentElement.previousSibling.innerText);
+    // console.log(e.parentElement.previousSibling.innerText);
     $(e).addClass('scale-out');
-    console.log(e);
+    // console.log(e);
     $.ajax({
           url: '/add_task',
           data: {text: text, id: id, step: step_id}, // TODO: add step handling
           type: "GET",
           async: true,
           error: function(jqXHR, exception) {$(e).removeClass('scale-out');alert(jqXHR);},
-          success: function(data){console.log('succes'); $(e).replaceWith('<i class="material-icons scale-transition scale-in">timer</i>')}
+          success: (data) => {
+                if (data['achievement'].length !== 0) {
+                    ach = data['achievement'];
+                    makeAchievementToast(ach[1], ach[0], ach[2]);
+                }
+          }
     });
 };
+
+
 </script>
 </html>

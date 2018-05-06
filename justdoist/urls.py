@@ -29,10 +29,10 @@ urlpatterns = [
     url(r'^login/$', dj_views.login, {'template_name': 'login.html'}),
     url(r'^logout/$', dj_views.logout_then_login, name="logout"),
 
-    path('landingpage', views.landingpage),
 
-    path('', views.index),
+    path('', views.main_route, name="main_routed"),
     path('index', views.index, name='index'),
+    path('landingpage', views.landingpage, name="landingpage"),
     path('register', views.Register.as_view(), name='register'),
 
     path('link/<slug:service>/', views.link, name='link'),

@@ -15,7 +15,8 @@ from main.oauth import OAuthSignIn
 from justdoist.settings import (
     LOGIN_URL, STRIPE_PUBLIC_KEY,
     STRIPE_SECRET_KEY, PREMIUM_PRICE_PER_DAY,
-    PREMIUM_PRICE_PER_WEEK, PREMIUM_SUBSCRIPTION_ACHIEVEMENT_ID
+    PREMIUM_PRICE_PER_WEEK, PREMIUM_SUBSCRIPTION_ACHIEVEMENT_ID,
+    FIRST_TASK_ACHIEVEMENT_ID
 )
 stripe.api_key = STRIPE_SECRET_KEY
 
@@ -45,8 +46,15 @@ def index(request):
     }
     return render(request, 'index.html', context=context, status=200)
 
+
+def main_route(request):
+    if not request.user.is_authenticated:
+        return redirect("landingpage")
+    return redirect('index')
+
+
 def landingpage(request):
-    return HttpResponseNotFound(render(request, "landingpage.html").content)
+    return render(request, "landingpage.html")
 
 
 def handler404(request):
@@ -82,7 +90,12 @@ def oauth_callback(request, provider):
 
 @login_required(login_url=LOGIN_URL)
 def progress(request, data):
+    ac = None
     if data == 'add':
+        if not request.user.shown_first_task_ac:
+            ac = request.user.achievements.all().filter(uid=FIRST_TASK_ACHIEVEMENT_ID)
+            ac = None if not ac else ac[0]
+
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
         pr.save()
@@ -106,6 +119,14 @@ def progress(request, data):
     context = {
         "probs": problems,
     }
+
+    if ac is not None:
+        ac.shown_first_task_ac = False
+        ac.save()
+        context['new_achievement'] = True
+        context['achievement_image'] = ac.image
+        context['achievement_text'] = ac.title
+
     return render(request, 'progress.html', context=context)
 
 
@@ -166,8 +187,8 @@ def add_task(request):
     if step_num is None:
         return JsonResponse({"error": "missing `step` param"}, status=422)
 
-    request.user.add_problem(task_text, task_id, step_num)
-    return JsonResponse({"status": "ok"}, status=200)
+    achievements = request.user.add_problem(task_text, task_id, step_num)
+    return JsonResponse({"status": "ok", "achievement": achievements}, status=200)
 
 
 @login_required(login_url=LOGIN_URL)

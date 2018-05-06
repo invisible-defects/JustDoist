@@ -7,8 +7,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractUser
 from requests import HTTPError
 
+from main.achievements import detect_achievements
 from main.api_utils import get_stats, get_combined_problems
-from justdoist.settings import POSSIBLE_PROBLEMS, PROBLEMS_TO_UID, is_available
+from justdoist.settings import (
+    POSSIBLE_PROBLEMS, PROBLEMS_TO_UID, is_available,
+    FIRST_TASK_ACHIEVEMENT_ID
+)
 
 
 # TODO: write comments
@@ -18,6 +22,7 @@ class JustdoistUser(AbstractUser):
     inbox_id = models.IntegerField(null=True)
     avatar = models.CharField(max_length=256, null=True)
     color = models.CharField(max_length=32, default='#e44332ff')
+    shown_first_task_ac = models.BooleanField(default=False)
 
     def get_subscription(self):
         try:
@@ -88,6 +93,8 @@ class JustdoistUser(AbstractUser):
             delta = datetime.now() - self.last_problem_shown.replace(tzinfo=None)
             if delta.days < 1:
                 return {"status": 'time', 'problem': None}
+        else:
+            self.add_achievement(FIRST_TASK_ACHIEVEMENT_ID)
 
         problem = self._get_highest_probability()
         # TODO: probably need to extract a constant
@@ -95,7 +102,6 @@ class JustdoistUser(AbstractUser):
             self.calculate_probabilities()
             problem = self._get_highest_probability()
 
-        # TODO: change `problem` key because that's actually a probability
         if problem is None or problem.value < 0.3:
             return {"status": "no", "problem": None}
 
@@ -139,19 +145,50 @@ class JustdoistUser(AbstractUser):
 
         return -1
 
-    def add_problem(self, text: str, problem_id: int, step_num: int) -> bool:
+    def add_problem(self, text: str, problem_id: int, step_num: int) -> list:
         if not self.check_todoist():
-            return False
+            return []
+
         proba = SuggestedProblem.objects.all().filter(uid=problem_id).first().probabilities.filter(user=self).first()
         proba.steps_completed += 1
         proba.save()
+
+        achievements = []
+        existing_achievements = [a.uid for a in self.achievements.all()]
+        achievement_candidates = detect_achievements(self)
+
+        for a in achievement_candidates:
+            if a in existing_achievements:
+                continue
+            try:
+                a = Achievement.objects.get(uid=a)
+                self.achievements.add(a)
+                achievements.append(a)
+            except ObjectDoesNotExist:
+                pass
+
+        if len(achievements) > 0:
+            achievements = [
+                achievements[0].title,
+                achievements[0].image,
+                len(achievements) - 1,
+            ]
+
         api = todoist.TodoistAPI(self.todoist_token)
         item = api.items.add(text, self.get_inbox_id(api))
         api.commit()
-        tracker = SuggestedProblem.objects.all().filter(uid=problem_id).first().steps.filter(number=step_num).first().steps_trackers.filter(related_problem_prob=proba).first()
+
+        tracker = SuggestedProblem.objects.filter(
+            uid=problem_id
+        ).first().steps.filter(
+            number=step_num
+        ).first().steps_trackers.filter(
+            related_problem_prob=proba
+        ).first()
+
         tracker.todoist_task_id = item['id']
         tracker.save()
-        return True
+        return achievements
 
     def __str__(self):
         return f"<JustdoistUser: {self.username}, premium: {self.has_subscription}>"
