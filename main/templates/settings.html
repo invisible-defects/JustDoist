@@ -168,6 +168,7 @@
     </p>
     <p>
     <button type="submit" class="submit-button waves-effect waves-light btn layout-background right" onclick="sendcolor()">Save colortheme</button></p>
+    <i class="material-icons right green-text" id="status" style="line-height: 36px; margin-right:1rem;"></i>
 
     </div></div>
     </div>
@@ -199,10 +200,11 @@ $(document).ready(function(){
           type: "GET",
           async: true,
           error: function(jqXHR, exception) {alert(jqXHR);},
-          success: function(data){}
+          success: function(data){$('#status').html('done');}
         });
     }
     function changecolor(color){
+        $('#status').html('');
         $('#style-color').html(':root {--color-layout: var(--color-'+color+')');
         data = {"red": "#C32127", "blue": "#235D77", "green": "#367439"};
         $('#fill_body').attr("fill", data[color]);
