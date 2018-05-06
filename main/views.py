@@ -242,7 +242,15 @@ def checkout(request, kind):
         charge_id=charge.id
     )
     sub.save()
-    return redirect("success")
+    # TODO: add achievement check
+    # request.user.achievements
+
+    context = {
+        "new_achievement": True,
+        "achievement_image": "/static/img/logo.svg",
+        "achievement_text": "Premium User",
+    }
+    return render(request, "success.html", context=context, status=200)
 
 
 @login_required(login_url=LOGIN_URL)

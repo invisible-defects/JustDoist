@@ -17,7 +17,7 @@ class JustdoistUser(AbstractUser):
     last_problem_shown = models.DateTimeField(null=True)
     inbox_id = models.IntegerField(null=True)
     avatar = models.CharField(max_length=256, null=True)
-    color = models.CharField(max_length=128, default='#e44332ff')
+    color = models.CharField(max_length=8, default='#e44332ff')
 
     def get_subscription(self):
         try:
