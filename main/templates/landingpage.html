@@ -10,15 +10,32 @@
 <link type="text/css" rel="stylesheet" href="{% static 'css/landingpage.css' %}"  media="screen,projection"/>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.fullPage.css' %}">
+<script type="text/javascript" src="{% static 'js/jquery.fullPage.js' %}"></script>
+<script>
+      $(document).ready(function() {
+            $('#fullpage').fullpage({
+                anchors:['hello', 'slider'],
+                slidesNavigation: true,
+                slidesNavPosition:'bottom',
+                controlArrows: true,
+            });
+      })
+</script>
 </head>
 <style>
 
 </style>
 <body id="content">
-<div class="section" id="first_section"><div>
+<div id="fullpage">
 
+<section class="section" id="section0">
+
+    <div>
     <div class="logotext">
-    J<img src="/static/img/logo.svg">STDOIST
+    {% load staticfiles %}
+    J<img src="{% static 'img/logo.svg' %}">STDOIST
     </div>
     <h5>UNLEASH YOUR PRODUCTIVITY</h5>
     <p class="flow-text">
@@ -28,9 +45,17 @@
     </p>
     <a href="/login" class="waves-effect waves-light btn-large white red-text" >Sign Up</a>
     <h5>SEE JUSTDOIST IN ACTION</h5>
-    <a href="" class="waves-effect waves-light btn-floating white"><i class="material-icons red-text">arrow_downward</i></a>
-</div></div>
+    <a href="#slider" class="waves-effect waves-light btn-floating white"><i class="material-icons red-text">arrow_downward</i></a>
+</div>
+</section>
+<section class="section" id="section1">
+    {% load staticfiles %}
+    <div class="slide" data-anchor="slide1"> <img src="{% static 'img/slider3.png' %}" class="z-depth-4"> </div>
+	<div class="slide" data-anchor="slide2"> <img src="{% static 'img/slider4.png' %}" class="z-depth-4"> </div>
+	<div class="slide" data-anchor="slide3"> <img src="{% static 'img/slider1.png' %}" class="z-depth-4"> </div>
+	<div class="slide" data-anchor="slide4"> <img src="{% static 'img/slider2.png' %}" class="z-depth-4"> </div>
+</section>
 
-
+</div>
 </body>
 </html>

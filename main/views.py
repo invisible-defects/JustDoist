@@ -16,7 +16,6 @@ from justdoist.settings import (
     LOGIN_URL, STRIPE_PUBLIC_KEY,
     STRIPE_SECRET_KEY, PREMIUM_PRICE_PER_DAY,
     PREMIUM_PRICE_PER_WEEK, PREMIUM_SUBSCRIPTION_ACHIEVEMENT_ID,
-    FIRST_TASK_ACHIEVEMENT_ID
 )
 stripe.api_key = STRIPE_SECRET_KEY
 
@@ -91,7 +90,6 @@ def oauth_callback(request, provider):
 
 @login_required(login_url=LOGIN_URL)
 def progress(request, data):
-    ac = None
     if data == 'add':
         pr = request.user.get_problem()['problem']
         pr.is_being_solved = True
@@ -116,20 +114,6 @@ def progress(request, data):
     context = {
         "probs": problems,
     }
-
-    if data == 'add':
-        return HttpResponse(request, status=200)
-    elif not request.user.shown_first_task_ac:
-        ac = request.user.achievements.all().filter(uid=FIRST_TASK_ACHIEVEMENT_ID)
-        ac = None if not ac else ac[0]
-
-    if ac is not None:
-        request.user.shown_first_task_ac = True
-        request.user.save()
-        # context['new_achievement'] = True
-        # context['achievement_image'] = ac.image
-        # context['achievement_text'] = ac.title
-    
     return render(request, 'progress.html', context=context)
 
 

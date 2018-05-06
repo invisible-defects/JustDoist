@@ -54,22 +54,21 @@ html, body{
     height: 100%;
     width: 100%;
 }
-.section{
+.section, slide{
     display: flex;
     height: 100%;
     width: 100%;
-}
-#first_section{
-    user-select: none;
-
-    background: url(/static/img/landing_background.jpg) no-repeat;
-    background-size: cover;
     flex-direction: column;
     align-items:center;
     align-content:center;
     justify-content:center;
-    color:white;
     text-align:center;
+}
+#section0{
+    user-select: none;
+    background: url(/static/img/landing_background.jpg) no-repeat;
+    background-size: cover;
+    color:white;
 }
 .logotext{
     color: white;
@@ -94,4 +93,8 @@ font-size:1.4rem;
 .btn-large{
 padding:0 6rem;
 margin:1rem;
+}
+.fp-tableCell > img{
+max-height:80%;
+max-width:90%;
 }

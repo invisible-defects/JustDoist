@@ -20,6 +20,7 @@ pip install -r requirements.txt
 ```bash
 python manage.py makemigrations main
 python manage.py migrate
+cd main && python fill_db.py && cd .. 
 python manage.py runserver localhost:5000
 ```
 5. Congrats! Now you can access the site on http://localhost:5000.
