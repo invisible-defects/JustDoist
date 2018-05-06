@@ -5,7 +5,7 @@ from django import setup
 from django.apps.registry import apps
 
 
-def load_django(app_settings: str="justdoist.settings", project_directory: str='..'):
+def load_django(app_settings: str="justdoist.settings", project_directory: str=None):
     """
     A function that loads django apps without starting the server.
     Usage:
@@ -17,6 +17,7 @@ def load_django(app_settings: str="justdoist.settings", project_directory: str='
     :param app_settings: project settings file 
     :param project_directory: path to main project directory
     """
+    project_directory = project_directory or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     if not apps.ready:
         if app_settings is None:
             raise ValueError("Application settings must be provided when django isn't loaded!")
