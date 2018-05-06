@@ -213,7 +213,18 @@ height: 100px !important;
     height: 1rem;
     margin-top: -2px;
 }
-
+.circle{
+    display: inline-flex;
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    max-width:100%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
+    text-transform:uppercase;
+}
 
 :root {
   --color-red: #e44332ff;

@@ -20,6 +20,7 @@
     bottom:0;
     left:0;
 }
+
 </style>
     
 <body id="content">
@@ -49,9 +50,16 @@
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
     <div class="col s12">
+        {% if user.has_todoist_token %}
         <h4>Progress</h4>
         {% if not probs %}
         <h4>You have no problems to work on yet.</h4>
+        {% endif %}
+        {% else %}
+        <div style="margin:4rem auto; display:flex; align-items:center; flex-direction:column;">
+        <p class="flow-text">To start woking you need to link ToDoist account</p>
+        <a type="button" class="waves-effect waves-light btn red" href="/link/todoist">Link your ToDoist</a>
+        </div>
         {% endif %}
     </div>
     

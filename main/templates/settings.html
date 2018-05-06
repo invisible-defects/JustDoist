@@ -43,7 +43,7 @@
 </nav>
     <style>
     .small{
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     </style>
 <!--  Main  -->
@@ -55,12 +55,42 @@
     <h4 style="margin-top: -0.5rem;">Personal Information</h4>
 
     <div class="valign-wrapper">
-    <div class="col s2"><img class="circle responsive-img" src="{{ img }}" style="max-width:100px;"></div>
-    <div class="col s10" style="margin-left: -1rem;"><span class="flow-text">{{name}}</span><br><span class="flow-text red-text small">{{ email }}</span></div>
+
+    <div class="col ">
+        {% if user.has_avatar %} <img class="circle responsive-img" src="{{ user.avatar }}" style="max-width:100px;">
+        {% else %} <div class="circle layout-color">{{ user.first_name.0 }}{{ user.last_name.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="col" ><span class="flow-text">{{user.username}}</span><br><span class="flow-text red-text small">Username</span></div>
+    </div>
+
+    </div></div>
+
+    <div class="card"><div class="card-content">
+    <div class="row" style="margin:0;">
+        <div class="col"><i class="material-icons" style="line-height: 1.5;">info_outline</i></div>
+        <div class="col">
+            <span class="flow-text">{{user.first_name}}</span><br><span class="flow-text red-text small">First name</span><br>
+            <span class="flow-text">{{user.last_name}}</span><br><span class="flow-text red-text small">Last name</span>
+        </div>
     </div>
     </div></div>
 
 
+    <div class="card"><div class="card-content">
+
+    <div class="row" style="margin:0;">
+    <div class="col s12"><h4 style="margin-top: -0.5rem;">ToDoist Account</h4></div>
+
+    {% if user.has_todoist_token %}
+    <i class="material-icons green-text" style="line-height: 1.5;">done</i>
+    {% else%}
+    <div class="col s11"><p class="flow-text">To start woking you need to link ToDoist account</p></div>
+    <div class="col s1"><a class="waves-effect waves-light btn-floating red right" href="/link/todoist"><i class="material-icons">link</i> </a></div>
+    {% endif %}
+    </div>
+    </div></div>
 
     {% if premium %}
 
