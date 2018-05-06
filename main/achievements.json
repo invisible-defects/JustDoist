@@ -1,0 +1,55 @@
+[
+    {
+        "uid": 0,
+        "title": "Add your first JustDoist task",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 1,
+        "title": "Add 5 JustDoist tasks",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 2,
+        "title": "Add 10 JustDoist tasks",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 3,
+        "title": "Add 25 JustDoist tasks",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 4,
+        "title": "Solve your first JustDoist task",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 5,
+        "title": "Solve 5 JustDoist tasks",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 6,
+        "title": "Solve 10 JustDoist tasks",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 7,
+        "title": "Solve 25 JustDoist tasks",
+        "icon": "blank"
+    },
+
+    {
+        "uid": 8,
+        "title": "Buy premium",
+        "icon": "blank"
+    }
+]

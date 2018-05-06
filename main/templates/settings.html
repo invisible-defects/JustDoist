@@ -62,14 +62,16 @@
 
 </div>
 </nav>
-    <style>
+<style>
     .small{
         font-size: 1rem;
     }
     .finished{
         border:2px #4CAF50  solid;
     }
-    </style>
+
+    
+</style>
 
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
@@ -118,11 +120,15 @@
 
 
     {% if user.has_todoist_token %}
+<<<<<<< HEAD
     <div class="col s12 m6"><div class="card"><div class="card-content {% if premium %}finished{% endif %}">
+=======
+    <div class="card"><div class="card-content {% if user.has_subscription %}finished{% endif %}">
+>>>>>>> 4ad83024e08d3e1d85f26cdd623230a99fe80da8
 
     <div class="row" style="margin:0;">
     <div class="col s11"><h4 style="margin:0">Premium Account</h4></div>
-    {% if premium %}
+    {% if user.has_subscription %}
     <div class="col s1"><i class="material-icons green-text" style="line-height: 1.5;">done</i></div>
     {% else %}
     <div class="col s12"><p class="flow-text">Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!</p></div>
@@ -132,8 +138,13 @@
     </div></div></div>
     {% endif %}
 
+<<<<<<< HEAD
     {% if premium %}
     <div class="col s12 m6"><div class="card"><div class="card-content">
+=======
+    {% if user.has_subscription %}
+    <div class="card"><div class="card-content">
+>>>>>>> 4ad83024e08d3e1d85f26cdd623230a99fe80da8
     <h4>Themes</h4>
     <style>
         #red + label:after{
@@ -183,6 +194,10 @@
 
 </script>
 <script>
+{% if showSubscriptionToast %}
+    Materialize.toast("You are already a premium user", 7500, "red");
+{% endif %}
+
 $(document).ready(function(){
     {% if new_achievement %}
         makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
