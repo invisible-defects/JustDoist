@@ -1,7 +1,7 @@
 import json
 from load_django import load_django; load_django()
 
-from main.models import SuggestedProblem, ProblemStep
+from main.models import SuggestedProblem, ProblemStep, Achievement
 
 
 if __name__ == "__main__":
@@ -25,3 +25,16 @@ if __name__ == "__main__":
             )
             step.save()
     print("[INFO] SUCCESSFULLY CREATED PRESET PROBLEMS")
+
+    with open('achievements.json', 'r') as f:
+        achievements = json.loads(f.read())
+
+    for reward in achievements:
+        ach = Achievement(
+            uid = reward['uid'],
+            title = reward['title'],
+            image = reward['icon']
+        )
+        ach.save()
+
+    print("[INFO] SUCCESSFULLY CREATED PRESET ACHIEVEMENTS")

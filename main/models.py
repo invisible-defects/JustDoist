@@ -248,7 +248,8 @@ class PremiumSubscription(models.Model):
         return str(self)
 
 
-class Achievment(models.Model):
+class Achievement(models.Model):
+    uid = models.IntegerField(primary_key=True, unique=True)
     title = models.CharField(max_length=256)
     text = models.CharField(max_length=1000)
     image = models.URLField(max_length=500)
