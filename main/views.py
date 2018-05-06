@@ -47,12 +47,6 @@ def index(request):
     return render(request, 'index.html', context=context, status=200)
 
 
-def main_route(request):
-    if not request.user.is_authenticated:
-        return redirect("landingpage")
-    return redirect('index')
-
-
 def landingpage(request):
     if request.user.is_authenticated:
         return redirect("index")

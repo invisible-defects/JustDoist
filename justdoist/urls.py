@@ -30,9 +30,8 @@ urlpatterns = [
     url(r'^logout/$', dj_views.logout_then_login, name="logout"),
 
 
-    path('', views.main_route, name="main_routed"),
+    path('', views.landingpage, name="main_routed"),
     path('index', views.index, name='index'),
-    path('landingpage', views.landingpage, name="landingpage"),
     path('register', views.Register.as_view(), name='register'),
 
     path('link/<slug:service>/', views.link, name='link'),
