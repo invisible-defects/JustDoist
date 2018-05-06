@@ -191,9 +191,12 @@
     
     
 </body>
-     
+
 <script>
 $(document).ready(function(){
+    {% if new_achievement %}
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+    {% endif %}
     init_color('{{ user.color }}');
     build_stats();
 });

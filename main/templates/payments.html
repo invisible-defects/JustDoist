@@ -181,6 +181,9 @@ if (window.location.protocol === 'file:') {
 
 <script>
 $(document).ready(function(){
+    {% if new_achievement %}
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+    {% endif %}
     Materialize.updateTextFields();
     init_color('{{ user.color }}');
 });

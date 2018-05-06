@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
 {% load staticfiles %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
@@ -6,18 +6,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+
+
+
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
+
 <meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="{% static 'img/logo.png' %}">
+
 </head>
 
 <body id="content">
 
 <nav class="layout-background">
 <div class="nav-wrapper layout-background">
-  {% load staticfiles %}
-  <a href="/index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J
+{% load staticfiles %}
+     <a href="/index" class="brand-logo left" style="font-weight: 600; margin-left: 1rem;">J
 
 <svg id="logo_img" viewBox="0 0 149 266" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="Canvas" fill="none">
@@ -45,7 +51,7 @@
 </svg>
 
       stDoist</a>
-  <ul class="right hide-on-med-and-down">
+   <ul class="right hide-on-med-and-down">
     <li><a href="/index"><i class="material-icons left">description</i>PROBLEMS</a></li>
     <li><a href="/progress/no_add"><i class="material-icons left">equalizer</i>PROGRESS</a></li>
     <li><a href="" class="active"><i class="material-icons left">settings</i>SETTINGS</a></li>
@@ -62,132 +68,88 @@
 
 </div>
 </nav>
+
+
     <style>
     .small{
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
-    .finished{
-        border:2px #4CAF50  solid;
+    .input-field label {
+     color: #333 !important;
+    }
+    .input-field input[type=text]:focus + label {
+     color: #333 !important;
+    }
+    .input-field input[type=text]:focus {
+     border-bottom: 1px solid var(--color-red) !important;
+     box-shadow: 0 1px 0 0 var(--color-red) !important;
+    }
+    .input-field input[type=text].valid {
+     border-bottom: 1px solid green !important;
+     box-shadow: 0 1px 0 0 green !important;
+    }
+    .input-field input[type=text].invalid {
+     border-bottom: 1px solid red !important;
+     box-shadow: 0 1px 0 0 red !important;
+    }
+    .input-field .prefix.active {
+     color: #fff !important;
     }
     </style>
-
 <!--  Main  -->
 <div class="container" style="width:85%;"><div class="row">
 
 <div class="col s12">
+    <div class="card">
+        <div class="card-content">
+            <h4 style="margin-top: -0.5rem;">Buy weekly subscription</h4>
+            <div class="valign-wrapper">
+                <div class="col s12" style="margin:0; padding:0;">
 
-    <div class="card"><div class="card-content">
-    <h4 style="margin-top: -0.5rem;">Personal Information</h4>
+                    <form action="/checkout/weekly" method="POST" id="payment-form">
+                        {% csrf_token %}
+                        {% load staticfiles %}
+                        <p class="payment-errors"></p>
+                        <div class="row">
+                        <div class="input-field col s12">
+                            <label>Card Number</label>
+                            <input type="text" size="16" autocomplete="off" class="card-number" placeholder="0000 0000 0000 0000" />
+                        </div>
+                        <div class="input-field col s4">
+                            <label>CVC</label>
+                            <input type="text" size="3" autocomplete="off" class="card-cvc" placeholder="000"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <label>Expiration</label>
+                            <input type="text" size="2" placeholder="00" class="card-expiry-month"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="text" size="4" placeholder="0000"  class="card-expiry-year"/>
+                        </div>
+                        <div class="input-field col right">
+                        <button type="submit" class="submit-button aves-effect waves-light btn red right">Pay $ 0.01</button>
+                        </div>
+                        </div>
+                    </form>
 
-    <div class="valign-wrapper">
-
-    <div class="col ">
-        {% if user.has_avatar %} <img class="circle responsive-img" src="{{ user.avatar }}" style="max-width:100px;">
-        {% else %} <div class="circle layout-background">{{ user.first_name.0 }}{{ user.last_name.0 }}</div>
-        {% endif %}
-    </div>
-
-    <div class="col" ><span class="flow-text">{{user.username}}</span><br><span class="flow-text layout-text small">Username</span></div>
-    </div>
-
-    </div></div>
-
-    <div class="card"><div class="card-content">
-    <div class="row" style="margin:0;">
-        <div class="col"><i class="material-icons" style="line-height: 1.5;">info_outline</i></div>
-        <div class="col">
-            <span class="flow-text">{{user.first_name}}</span><br><span class="flow-text layout-text small">First name</span><br>
-            <span class="flow-text">{{user.last_name}}</span><br><span class="flow-text layout-text small">Last name</span>
+                </div>
+            </div>
         </div>
     </div>
-    </div></div>
-
-
-    <div class="card"><div class="card-content {% if user.has_todoist_token %}finished{% endif %}">
-
-    <div class="row" style="margin:0;">
-    <div class="col s11"><h4 style="margin:0">ToDoist Account</h4></div>
-
-    {% if user.has_todoist_token %}
-    <div class="col s1"><i class="material-icons green-text" style="line-height: 1.5;">done</i></div>
-    {% else%}
-    <div class="col s11"><p class="flow-text">To start woking you need to link ToDoist account!</p></div>
-    <div class="col s1"><a class="waves-effect waves-light btn-floating layout-background right" href="/authorize/todoist"><i class="material-icons">link</i> </a></div>
-    {% endif %}
-    </div>
-    </div></div>
-
-
-    {% if user.has_todoist_token %}
-    <div class="card"><div class="card-content {% if user.has_todoist_token %}finished{% endif %}">
-
-    <div class="row" style="margin:0;">
-    <div class="col s11"><h4 style="margin:0">Premium Account</h4></div>
-    {% if premium %}
-    <div class="col s1"><i class="material-icons green-text" style="line-height: 1.5;">done</i></div>
-    {% else %}
-    <div class="col s12"><p class="flow-text">Get ultimate experience with JustDoist Premium - access full set of problems and enjoy various color themes!</p></div>
-    <div class="col s12" style="margin:0; margin-top:1rem;"><a class="waves-effect waves-light btn layout-background right" href="/payment">Buy Premium Account</a></div>
-    {% endif %}
-    </div>
-    </div></div>
-    {% endif %}
-
-    {% if premium %}
-    <div class="card"><div class="card-content">
-    <h4>Themes</h4>
-    <style>
-        #red + label:after{
-            background: var(--color-red);
-            border: 2px solid var(--color-red);
-        }
-        #blue + label:after{
-            background: var(--color-blue);
-            border: 2px solid var(--color-blue);
-        }
-        #green + label:after{
-            background: var(--color-green);
-            border: 2px solid var(--color-green);
-        }
-    </style>
-
-    <div class="row" style="margin:0;">
-    <p onclick="changecolor('red')">
-      <input type="radio" id="red" name="hex" value="#e44332ff" {% if user.color == "#e44332ff" %} checked {% endif %} />
-      <label for="red">Red</label>
-    </p>
-    <p onclick="changecolor('blue')">
-      <input type="radio" id="blue" name="hex" value="#1B92C6" {% if user.color == "#1B92C6" %} checked {% endif %} />
-      <label for="blue">Blue</label>
-    </p>
-    <p onclick="changecolor('green')">
-      <input type="radio" id="green" name="hex" value="#48d34e" {% if user.color == "#48d34e" %} checked {% endif %} />
-      <label for="green">Green</label>
-    </p>
-    <p>
-    <button type="submit" class="submit-button waves-effect waves-light btn layout-background right" onclick="sendcolor()">Save colortheme</button></p>
-    <i class="material-icons right green-text" id="status" style="line-height: 36px; margin-right:1rem;"></i>
-
-    </div></div>
-    </div>
-    {% endif %}
-
 </div>
 
 </div></div>
 
 
 </body>
-<script>
 
-</script>
 <script>
 $(document).ready(function(){
     {% if new_achievement %}
         makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
     {% endif %}
+    Materialize.updateTextFields();
     init_color('{{ user.color }}');
 });
 </script>
-
 </html>
