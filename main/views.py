@@ -202,7 +202,7 @@ def payments(request):
 
     # Redirect if user is already subscribed
     if request.user.has_subscription:
-        return redirect("already_has_subscription")
+        return render(request, "settings.html", context={"showSubscriptionToast": True})
 
     context = {
         "stripe_key": STRIPE_PUBLIC_KEY,
@@ -260,4 +260,6 @@ def failure(request):
 
 @login_required(login_url=LOGIN_URL)
 def success(request):
+    if not request.user.has_subscription:
+        return redirect("payments")
     return render(request, "success.html")
