@@ -178,6 +178,7 @@ nav > div > a{
     display: inline-flex;
     flex:auto;
     word-break: break-word;
+
 }
 .card-panel{
     display: flex;
