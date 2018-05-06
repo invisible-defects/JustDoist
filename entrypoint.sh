@@ -1,5 +1,6 @@
 #!/bin/sh
 cd /justdoist
+sleep 5
 python manage.py makemigrations main
 python manage.py migrate
 if [ -d "static" ]; then
