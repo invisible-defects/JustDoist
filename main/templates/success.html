@@ -6,9 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>JustDoist</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-
-
 
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
@@ -75,10 +72,13 @@
 
 <div style="margin:6rem auto; display:flex; align-items:center; flex-direction:column;">
 
-<svg style="display:flex; width: 84px; height:84px;" viewBox="0 0 84 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
-<circle class="border" cx="42" cy="42" r="40" stroke-linecap="round" stroke-width="4" stroke="#abe9d2" fill="none"></circle>
-<path class="checkmark" stroke-linecap="round" stroke-linejoin="round" d="M23.375 42.5488281 36.8840688 56.0578969 64.891932 28.0500338" stroke-width="4" stroke="#24b47e" fill="none"></path>
+<svg width="84" height="84" viewBox="0 0 84 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Canvas" fill="none">
+<path id="Vector" d="M 80 40C 80 62.0914 62.0914 80 40 80C 17.9086 80 0 62.0914 0 40C 0 17.9086 17.9086 0 40 0C 62.0914 0 80 17.9086 80 40Z" transform="translate(2 2)" stroke="#ABE9D2" stroke-width="4" stroke-linecap="round"/>
+<path id="Vector_2" d="M 0 14.4988L 13.5091 28.0079L 41.5169 -2.30664e-07" transform="translate(21 28)" stroke="#24B47E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 </svg>
+
 
 <p class="flow-text">Congratultions! You`ve just bought a weekly subscription!</p>
 </div>
@@ -91,7 +91,7 @@
 <script>
 $(document).ready(function(){
     {% if new_achievement %}
-        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}");
+        makeAchievementToast("{{ achievement_image }}", "{{ achievement_text }}", "{{ user.color }}");
     {% endif %}
     Materialize.updateTextFields();
     init_color('{{ user.color }}');
