@@ -16,7 +16,8 @@
   
 ## Current bugs and issues
 - Problem solution steps are given in a random oreder  
-- Not enought content (more problems and solutions are needed)
+- Not enought content (more problems and solutions are needed)  
+- No username\password checks (minimum length, etc.)
   
   
 ## To run JustDoist locally
@@ -58,4 +59,4 @@ So you won't be able to access any page without adding `*`
    
    
  ## License
- ![Apache License 2.0](LICENSE.md)
+ ![Apache License 2.0](LICENSE)
