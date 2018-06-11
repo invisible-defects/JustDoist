@@ -2,9 +2,15 @@
 ## ToDoist add-on for ones, who just do it. https://justdoist.com/  
   
   
-![Registration](justdoist_registration.png)  
-![Main menu](justdoist_main_menu.png)  
+![Main menu](justdoist_main_menu.png)
 ![Premium Settings](justdoist_premium.png)  
+  
+  
+## Description
+JustDoist is a webiste which analyzes your dailty ToDoist tasks and tries to find problems in your personal 
+productivity. When it detects that there is a way you can boost your daily performance, it offers you a 
+simple, step-by-step guide to do it. You can easily add your JustDoist tasks to ToDoist and track their completance, as 
+well as your ToDoist karma.
   
   
 ## Features  
