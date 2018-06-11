@@ -14,10 +14,11 @@
 - Premium mode with different color schemes  
   
   
-## Current bugs and issues
+## Current known bugs and issues
 - Problem solution steps are given in a random oreder  
 - Not enought content (more problems and solutions are needed)  
-- No username\password checks (minimum length, etc.)
+- No username\password checks (minimum length, etc.)  
+- Karma growth bar not working correctly
   
   
 ## To run JustDoist locally
