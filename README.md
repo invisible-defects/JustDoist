@@ -1,9 +1,25 @@
 # JustDoist
-**ToDoist add-on for ones, who just do it.**  
-
-justdoist.com 
-
-**To run JustDoist locally**
+## ToDoist add-on for ones, who just do it. https://justdoist.com/  
+  
+  
+![Registration](justdoist_registration.png)  
+![Main menu](justdoist_main_menu.png)  
+![Premium Settings](justdoist_premium.png)  
+  
+  
+## Features  
+- Automatic problem detection  
+- Step-by-step problem guides
+- Add problems to ToDoist directly  
+- Premium mode with different color schemes  
+  
+  
+## Current bugs and issues
+- Problem solution steps are given in a random oreder  
+- Not enought content (more problems and solutions are needed)
+  
+  
+## To run JustDoist locally
 1. Create virtualenv with python 3.6 (I'll use virtualenvwrapper)
 ```bash
 mkvirtualenv justdoist --python=python3.6
@@ -26,7 +42,7 @@ python manage.py runserver localhost:5000
 5. Congrats! Now you can access the site on http://localhost:5000.
 
 
-**Production mode**  
+## Production mode 
 1. Install Docker and Docker-compose (apt users probably [want](https://stackoverflow.com/questions/42139982/version-in-docker-compose-yml-is-unsupported-you-might-be-seeing-this-error) to install Docker-compose directly from github)
 2. Run Docker-compose in the porject directory
 ```bash 
@@ -38,4 +54,8 @@ sudo docker-compose up
 Note: by default, only `justdoist.com` domain is allowed in the production mode. 
 So you won't be able to access any page without adding `*` 
  to `ALLOWED_HOSTS` (that may cause an [XSS-attack](https://en.wikipedia.org/wiki/Cross-site_scripting))
- in `settings.py`. 
+ in `settings.py`.  
+   
+   
+ ## License
+ ![Apache License 2.0](LICENSE.md)
